@@ -14,7 +14,7 @@ namespace BL
         void Logout();
 
         bool IsSkipped { get; set; }
-        bool IsAutorized { get; }
+        bool IsAutorized { get; }        
 
         event Action Autorized;
         event Action Exited;

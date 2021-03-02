@@ -22,7 +22,7 @@
                     </StackPanel>
 
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5">
-                        <TextBlock Text="Логин" />
+                        <TextBlock Text="E-mail" />
                         <TextBox Width="250" x:Name="tbLogin" Margin="0 10"/>
                     </StackPanel>
 
@@ -46,20 +46,34 @@
             </TabItem>
             <TabItem Header="Посмотреть">
                 <StackPanel >
-                    <ComboBox DisplayMemberPath="Name" x:Name="Combo"/>
+                    <DataGrid 
+                        CanUserAddRows="False"
+                        
+                        CanUserDeleteRows="False"
+                        IsReadOnly="False"
+                        x:Name="grid"/>
 
-                    <Button Margin="0 10 0 0" Content="Посмотреть" x:Name="Look" Click="Look_Click"/>
-
-                    <TextBlock Text="Логин"/>
-                    <TextBox x:Name="tbLoginView"/>
-
-
-                    <TextBlock Text="Пароль"/>
-                    <TextBox x:Name="tbPassView"/>
-
-                    <Image MaxWidth="800" x:Name="img" />
-
+                    <Button 
+                        Margin="0 10"
+                        HorizontalAlignment="Right"
+                        Padding="15 3"
+                        Click="Button_Click_3"
+                        Content="Обновить таблицу" />
+                    <Button 
+                        Margin="0 10"
+                        HorizontalAlignment="Right"
+                        Padding="15 3"
+                        Content="Внести изменения в бд" 
+                        Click="Button_Click_1"/>
+                    <Button 
+                        Margin="0 10"
+                        HorizontalAlignment="Right"
+                        Padding="15 3"
+                        Click="Button_Click_2"
+                        Content="Удалить это" />
                 </StackPanel>
+                
+                
             </TabItem>
         </TabControl>
         

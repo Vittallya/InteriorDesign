@@ -34,6 +34,8 @@ namespace DbHelper
             Closing += (a, b) => context.Dispose();
         }
 
+        ICollection<User> _users;
+
         async void Init()
         {
             await Task.Run(() => context = new AllDbContext());
@@ -44,7 +46,9 @@ namespace DbHelper
         async void UpdateLists()
         {
             await context.Users.LoadAsync();
-            Combo.ItemsSource = context.Users.ToList();
+            _users = context.Users.ToList();
+
+            grid.ItemsSource = _users;
 
         }
 
@@ -56,30 +60,26 @@ namespace DbHelper
             if (!string.IsNullOrEmpty(tb.Text) &&
                 RoleCombo.SelectedItem != null &&
                 !string.IsNullOrEmpty(tbLogin.Text) &&
-                !string.IsNullOrEmpty(tbPass.Text) &&
-                file != null)
+                !string.IsNullOrEmpty(tbPass.Text))
             {
                
-                using (var stream = new FileStream(file, FileMode.Open, FileAccess.Read))
+                
+                context.Users.Add(new User
                 {
-                    byte[] image = new byte[stream.Length];
+                    Email = tbLogin.Text,
+                    Password = tbPass.Text,
+                    Name = tb.Text,
+                    Role = (DAL.Models.Role)Enum.Parse(typeof(DAL.Models.Role), RoleCombo.SelectedItem.ToString()),
+                });
+                await context.SaveChangesAsync();
 
-                    await stream.ReadAsync(image, 0, (int)stream.Length);
-                    context.Users.Add(new User
-                    {
-                        Image = image,
-                        Login = tbLogin.Text,
-                        Password = tbPass.Text,
-                        Name = tb.Text,
-                        Role = (DAL.Models.Role)Enum.Parse(typeof(DAL.Models.Role), RoleCombo.SelectedItem.ToString()),
-                    });
-                    await context.SaveChangesAsync();
-                }
 
                 UpdateLists();
+                MessageBox.Show("Добавлен");
+
             }
 
-            
+
         }
 
         private void selectImage_Click(object sender, RoutedEventArgs e)
@@ -97,29 +97,62 @@ namespace DbHelper
 
         private void Look_Click(object sender, RoutedEventArgs e)
         {
-            if (Combo.SelectedItem != null && Combo.SelectedItem is User user)
+            //if (Combo.SelectedItem != null && Combo.SelectedItem is User user)
+            //{
+            //    BitmapImage image = new BitmapImage();
+
+            //    using (var sm = new MemoryStream(user.Image))
+            //    {
+            //        sm.Position = 0;
+            //        image.BeginInit();
+            //        image.StreamSource = sm;
+            //        image.CacheOption = BitmapCacheOption.OnLoad;
+            //        image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+            //        image.UriSource = null;
+            //        image.EndInit();
+            //    }
+            //    tbLoginView.Text = user.Email;
+            //    tbPassView.Text = user.Password;
+
+            //    img.Source = image;
+
+
+            //}
+
+
+        }
+
+
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var users = grid.ItemsSource;
+
+            foreach(var user in users)
             {
-                BitmapImage image = new BitmapImage();
-
-                using (var sm = new MemoryStream(user.Image))
-                {
-                    sm.Position = 0;
-                    image.BeginInit();
-                    image.StreamSource = sm;
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                    image.UriSource = null;
-                    image.EndInit();
-                }
-                tbLoginView.Text = user.Login;
-                tbPassView.Text = user.Password;
-
-                img.Source = image;
-
-
+                context.Entry(user).State = EntityState.Modified;
             }
 
 
+
+            await context.SaveChangesAsync();
+
+            MessageBox.Show("Обновлено");
+        }
+
+        private async void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if(grid.SelectedItem != null && grid.SelectedItem is User user)
+            {
+                context.Users.Remove(user);
+                await context.SaveChangesAsync();
+                UpdateLists();
+                MessageBox.Show("Удалено");
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            UpdateLists();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace BL
             Role role = isAdmin ? Role.Admin : Role.User;
 
             var user = await dbContext.Users.FirstOrDefaultAsync( u =>
-                string.Compare(login, u.Login, false) == 0 &&
+                string.Compare(login, u.Email, false) == 0 &&
                 string.Compare(password, u.Password, false) == 0 &&
                 u.Role == role);
 
