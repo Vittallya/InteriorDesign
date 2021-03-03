@@ -75,9 +75,14 @@
     <Compile Include="Migrations\202103021448189_New.designer.cs">
       <DependentUpon>202103021448189_New.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103031038469_StylesAdded.cs" />
+    <Compile Include="Migrations\202103031038469_StylesAdded.designer.cs">
+      <DependentUpon>202103031038469_StylesAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Special.cs" />
+    <Compile Include="Models\Style.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -103,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103021448189_New.resx">
       <DependentUpon>202103021448189_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103031038469_StylesAdded.resx">
+      <DependentUpon>202103031038469_StylesAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

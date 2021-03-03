@@ -16,5 +16,6 @@ namespace DAL
 
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Style> Styles { get; set; }
     }
 }
