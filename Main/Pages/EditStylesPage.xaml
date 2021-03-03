@@ -13,6 +13,15 @@
 
         <ListBox ItemsSource="{Binding Styles}">
 
+            <ListBox.ContextMenu>
+                <ContextMenu  >
+                    <MenuItem Header="Добавить стиль" Command="{Binding AddStyle}"/>
+                    <MenuItem Header="Редактировать стиль" Command="{Binding EditStyle}"/>
+                    <MenuItem Header="Удалить стиль" Command="{Binding RemoveStyle}"/>
+                    <MenuItem Header="Обновить" Command="{Binding Update}"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+            
             <ListBox.ItemTemplate>
                 <DataTemplate >
                     <Border >

@@ -114,6 +114,7 @@
     </Compile>
     <Compile Include="Resources\Converters\Converters.cs" />
     <Compile Include="MVVM_Core\BaseViewModel.cs" />
+    <Compile Include="MVVM_Core\BasePageViewModel.cs" />
     <Compile Include="ViewModels\EditStylesViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

@@ -8,12 +8,14 @@ using System.Windows.Input;
 using BL;
 using DAL;
 using Main.MVVM_Core;
+using Main.Pages;
 
 namespace Main.ViewModels
 {
     public class UserHomeViewModel: BaseViewModel
     {
         private readonly ICurrentUserService userService;
+        private readonly PageService pageService;
 
         public bool IsGreeting { get; set; }
 
@@ -22,11 +24,14 @@ namespace Main.ViewModels
 
         public bool IsTextVisible { get; set; } = true;
 
-        public UserHomeViewModel(ICurrentUserService userService)
+        public UserHomeViewModel(ICurrentUserService userService, PageService pageService)
         {
             this.userService = userService;
+            this.pageService = pageService;
             ToGreet();
         }
+
+       
 
         async void ToGreet()
         {
@@ -55,11 +60,12 @@ namespace Main.ViewModels
             {
                 text += $", {userService.CurrentUser.Name}!";
             }
-            TextShowingStack(new string[] { text, "Почти все готово..." });
+
+            await TextShowingStack(new string[] { text, "5 сек, ща загрузится...", "еще чуток.." });
 
         }
         
-        async void TextShowingStack(ICollection<string> strings)
+        async Task TextShowingStack(ICollection<string> strings)
         {
 
             foreach(var str in strings)
@@ -79,9 +85,9 @@ namespace Main.ViewModels
         }
 
 
-        public ICommand GoToCalculatePage => new Command(x =>
+        public ICommand ToServicesView => new Command(x =>
         {
-            
+            pageService.ChangePage<StylesPage>(AnimateTo.Left);
         });
 
     }

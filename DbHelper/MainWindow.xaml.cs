@@ -41,15 +41,14 @@ namespace DbHelper
             await Task.Run(() => context = new AllDbContext());
             UpdateLists();
             RoleCombo.ItemsSource = Enum.GetValues(typeof(Role));
+            await SqlInstructions.DefaultExecute();
         }
 
         async void UpdateLists()
         {
             await context.Users.LoadAsync();
             _users = context.Users.ToList();
-
             grid.ItemsSource = _users;
-
         }
 
 

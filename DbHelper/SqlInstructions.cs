@@ -71,7 +71,7 @@ namespace DbHelper
         };
 
 
-        static async Task ExecuteStatement(AllDbContext context, string text, SqlParameter[][] @params)
+        public static async Task ExecuteStatement(AllDbContext context, string text, SqlParameter[][] @params)
         {
             
             var db = context.Database;
@@ -83,7 +83,7 @@ namespace DbHelper
             
         }
 
-        static async Task DefaultExecute()
+        public static async Task DefaultExecute()
         {
             using (AllDbContext context = new AllDbContext())
             {

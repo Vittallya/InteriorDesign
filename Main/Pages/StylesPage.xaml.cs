@@ -23,6 +23,7 @@ namespace Main.Pages
         public StylesPage()
         {
             InitializeComponent();
+            
         }
     }
 }
