@@ -8,15 +8,7 @@ using DAL;
 using DAL.Models;
 
 namespace BL
-{
-    public interface ILoginService
-    {
-        Task<bool> TryLogin(string login, string password, bool isAdmin);
-        string ErrorMessage { get; }
-
-        void Skip();
-
-    }
+{    
 
     public class LoginService : ILoginService
     {
@@ -34,14 +26,25 @@ namespace BL
         {
             await Task.Run(() => dbContext = new AllDbContext());
 
-            await dbContext.Users.LoadAsync();
+            IUser user;
 
-            Role role = isAdmin ? Role.Admin : Role.User;
+            if (isAdmin)
+            {
+                await dbContext.EmployeeAdmins.LoadAsync();
+                user = await dbContext.EmployeeAdmins.FirstOrDefaultAsync(u =>
+                   string.Compare(login, u.Login, false) == 0 &&
+                   string.Compare(password, u.Password, false) == 0);
+            }
+            else
+            {
+                await dbContext.Clients.LoadAsync();
 
-            var user = await dbContext.Users.FirstOrDefaultAsync( u =>
-                string.Compare(login, u.Email, false) == 0 &&
-                string.Compare(password, u.Password, false) == 0 &&
-                u.Role == role);
+                user = await dbContext.Clients.FirstOrDefaultAsync(u =>
+                   string.Compare(login, u.Login, false) == 0 &&
+                   string.Compare(password, u.Password, false) == 0);
+            }
+
+            
 
             if(user != null)
             {

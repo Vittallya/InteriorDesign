@@ -10,7 +10,13 @@
       Title="LoginPage">
 
     <Grid>
-        <StackPanel HorizontalAlignment="Center">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="12*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center">
             <StackPanel>
                 
                 <TextBlock 

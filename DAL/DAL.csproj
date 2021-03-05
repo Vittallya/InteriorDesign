@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllDbContext.cs" />
+    <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Migrations\202102271809004_init.cs" />
     <Compile Include="Migrations\202102271809004_init.designer.cs">
       <DependentUpon>202102271809004_init.cs</DependentUpon>
@@ -79,8 +80,24 @@
     <Compile Include="Migrations\202103031038469_StylesAdded.designer.cs">
       <DependentUpon>202103031038469_StylesAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103041958177_Services.cs" />
+    <Compile Include="Migrations\202103041958177_Services.designer.cs">
+      <DependentUpon>202103041958177_Services.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103051113085_OrdersOrdersDetailsClientsEmployeesEmployeesAdmins.cs" />
+    <Compile Include="Migrations\202103051113085_OrdersOrdersDetailsClientsEmployeesEmployeesAdmins.designer.cs">
+      <DependentUpon>202103051113085_OrdersOrdersDetailsClientsEmployeesEmployeesAdmins.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\WorkingStatus.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\EmployeeAdmin.cs" />
+    <Compile Include="Models\HouseType.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Special.cs" />
     <Compile Include="Models\Style.cs" />
     <Compile Include="Models\User.cs" />
@@ -111,6 +128,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103031038469_StylesAdded.resx">
       <DependentUpon>202103031038469_StylesAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103041958177_Services.resx">
+      <DependentUpon>202103041958177_Services.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103051113085_OrdersOrdersDetailsClientsEmployeesEmployeesAdmins.resx">
+      <DependentUpon>202103051113085_OrdersOrdersDetailsClientsEmployeesEmployeesAdmins.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

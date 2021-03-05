@@ -1,0 +1,149 @@
+﻿<Page x:Class="Main.Pages.DesignParamsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Main.Pages"
+      mc:Ignorable="d" 
+      DataContext="{Binding Source={StaticResource Locator}, Path=DesignParamsViewModel}"
+      Title="DesignParamsPage" >
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="75" />
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="12*" />
+
+        </Grid.ColumnDefinitions>
+
+        <TextBlock 
+                Grid.Column="1"
+                Grid.Row="0" 
+                Text="Введите параметры:" 
+                VerticalAlignment="Center"
+                FontSize="24" FontFamily="Candara"/>
+
+
+        <Border 
+            Grid.Column="1" 
+            HorizontalAlignment="Left"
+            Margin="25 20"
+            Grid.Row="1" 
+            BorderBrush="White">
+
+            <StackPanel HorizontalAlignment="Center">
+                <DockPanel Margin="5 10">
+                    <TextBlock 
+                        DockPanel.Dock="Left"
+                        Text="Общая площадь помещения:" 
+                        FontFamily="Trebuchet MS" 
+                        Width="250"
+                        FontSize="14"/>
+
+                    <TextBox Width="75" Text="{Binding ParamsService.Area}"/>
+
+                    <TextBlock 
+                        DockPanel.Dock="Left"
+                        Text="кв м." 
+                        Margin="5 0 0 0"
+                        FontFamily="Trebuchet MS" 
+                        FontSize="14"/>
+                </DockPanel>
+
+                <DockPanel Margin="5 10">
+                    <TextBlock 
+                        DockPanel.Dock="Left"
+                        Text="Высота потолков:" 
+                        FontFamily="Trebuchet MS" 
+                        Width="250"
+                        FontSize="14"/>
+
+                    <TextBox Width="75" Text="{Binding ParamsService.FloorsHeight}"/>
+
+                    <TextBlock 
+                        DockPanel.Dock="Left"
+                        Text="м." 
+                        Margin="5 0 0 0"
+                        FontFamily="Trebuchet MS" 
+                        FontSize="14"/>
+                </DockPanel>
+                <DockPanel Margin="5 10">
+                    <TextBlock 
+                        DockPanel.Dock="Left"
+                        Text="Тип помещения:" 
+                        FontFamily="Trebuchet MS" 
+                        Width="250"
+                        FontSize="14"/>
+
+                    <ComboBox 
+                        FontSize="12"
+                        ItemsSource="{Binding HouseTypes}"
+                        SelectedValue="{Binding SelectedHouseType}"
+                        SelectedValuePath="Key"
+                        VerticalAlignment="Top"
+                        DisplayMemberPath="Value"/>
+                </DockPanel>
+
+                <DockPanel Margin="5 10">
+                    <TextBlock 
+                        DockPanel.Dock="Left"
+                        Text="Нужно ли выравнивание стен:" 
+                        FontFamily="Trebuchet MS" 
+                        Width="250"
+                        FontSize="14"/>
+
+                    <ComboBox 
+                        FontSize="12"
+                        SelectedIndex="{Binding WallAlignmentIndex}">
+                        <ComboBoxItem Content="Да"/>
+                        <ComboBoxItem Content="Нет"/>
+                    </ComboBox>
+                </DockPanel>
+
+                <DockPanel Margin="5 10">
+                    <TextBlock 
+                        DockPanel.Dock="Left"
+                        Text="Количество комнат:" 
+                        FontFamily="Trebuchet MS" 
+                        Width="250"
+                        FontSize="14"/>
+
+                    <TextBox  Text="{Binding ParamsService.RoomsCount}"/>
+
+                </DockPanel>
+
+
+            </StackPanel>
+        </Border>
+
+        <Button 
+            Grid.Column="1"
+            Command="{Binding Next}"
+            Grid.Row="2"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Padding="45 8"
+            Foreground="White"
+            FontWeight="Bold"
+            Style="{StaticResource ButtonNext}"
+            Margin="0 0 25 0"
+            Content="Далее"/>
+
+        <Button 
+            Command="{Binding BackCommand}"
+            Grid.Row="2"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Padding="45 8"
+            Foreground="Black"
+            Grid.Column="1"
+            Style="{StaticResource ButtonSkip}"
+            Content="Назад"/>
+    </Grid>
+</Page>

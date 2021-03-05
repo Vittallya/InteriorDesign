@@ -40,14 +40,14 @@ namespace DbHelper
         {
             await Task.Run(() => context = new AllDbContext());
             UpdateLists();
-            RoleCombo.ItemsSource = Enum.GetValues(typeof(Role));
-            await SqlInstructions.DefaultExecute();
+            //RoleCombo.ItemsSource = Enum.GetValues(typeof(Role));
+            await SqlInstructions.ExecuteStyles();
         }
 
         async void UpdateLists()
         {
-            await context.Users.LoadAsync();
-            _users = context.Users.ToList();
+            //await context.Users.LoadAsync();
+            //_users = context.Users.ToList();
             grid.ItemsSource = _users;
         }
 
@@ -56,27 +56,27 @@ namespace DbHelper
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(tb.Text) &&
-                RoleCombo.SelectedItem != null &&
-                !string.IsNullOrEmpty(tbLogin.Text) &&
-                !string.IsNullOrEmpty(tbPass.Text))
-            {
+            //if (!string.IsNullOrEmpty(tb.Text) &&
+            //    RoleCombo.SelectedItem != null &&
+            //    !string.IsNullOrEmpty(tbLogin.Text) &&
+            //    !string.IsNullOrEmpty(tbPass.Text))
+            //{
                
                 
-                context.Users.Add(new User
-                {
-                    Email = tbLogin.Text,
-                    Password = tbPass.Text,
-                    Name = tb.Text,
-                    Role = (DAL.Models.Role)Enum.Parse(typeof(DAL.Models.Role), RoleCombo.SelectedItem.ToString()),
-                });
-                await context.SaveChangesAsync();
+            //    context.Users.Add(new User
+            //    {
+            //        Login = tbLogin.Text,
+            //        Password = tbPass.Text,
+            //        Name = tb.Text,
+            //        Role = (DAL.Models.Role)Enum.Parse(typeof(DAL.Models.Role), RoleCombo.SelectedItem.ToString()),
+            //    });
+            //    await context.SaveChangesAsync();
 
 
-                UpdateLists();
-                MessageBox.Show("Добавлен");
+            //    UpdateLists();
+            //    MessageBox.Show("Добавлен");
 
-            }
+            //}
 
 
         }
@@ -142,10 +142,10 @@ namespace DbHelper
         {
             if(grid.SelectedItem != null && grid.SelectedItem is User user)
             {
-                context.Users.Remove(user);
-                await context.SaveChangesAsync();
-                UpdateLists();
-                MessageBox.Show("Удалено");
+                //context.Users.Remove(user);
+                //await context.SaveChangesAsync();
+                //UpdateLists();
+                //MessageBox.Show("Удалено");
             }
         }
 
@@ -153,5 +153,23 @@ namespace DbHelper
         {
             UpdateLists();
         }
+
+        private async void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            Execute(SqlInstructions.ExecuteServices);
+        }
+
+        private async void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            Execute(SqlInstructions.ExecuteStyles);
+        }
+
+        async void Execute(Func<Task> func)
+        {
+            IsEnabled = false;
+            await func?.Invoke();
+            IsEnabled = true;
+        }
+
     }
 }

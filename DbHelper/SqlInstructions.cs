@@ -14,7 +14,43 @@ namespace DbHelper
         static string StylesTableStatement { get; } =
             "INSERT INTO Styles VALUES (@name, @img)";
 
+        static string ServicesTableStatement { get; } =
+            "INSERT INTO Services VALUES (@name, @cost, @costUnitName, @descr)";
 
+        static SqlParameter[][] ServicesTableParams { get; } = new SqlParameter[][]
+        {
+            new SqlParameter[]
+            {
+                new SqlParameter("name", "Консультация"),
+                new SqlParameter("cost", 2500),
+                new SqlParameter("costUnitName", DBNull.Value),
+                new SqlParameter("descr", "Личная встреча с дизайнером у нас в студии в режиме консультации по материалам, мебели, стилю и другим интересующим вопросам"),
+            },
+            new SqlParameter[]
+            {
+                new SqlParameter("name", "Выезд дизайнера"),
+                new SqlParameter("cost", 4400),
+                new SqlParameter("costUnitName", DBNull.Value),
+                new SqlParameter("descr", "Выезд дизайнера на объект;Обмер объекта и составление обмерного плана;Разработка трех вариантов чертежей с планировочным решением расстановки мебели и оборудования;"),
+            },
+
+            new SqlParameter[]
+            {
+                new SqlParameter("name", "Ремонтно-отделочные работы"),
+                new SqlParameter("cost", 6000),
+                new SqlParameter("costUnitName", "кв. м"),
+                new SqlParameter("descr", "Отделочные работы;" +
+                                    "Перепланировка и функциональное зонирование помещений;"+
+                                    "Электромонтажные работы;"+
+                                    "Монтаж напольного покрытия;"+
+                                    "Укладка керамической плитки;"+
+                                    "Сантехнические работы;"+
+                                    "Покраска потолка;"+
+                                    "Устройство натяжных потолков;"+
+                                    "Монтаж фигурного потолка;"),
+            },
+
+        };
 
         static SqlParameter[][] StylesTableParams { get; } = new SqlParameter[][]
         {
@@ -83,18 +119,27 @@ namespace DbHelper
             
         }
 
-        public static async Task DefaultExecute()
+        public static async Task ExecuteStyles()
         {
             using (AllDbContext context = new AllDbContext())
             {
                 await context.Styles.LoadAsync();
 
-                if (context.Styles == null || context.Styles.ToList().Count == 0)
-                {
-                    await ExecuteStatement(context, StylesTableStatement, StylesTableParams);
-                }
+                context.Styles.RemoveRange(context.Styles);
+                
+                await ExecuteStatement(context, StylesTableStatement, StylesTableParams);                
             }
         }
+        public static async Task ExecuteServices()
+        {
+            using (AllDbContext context = new AllDbContext())
+            {
+                await context.Services.LoadAsync();
 
+                context.Services.RemoveRange(context.Services);
+
+                await ExecuteStatement(context, ServicesTableStatement, ServicesTableParams);
+            }
+        }
     }
 }

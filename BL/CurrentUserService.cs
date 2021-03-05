@@ -3,29 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 using DAL.Models;
 
 
 namespace BL
 {
-    public interface ICurrentUserService
-    {
-        User CurrentUser { get; }
-        void Logout();
-
-        bool IsSkipped { get; set; }
-        bool IsAutorized { get; }        
-
-        event Action Autorized;
-        event Action Exited;
-
-        void SetupUser(User user);
-
-    }
-
     public class UserService : ICurrentUserService
     {
-        public User CurrentUser { get; private set; }
+        public IUser CurrentUser { get; private set; }
 
 
 
@@ -43,7 +29,7 @@ namespace BL
             Exited?.Invoke();
         }
 
-        public void SetupUser(User user)
+        public void SetupUser(IUser user)
         {
             CurrentUser = user;
             IsAutorized = true;

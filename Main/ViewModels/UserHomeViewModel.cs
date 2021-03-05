@@ -61,7 +61,7 @@ namespace Main.ViewModels
                 text += $", {userService.CurrentUser.Name}!";
             }
 
-            await TextShowingStack(new string[] { text, "5 сек, ща загрузится...", "еще чуток.." });
+            await TextShowingStack(new string[] { text });
 
         }
         

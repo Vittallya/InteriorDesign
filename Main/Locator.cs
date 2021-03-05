@@ -19,7 +19,9 @@ namespace Main
             services.AddTransient<LoginViewModel>();
             services.AddSingleton<UserHomeViewModel>();
             services.AddTransient<StylesViewModel>();
-            services.AddTransient<EditStylesViewModel>();
+            services.AddSingleton<DesignParamsViewModel>();
+            services.AddTransient<OrderConfirmViewModel>();
+            services.AddTransient<NewClientViewModel>();
 
 
             //Services/////////////////////////////////
@@ -33,6 +35,7 @@ namespace Main
             services.AddTransient<ILoginService, LoginService>();
             services.AddTransient<StylesService>();
             services.AddTransient<EditStylesService>();
+            services.AddSingleton<DesignParamsService>();
 
 
             
@@ -46,5 +49,8 @@ namespace Main
         public  UserHomeViewModel UserHomeViewModel => Services.GetRequiredService<UserHomeViewModel>();
         public  StylesViewModel StylesViewModel => Services.GetRequiredService<StylesViewModel>();
         public  EditStylesViewModel EditStylesViewModel => Services.GetRequiredService<EditStylesViewModel>();
+        public  DesignParamsViewModel DesignParamsViewModel => Services.GetRequiredService<DesignParamsViewModel>();
+        public  OrderConfirmViewModel OrderConfirmViewModel => Services.GetRequiredService<OrderConfirmViewModel>();
+        public  NewClientViewModel NewClientViewModel => Services.GetRequiredService<NewClientViewModel>();
     }
 }

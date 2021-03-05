@@ -9,20 +9,16 @@
     <Grid Margin="15 10">
 
         <TabControl>
-            <TabItem Header="Добавить">
+            <TabItem Header="Добавить админа">
                 <StackPanel >
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5">
-                        <TextBlock Text="Имя" />
-                        <TextBox Width="250" x:Name="tb" Margin="0 10"/>
+                        <TextBlock Text="Сотрудник" />
+                        <ComboBox Width="250" x:Name="combEmployees"/>
                     </StackPanel>
+                    
 
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5">
-                        <TextBlock Text="Роль" />
-                        <ComboBox x:Name="RoleCombo" Width="250" Margin="0 10"/>
-                    </StackPanel>
-
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5">
-                        <TextBlock Text="E-mail" />
+                        <TextBlock Text="Логин" />
                         <TextBox Width="250" x:Name="tbLogin" Margin="0 10"/>
                     </StackPanel>
 
@@ -74,6 +70,26 @@
                 </StackPanel>
                 
                 
+            </TabItem>
+            <TabItem Header="Авто-заполнение бд">
+                <StackPanel >
+                    
+                    <Button 
+                        Margin="0 10"
+                        HorizontalAlignment="Left"
+                        Padding="15 3"
+                        Click="Button_Click_5"
+                        Content="Заполнить стили" />
+                    <Button 
+                        Margin="0 10"
+                        HorizontalAlignment="Left"
+                        Padding="15 3"
+                        Content="Заполнить услуги" 
+                        Click="Button_Click_4"/>
+                    
+                </StackPanel>
+
+
             </TabItem>
         </TabControl>
         
