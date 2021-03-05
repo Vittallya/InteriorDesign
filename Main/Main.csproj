@@ -112,6 +112,9 @@
     <Compile Include="Pages\OrderConfirmPage.xaml.cs">
       <DependentUpon>OrderConfirmPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ServicesPage.xaml.cs">
+      <DependentUpon>ServicesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StylesPage.xaml.cs">
       <DependentUpon>StylesPage.xaml</DependentUpon>
     </Compile>
@@ -129,7 +132,7 @@
     <Compile Include="ViewModels\OrderConfirmViewModel.cs" />
     <Compile Include="ViewModels\ServicesViewModel.cs" />
     <Compile Include="ViewModels\StylesViewModel.cs" />
-    <Compile Include="ViewModels\UserHomeViewModel.cs" />
+    <Compile Include="ViewModels\ClientHomeViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\OrderConfirmPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ServicesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

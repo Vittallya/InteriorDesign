@@ -46,7 +46,7 @@
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBox Width="75" Text="{Binding ParamsService.Area}"/>
+                    <TextBox Width="75" Text="{Binding Order.Area}"/>
 
                     <TextBlock 
                         DockPanel.Dock="Left"
@@ -64,7 +64,7 @@
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBox Width="75" Text="{Binding ParamsService.FloorsHeight}"/>
+                    <TextBox Width="75" Text="{Binding Order.FloorsHeight}"/>
 
                     <TextBlock 
                         DockPanel.Dock="Left"
@@ -114,7 +114,7 @@
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBox  Text="{Binding ParamsService.RoomsCount}"/>
+                    <TextBox  Text="{Binding Order.RoomsCount}"/>
 
                 </DockPanel>
 

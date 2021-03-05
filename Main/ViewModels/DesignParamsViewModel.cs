@@ -9,17 +9,22 @@ using DAL;
 using DAL.Models;
 using System.Windows.Input;
 using Main.Pages;
+using System.Windows;
 
 namespace Main.ViewModels
 {
     public class DesignParamsViewModel: BasePageViewModel
     {
         private readonly PageService pageService;
+        private readonly OrderDetailsService paramsService;
 
-        public DesignParamsViewModel(PageService pageService, DesignParamsService paramsService) : base(pageService)
+        public OrderDetail Order { get; set; }
+
+        public DesignParamsViewModel(PageService pageService, OrderDetailsService paramsService) : base(pageService)
         {
             this.pageService = pageService;
-            ParamsService = paramsService;
+            this.paramsService = paramsService;
+
             HouseTypes = new Dictionary<HouseType, string>
             {
                 {HouseType.Apartment, "Квартира" },
@@ -27,23 +32,31 @@ namespace Main.ViewModels
                 {HouseType.Office, "Офис" },
             };
 
-            if (!paramsService.Beginned)
+            if (!paramsService.IsBeginned)
             {
-                paramsService.Order.RoomsCount = 3;
-                paramsService.Order.FloorsHeight = 3.5;
-                paramsService.Order.Area = 75;
+                Order = new OrderDetail();
+                Order.RoomsCount = 3;
+                Order.FloorsHeight = 4;
+                Order.Area = 75;
             }
-            paramsService.Beginned = true;
+            paramsService.IsBeginned = true;
         }
 
         public ICommand Next => new Command(x =>
         {
-            ParamsService.Order.HouseType = SelectedHouseType;
-            ParamsService.Order.IsWallAlignment = !Convert.ToBoolean(WallAlignmentIndex);
-            pageService.ChangePage<OrderConfirmPage>(AnimateTo.Left);
+            Order.HouseType = SelectedHouseType;
+            Order.IsWallAlignment = !Convert.ToBoolean(WallAlignmentIndex);
+
+            if (paramsService.Setup(Order))
+            {
+                pageService.ChangePage<OrderConfirmPage>(AnimateTo.Left);
+            }
+            else
+            {
+                MessageBox.Show(paramsService.ErrorMessage);
+            }
         });
 
-        public DesignParamsService ParamsService { get; set; }
 
         public int WallAlignmentIndex { get; set; }
 

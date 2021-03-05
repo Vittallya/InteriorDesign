@@ -12,7 +12,7 @@ using Main.Pages;
 
 namespace Main.ViewModels
 {
-    public class UserHomeViewModel: BaseViewModel
+    public class ClientHomeViewModel: BaseViewModel
     {
         private readonly ICurrentUserService userService;
         private readonly PageService pageService;
@@ -24,7 +24,7 @@ namespace Main.ViewModels
 
         public bool IsTextVisible { get; set; } = true;
 
-        public UserHomeViewModel(ICurrentUserService userService, PageService pageService)
+        public ClientHomeViewModel(ICurrentUserService userService, PageService pageService)
         {
             this.userService = userService;
             this.pageService = pageService;
@@ -87,7 +87,7 @@ namespace Main.ViewModels
 
         public ICommand ToServicesView => new Command(x =>
         {
-            pageService.ChangePage<StylesPage>(AnimateTo.Left);
+            pageService.ChangePage<ServicesPage>(AnimateTo.Left);
         });
 
     }

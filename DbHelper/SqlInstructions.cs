@@ -15,7 +15,7 @@ namespace DbHelper
             "INSERT INTO Styles VALUES (@name, @img)";
 
         static string ServicesTableStatement { get; } =
-            "INSERT INTO Services VALUES (@name, @cost, @costUnitName, @descr)";
+            "INSERT INTO Services VALUES (@name, @cost, @costUnitName, @descr, @need)";
 
         static SqlParameter[][] ServicesTableParams { get; } = new SqlParameter[][]
         {
@@ -25,6 +25,7 @@ namespace DbHelper
                 new SqlParameter("cost", 2500),
                 new SqlParameter("costUnitName", DBNull.Value),
                 new SqlParameter("descr", "Личная встреча с дизайнером у нас в студии в режиме консультации по материалам, мебели, стилю и другим интересующим вопросам"),
+                new SqlParameter("need", false),
             },
             new SqlParameter[]
             {
@@ -32,6 +33,7 @@ namespace DbHelper
                 new SqlParameter("cost", 4400),
                 new SqlParameter("costUnitName", DBNull.Value),
                 new SqlParameter("descr", "Выезд дизайнера на объект;Обмер объекта и составление обмерного плана;Разработка трех вариантов чертежей с планировочным решением расстановки мебели и оборудования;"),
+                new SqlParameter("need", false),
             },
 
             new SqlParameter[]
@@ -48,6 +50,7 @@ namespace DbHelper
                                     "Покраска потолка;"+
                                     "Устройство натяжных потолков;"+
                                     "Монтаж фигурного потолка;"),
+                new SqlParameter("need", true),
             },
 
         };

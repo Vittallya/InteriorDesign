@@ -24,7 +24,6 @@
 
         </Grid.ColumnDefinitions>
 
-        <Rectangle/>
         <TextBlock 
                 Grid.Column="1"
                 Grid.Row="0" 
@@ -37,6 +36,7 @@
             Grid.ColumnSpan="2"
             Grid.Column="0" 
             BorderThickness="5"
+            VerticalAlignment="Top"
             HorizontalAlignment="Center"
             CornerRadius="4"
             Grid.Row="1" 
@@ -45,16 +45,37 @@
             <Grid Margin="45 15 45 10" HorizontalAlignment="Center">
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="75"/>
                 </Grid.RowDefinitions>
-                
-                <StackPanel >
 
-                <TextBlock TextAlignment="Center" Text="Выбрано:" FontSize="24"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
-                <DockPanel Margin="5 25 0 5">
+
+                <TextBlock Grid.ColumnSpan="2" TextAlignment="Center" Text="Выбрано:" FontSize="24"/>
+
+                <StackPanel Grid.Row="1" Grid.Column="0">
+
+
+                    <DockPanel Margin="5 25 0 5">
+                        <TextBlock 
+                        DockPanel.Dock="Left"
+                        Text="Услуга:" 
+                        FontFamily="Trebuchet MS" 
+                        Width="250"
+                        FontSize="14"/>
+
+                        <TextBlock 
+                            HorizontalAlignment="Left"
+                            Text="{Binding Service.Name}"/>
+                    </DockPanel>
+
+                    <DockPanel Margin="5 5">
                     <TextBlock 
                         DockPanel.Dock="Left"
                         Text="Базовая стоимость:" 
@@ -64,13 +85,12 @@
 
                     <TextBlock Width="75" 
                                HorizontalAlignment="Left">
-                        <Run Text="{Binding ParamsService.Service.Cost}"/>
-                        <Run Text="/"/>
-                        <Run Text="{Binding ParamsService.Service.CostUnitName}"/>
-                    </TextBlock>
+                        <Run Text="{Binding Service.Cost, StringFormat='{}{0} р.'}"/>
+                        <Run Text="{Binding UnitName}"/>
+                        </TextBlock>
                 </DockPanel>
 
-                <DockPanel Margin="5 5">
+                    <DockPanel Visibility="{Binding IsDetailsOrder, Converter={StaticResource BoolToVis}}" Margin="5 5">
                     <TextBlock 
                         DockPanel.Dock="Left"
                         Text="Стиль:" 
@@ -80,97 +100,159 @@
 
                     <TextBlock Width="75" 
                                HorizontalAlignment="Left"
-                               Text="{Binding ParamsService.Style.Name}"/>
+                               Text="{Binding Order.Style.Name}"/>
 
                 </DockPanel>
 
-                <DockPanel Margin="5 5">
-                    <TextBlock 
+
+                
+
+            </StackPanel>
+
+                <StackPanel Visibility="{Binding IsDetailsOrder, Converter={StaticResource BoolToVis}}" Grid.Row="2">
+
+                    <DockPanel Margin="5 5">
+                        <TextBlock 
                         DockPanel.Dock="Left"
                         Text="Общая площадь помещения:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBlock 
-                        HorizontalAlignment="Left"
-                        Width="75" Text="{Binding ParamsService.Area}"/>
+                        <TextBlock 
+                            Width="80"
+                            HorizontalAlignment="Left"
+                            >
+                            <Run Text="{Binding Order.Area}"/>
+                            <Run Text="кв. м."/>
+                        </TextBlock>
 
-                    <TextBlock 
-                        DockPanel.Dock="Left"
-                        Text="кв м." 
-                        Margin="5 0 0 0"
-                        FontFamily="Trebuchet MS" 
-                        FontSize="14"/>
-                </DockPanel>
 
-                <DockPanel Margin="5 5">
-                    <TextBlock 
+                    </DockPanel>
+
+                    <DockPanel Margin="5 5">
+                        <TextBlock 
                         DockPanel.Dock="Left"
                         Text="Высота потолков:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBlock Width="75" Text="{Binding ParamsService.FloorsHeight}"/>
+                        <TextBlock 
+                            HorizontalAlignment="Left"
+                            Width="80">
+                            <Run Text="{Binding Order.FloorsHeight}"/>
+                            <Run Text="м."/>
+                        </TextBlock>
 
-                    <TextBlock 
-                        DockPanel.Dock="Left"
-                        Text="м." 
-                        Margin="5 0 0 0"
-                        FontFamily="Trebuchet MS" 
-                        FontSize="14"/>
-                </DockPanel>
-                <DockPanel Margin="5 5">
-                    <TextBlock 
+
+                    </DockPanel>
+
+                    <DockPanel Margin="5 5">
+                        <TextBlock 
                         DockPanel.Dock="Left"
                         Text="Тип помещения:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBlock 
+                        <TextBlock 
                         FontSize="12"
+                        HorizontalAlignment="Left"
+                        Width="80"
                         Text="{Binding HouseType}"/>
-                </DockPanel>
 
-                <DockPanel Margin="5 5">
-                    <TextBlock 
+                    </DockPanel>
+
+                    <DockPanel Margin="5 5">
+                        <TextBlock 
                         DockPanel.Dock="Left"
                         Text="Нужно ли выравнивание стен:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBlock 
+                        <TextBlock 
+                        Width="80"
+                        HorizontalAlignment="Left"
                         Text="{Binding IsWallAlignment}"
                         FontSize="12"/>
-                </DockPanel>
 
-                <DockPanel Margin="5 5">
-                    <TextBlock 
+                        
+
+                    </DockPanel>
+
+                    <DockPanel Margin="5 5">
+                        <TextBlock 
                         DockPanel.Dock="Left"
                         Text="Количество комнат:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBlock  Text="{Binding ParamsService.RoomsCount}"/>
+                        <TextBlock HorizontalAlignment="Left" Text="{Binding Order.RoomsCount}"/>
 
-                </DockPanel>
+                        
 
-                
+                    </DockPanel>
+                </StackPanel>
 
-            </StackPanel>
+                <StackPanel Visibility="{Binding IsDetailsOrder, Converter={StaticResource BoolToVis}}" Grid.Row="2" Grid.Column="1">
 
-                <DockPanel Grid.Row="2" VerticalAlignment="Bottom">
+
+                    <TextBlock 
+                            HorizontalAlignment="Left"
+                            DockPanel.Dock="Left"
+                            Text="{Binding paramsService.AllAreaCost, Mode=OneWay, StringFormat='{}{0} р.'}"
+                            FontSize="12"
+                            FontWeight="Bold"
+                            Margin="15 5"/>
+
+                    <TextBlock 
+                            HorizontalAlignment="Left"
+                            DockPanel.Dock="Left"
+                            Text="{Binding paramsService.FloorsCost, Mode=OneWay, StringFormat='{}{0} р.'}"
+                            FontSize="12"
+                            FontWeight="Bold"
+                            Margin="15 5"/>
+
+                    <TextBlock 
+                            HorizontalAlignment="Left"
+                            DockPanel.Dock="Left"
+                            Text="{Binding paramsService.HouseTypeCost, Mode=OneWay, StringFormat='{}{0} р.'}"
+                            FontSize="12"
+                            FontWeight="Bold"
+                            Margin="15 5"/>
+
+                    <TextBlock 
+                            HorizontalAlignment="Left"
+                            DockPanel.Dock="Left"
+                            Text="{Binding paramsService.WallAlignmentCost, Mode=OneWay, StringFormat='{}{0} р.'}"
+                            FontSize="12"
+                            FontWeight="Bold"
+                            Margin="15 5"/>
+
+                    <TextBlock 
+                            HorizontalAlignment="Left"
+                            DockPanel.Dock="Left"
+                            Text="{Binding paramsService.RoomsCost,Mode=OneWay, StringFormat='{}{0} р.'}"
+                            FontSize="12"
+                            FontWeight="Bold"
+                            Margin="15 5"/>
+
+                </StackPanel>
+
+                <DockPanel 
+                    Margin="0 25" 
+                    Grid.Row="3" 
+                    Grid.ColumnSpan="2" 
+                    VerticalAlignment="Bottom">
 
                     <Border Height="1" Background="Black" DockPanel.Dock="Top" />
 
 
                     <TextBlock FontSize="14" Margin="0 0 15 0"  DockPanel.Dock="Right">
-                        <Run Text="{Binding Cost}"/>
-                        <Run Text="р."/>
+                        <Run Text="{Binding Cost, StringFormat='{}{0} р.'}"/>
                     </TextBlock>
                     <TextBlock Text="Итого:"/>
                 </DockPanel>
@@ -187,6 +269,7 @@
             VerticalAlignment="Center"
             Padding="45 8"
             Foreground="Black"
+            Background="White"
             Grid.Column="1"
             Style="{StaticResource ButtonSkip}"
             Content="Назад"/>

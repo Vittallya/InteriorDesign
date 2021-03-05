@@ -19,8 +19,6 @@ namespace DAL.Models
         public HouseType HouseType { get; set; }
         public int RoomsCount { get; set; }
         public bool IsWallAlignment { get; set; }
-        public Service Service { get; set; }
-
         public Order Order { get; set; }
     }
 }

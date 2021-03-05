@@ -17,13 +17,13 @@ namespace Main.ViewModels
     {
         private readonly StylesService service;
         private readonly PageService pageService;
-        private readonly DesignParamsService designParams;
+        private readonly OrderDetailsService designParams;
 
         public ObservableCollection<Style> Styles { get; set; }
 
         public Style Selected { get; set; }
 
-        public StylesViewModel(StylesService service, PageService pageService, DesignParamsService designParams):base(pageService)
+        public StylesViewModel(StylesService service, PageService pageService, OrderDetailsService designParams):base(pageService)
         {
             this.service = service;
             this.pageService = pageService;
@@ -39,7 +39,7 @@ namespace Main.ViewModels
 
         public ICommand NextPage => new Command(x =>
         {
-            designParams.Order.Style = Selected;
+            designParams.Style = Selected;
             pageService.ChangePage<DesignParamsPage>(AnimateTo.Left);
 
         }, y => Selected != null);

@@ -88,6 +88,18 @@
     <Compile Include="Migrations\202103051113085_OrdersOrdersDetailsClientsEmployeesEmployeesAdmins.designer.cs">
       <DependentUpon>202103051113085_OrdersOrdersDetailsClientsEmployeesEmployeesAdmins.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103051143509_CommonCostInOrder.cs" />
+    <Compile Include="Migrations\202103051143509_CommonCostInOrder.designer.cs">
+      <DependentUpon>202103051143509_CommonCostInOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103051218232_new1.cs" />
+    <Compile Include="Migrations\202103051218232_new1.designer.cs">
+      <DependentUpon>202103051218232_new1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103051415189_new2.cs" />
+    <Compile Include="Migrations\202103051415189_new2.designer.cs">
+      <DependentUpon>202103051415189_new2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\WorkingStatus.cs" />
     <Compile Include="Models\Client.cs" />
@@ -134,6 +146,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103051113085_OrdersOrdersDetailsClientsEmployeesEmployeesAdmins.resx">
       <DependentUpon>202103051113085_OrdersOrdersDetailsClientsEmployeesEmployeesAdmins.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103051143509_CommonCostInOrder.resx">
+      <DependentUpon>202103051143509_CommonCostInOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103051218232_new1.resx">
+      <DependentUpon>202103051218232_new1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103051415189_new2.resx">
+      <DependentUpon>202103051415189_new2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

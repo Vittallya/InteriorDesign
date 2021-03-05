@@ -8,14 +8,61 @@ using DAL;
 using BL;
 using DAL.Models;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Main.Pages;
 
 namespace Main.ViewModels
 {
     public class ServicesViewModel: BasePageViewModel
     {
-        public ServicesViewModel(PageService pageService):base(pageService)
-        {
+        private readonly PageService pageService;
+        private readonly IServicesModelService modelService;
+        private readonly OrderService paramsService;
 
+        public ObservableCollection<Service> Services { get; set; }
+
+        public ServicesViewModel(PageService pageService, IServicesModelService modelService, OrderService paramsService):base(pageService)
+        {
+            this.pageService = pageService;
+            this.modelService = modelService;
+            this.paramsService = paramsService;
+            Init();
         }
+
+        public Service Selected { get; set; }
+
+        async void Init()
+        {
+            Services = new ObservableCollection<Service>(await modelService.GetServicesAsync());
+        }
+
+        
+
+        public ICommand Search => new CommandAsync(async name =>
+        {
+            if (name != null && name.ToString().Length == 0)
+                name = null;
+
+            Services = new ObservableCollection<Service>(
+                await modelService.GetServicesAsync(name?.ToString()));
+        });
+
+        public ICommand Next => new Command(name =>
+        {
+            paramsService.Order.Service = Selected;
+
+
+            if (Selected.NeedDetails)
+            {
+                pageService.ChangePage<StylesPage>(AnimateTo.Left);
+            }
+            else
+            {
+                pageService.ChangePage<OrderConfirmPage>(AnimateTo.Left);
+            }
+
+        }, x => Selected != null);
+
     }
+
 }

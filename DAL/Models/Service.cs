@@ -13,5 +13,6 @@ namespace DAL.Models
         public double Cost { get; set; }
         public string CostUnitName { get; set; }
         public string Description { get; set; }
+        public bool NeedDetails { get; set; }
     }
 }

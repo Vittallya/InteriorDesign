@@ -14,32 +14,59 @@ namespace Main.ViewModels
     public class OrderConfirmViewModel: BasePageViewModel
     {
         private readonly PageService pageService;
+        public OrderDetailsService paramsService { get; }
 
-        public DesignParamsService ParamsService { get; set; }
+        public bool IsDetailsOrder { get; set; }
 
+        public OrderService orderService { get; }
         public string HouseType { get; set; }
+
+        public OrderDetail Order { get; set; }
+
+        public Service Service { get; set; }
 
         public Dictionary<HouseType, string> HouseTypes { get; set; }
 
-        public OrderConfirmViewModel(PageService pageService, DesignParamsService paramsService) : base(pageService)
+        public OrderConfirmViewModel(PageService pageService, OrderService paramsService, OrderDetailsService detailsService) : base(pageService)
         {
             this.pageService = pageService;
-            ParamsService = paramsService;
+            this.orderService = paramsService;
+            this.paramsService = detailsService;
+            Service = paramsService.Order.Service;
 
-            HouseTypes = new Dictionary<HouseType, string>
+            IsDetailsOrder = detailsService.IsSetted;
+
+
+            if (detailsService.IsSetted)
             {
-                {DAL.Models.HouseType.Apartment, "Квартира" },
-                {DAL.Models.HouseType.House, "Дом" },
-                {DAL.Models.HouseType.Office, "Офис" },
-            };
+                Order = detailsService.OrderD;
 
-            HouseType = HouseTypes[paramsService.Order.HouseType];
-            Cost = paramsService.GetCommonCost();
+
+
+                
+                HouseTypes = new Dictionary<HouseType, string>
+                {
+                    {DAL.Models.HouseType.Apartment, "Квартира" },
+                    {DAL.Models.HouseType.House, "Дом" },
+                    {DAL.Models.HouseType.Office, "Офис" },
+                };
+                IsWallAlignment = detailsService.OrderD.IsWallAlignment ? "Да" : "Нет";
+
+                HouseType = HouseTypes[detailsService.OrderD.HouseType];
+                Cost = detailsService.GetCommonCost();
+                UnitName = "\\" + Service.CostUnitName;
+            }
+            else
+            {
+                Cost = paramsService.GetCommonCost();
+            }
         }
+
+        public string UnitName { get; set; }
 
         public double Cost { get; set; }
 
-        public string IsWallAlignment => ParamsService.Order.IsWallAlignment ? "Да" : "Нет";
+        public string IsWallAlignment { get; set; }
 
         public ICommand Next => new Command(x =>
         {

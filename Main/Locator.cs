@@ -17,11 +17,12 @@ namespace Main
             //ViewModels//////////////////////////////////
             services.AddTransient<MainViewModel>();
             services.AddTransient<LoginViewModel>();
-            services.AddSingleton<UserHomeViewModel>();
+            services.AddSingleton<ClientHomeViewModel>();
             services.AddTransient<StylesViewModel>();
             services.AddSingleton<DesignParamsViewModel>();
             services.AddTransient<OrderConfirmViewModel>();
             services.AddTransient<NewClientViewModel>();
+            services.AddTransient<ServicesViewModel>();
 
 
             //Services/////////////////////////////////
@@ -35,7 +36,9 @@ namespace Main
             services.AddTransient<ILoginService, LoginService>();
             services.AddTransient<StylesService>();
             services.AddTransient<EditStylesService>();
-            services.AddSingleton<DesignParamsService>();
+            services.AddSingleton<OrderService>();
+            services.AddSingleton<OrderDetailsService>();
+            services.AddTransient<IServicesModelService, ServicesModelSerivce>();
 
 
             
@@ -46,11 +49,12 @@ namespace Main
         }
         public  MainViewModel MainViewModel => Services.GetRequiredService<MainViewModel>();
         public  LoginViewModel LoginViewModel => Services.GetRequiredService<LoginViewModel>();
-        public  UserHomeViewModel UserHomeViewModel => Services.GetRequiredService<UserHomeViewModel>();
+        public  ClientHomeViewModel UserHomeViewModel => Services.GetRequiredService<ClientHomeViewModel>();
         public  StylesViewModel StylesViewModel => Services.GetRequiredService<StylesViewModel>();
         public  EditStylesViewModel EditStylesViewModel => Services.GetRequiredService<EditStylesViewModel>();
         public  DesignParamsViewModel DesignParamsViewModel => Services.GetRequiredService<DesignParamsViewModel>();
         public  OrderConfirmViewModel OrderConfirmViewModel => Services.GetRequiredService<OrderConfirmViewModel>();
         public  NewClientViewModel NewClientViewModel => Services.GetRequiredService<NewClientViewModel>();
+        public  ServicesViewModel ServicesViewModel => Services.GetRequiredService<ServicesViewModel>();
     }
 }

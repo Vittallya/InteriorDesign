@@ -14,6 +14,8 @@ namespace DAL.Models
         public int ServiceId { get; set; }
         public DateTime? StartWorkingDate { get; set; }
 
+        public double CommonCost { get; set; }
+
         public Client Client { get; set; }
         public Service Service { get; set; }
 

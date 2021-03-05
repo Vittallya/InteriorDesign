@@ -54,12 +54,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DesignParamsService.cs" />
+    <Compile Include="OrderService.cs" />
     <Compile Include="Interfaces\IControlledAction.cs" />
     <Compile Include="CurrentUserService.cs" />
+    <Compile Include="Interfaces\IServicesModelService.cs" />
     <Compile Include="LoginService.cs" />
     <Compile Include="Interfaces\ICurrentUserService.cs" />
     <Compile Include="Interfaces\ILoginService.cs" />
+    <Compile Include="OrderDetailsService.cs" />
+    <Compile Include="ServicesModelSerivce.cs" />
     <Compile Include="StylesService.cs" />
     <Compile Include="PageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
