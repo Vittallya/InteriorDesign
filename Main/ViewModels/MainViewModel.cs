@@ -85,7 +85,7 @@ namespace Main.ViewModels
                 }
                 else
                 {
-                    pageService.ChangePage<Main.Pages.ServicesPage>(1);
+                    pageService.ChangePage<Main.Pages.ServicesPage>(Rules.Pages.SERVICES_POOL);
                 }
             }
         });

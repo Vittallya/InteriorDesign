@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Reflection;
 namespace BL
 {
 
@@ -18,14 +15,7 @@ namespace BL
         public event Action<Page, AnimateTo> PageChanged;
 
 
-        public void ChangePage<TPage>() where TPage : Page, new()
-        {
-            var page = new TPage();
-            OnChangePage(page, AnimateTo.None);
-
-        }
-
-        public void ChangePage<TPage>(AnimateTo animate) where TPage : Page, new()
+        public void ChangePage<TPage>(AnimateTo animate = AnimateTo.None) where TPage : Page, new()
         {
             var page = new TPage();
             OnChangePage(page, animate);
@@ -41,50 +31,42 @@ namespace BL
         {
 
             Page page = null;
+            
+            bool isExist = false;
+            bool other = poolIndex != ActualPool;
+            bool poolContains = _pool.ContainsKey(poolIndex);
+            bool hasSame = poolContains && _pool[poolIndex].Any(x => x.GetType() == typeof(TPage));
 
-
-
-            if (poolIndex != ActualPool && _pool.ContainsKey(poolIndex))
+            if (other)
             {
-                page = _pool[poolIndex].FirstOrDefault(x => x.GetType() == typeof(TPage));
+                ActualPool = poolIndex;
+
+                if (hasSame)
+                {
+                    page = _pool[poolIndex].FirstOrDefault(x => x.GetType() == typeof(TPage));
+                    isExist = true;
+                }
             }
 
-            bool isNew = false;
+            if (!_poolHistory.Contains(poolIndex))
+                _poolHistory.Add(poolIndex);
 
-            if(page == null)
+
+            if(!isExist)
             {
                 page = new TPage();
-                isNew = true;
+                if (!poolContains)
+                {
+                    _pool.Add(poolIndex, new List<Page>());
+                }
+                _pool[poolIndex].Add(page);
+
             }
 
-            ChangePage(page, animate, poolIndex, isNew);
-
+            OnChangePage(page, animate);
         }
 
-        public void ChangePage<TPage>(TPage target, AnimateTo animateTo, int poolIndex, bool isNew) where TPage : Page, new()
-        {
 
-            OnChangePage(target, animateTo);
-
-            if(poolIndex != ActualPool)
-            {
-                if(_poolHistory.Count == 0 || !_poolHistory.Contains(poolIndex))
-                    _poolHistory.Add(poolIndex);
-
-                ActualPool = poolIndex;
-            }
-
-            
-            
-            if (!_pool.ContainsKey(poolIndex))
-            {
-                _pool.Add(poolIndex, new List<Page>());
-            }
-
-            if(isNew)
-                _pool[poolIndex].Add(target);
-
-        }
 
         public void OnChangePage<TPage>(TPage target, AnimateTo animateTo) where TPage : Page, new()
         {

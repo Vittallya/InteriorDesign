@@ -41,7 +41,6 @@ namespace DbHelper
             await Task.Run(() => context = new AllDbContext());
             UpdateLists();
             //RoleCombo.ItemsSource = Enum.GetValues(typeof(Role));
-            await SqlInstructions.ExecuteStyles();
         }
 
         async void UpdateLists()
