@@ -18,7 +18,8 @@ namespace BL
 
         event Action Autorized;
         event Action Exited;
-
+        event Action Skipped;
+        void Skip();
         void SetupUser(IUser user);
 
     }

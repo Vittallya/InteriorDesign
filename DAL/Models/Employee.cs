@@ -19,6 +19,8 @@ namespace DAL.Models
         public double Salary { get; set; }
         public WorkingStatus WorkingStatus { get; set; }
 
+        public string ImagePath { get; set; }
+
         public EmployeeAdmin EmployeeAdmin { get; set; }
     }
 }

@@ -13,9 +13,11 @@ namespace Main.MVVM_Core
     {
         private readonly PageService pageservice;
 
-        public ICommand BackCommand => new Command(x =>
+        public abstract int PoolIndex { get; }
+
+        public virtual ICommand BackCommand => new Command(x =>
         {
-            pageservice.Back();
+            pageservice.Back(PoolIndex);
         });
         public BasePageViewModel(PageService pageservice)
         {

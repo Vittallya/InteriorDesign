@@ -19,9 +19,9 @@ namespace Main.Pages
     /// <summary>
     /// Логика взаимодействия для UserHomePage.xaml
     /// </summary>
-    public partial class UserHomePage : Page
+    public partial class ClientHomePage : Page
     {
-        public UserHomePage()
+        public ClientHomePage()
         {
             InitializeComponent();
 

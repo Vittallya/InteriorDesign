@@ -40,7 +40,7 @@ namespace BL
                 await dbContext.Clients.LoadAsync();
 
                 user = await dbContext.Clients.FirstOrDefaultAsync(u =>
-                   string.Compare(login, u.Login, false) == 0 &&
+                   string.Compare(login, u.Login, false) == 0 || string.Compare(login, u.Email, false) == 0 &&
                    string.Compare(password, u.Password, false) == 0);
             }
 
@@ -60,7 +60,7 @@ namespace BL
 
         public void Skip()
         {
-            userService.IsSkipped = true;
+            userService.Skip();
         }
     }
 }

@@ -28,10 +28,11 @@
 
 
         <ListBox 
+                BorderBrush="{x:Null}"
                 Grid.Row="1"
                 Margin="15 0"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
                 ItemsSource="{Binding Services}" 
                 SelectedItem="{Binding Selected}">
 
@@ -39,7 +40,6 @@
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="BorderThickness" Value="3"/>
-                    <Setter Property="Opacity" Value="0.7"/>
                     <Setter Property="FontSize" Value="16"/>
                     <Setter Property="FontFamily" Value="TrebuchetMs"/>
                     <Setter Property="Cursor" Value="Hand"/>
@@ -79,7 +79,17 @@
                                             FontWeight="{TemplateBinding FontWeight}"
                                             FontFamily="{TemplateBinding FontFamily}"
                                              Text="{Binding Cost}"/>
-                                       
+
+                                        <TextBlock 
+                                             x:Name="text2"
+                                            Margin="0 5"
+                                            Foreground="{TemplateBinding Foreground}"
+                                            FontSize="14"
+                                            TextWrapping="Wrap"
+                                            FontWeight="{TemplateBinding FontWeight}"
+                                            FontFamily="{TemplateBinding FontFamily}"
+                                             Text="{Binding Description}"/>
+
                                     </StackPanel>
                                 </Border>
                                 <ControlTemplate.Triggers>
@@ -90,15 +100,12 @@
 
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                     To="1"
-                                                                     Duration="0:0:0.1"/>
 
                                                     <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                                                     To="1.02"
+                                                                     To="1.01"
                                                                      Duration="0:0:0.3"/>
                                                     <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                                                     To="1.02"
+                                                                     To="1.01"
                                                                      Duration="0:0:0.3"/>
 
                                                 </Storyboard>
@@ -115,9 +122,6 @@
                                                     <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
                                                                      To="1"
                                                                      Duration="0:0:0.2"/>
-                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                     To="0.7"
-                                                                     Duration="0:0:0.1"/>
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </Trigger.ExitActions>
@@ -127,6 +131,7 @@
                                     <Trigger Property="IsSelected" Value="True">
                                         <Setter TargetName="text" Property="TextBlock.FontWeight" Value="Bold"/>
                                         <Setter Property="Opacity" Value="1"/>
+                                        <Setter Property="Foreground" Value="Black"/>
 
                                         <Trigger.EnterActions>
                                             <BeginStoryboard>
@@ -184,7 +189,7 @@
             Margin="0 0 25 0"
             Content="Далее"/>
 
-        <Button 
+        <!--<Button 
             Command="{Binding BackCommand}"
             Grid.Row="2"
             HorizontalAlignment="Left"
@@ -194,6 +199,6 @@
             
             Style="{StaticResource ButtonSkip}"
             Margin="25 0 0 0"
-            Content="Назад"/>
+            Content="Назад"/>-->
     </Grid>
 </Page>

@@ -10,7 +10,7 @@ namespace Main
     public class Locator
     {
         public static IServiceProvider Services { get; set; }
-        public async static void InitServices()
+        public static void InitServices()
         {
             IServiceCollection services = new ServiceCollection();
 
@@ -21,8 +21,12 @@ namespace Main
             services.AddTransient<StylesViewModel>();
             services.AddSingleton<DesignParamsViewModel>();
             services.AddTransient<OrderConfirmViewModel>();
-            services.AddTransient<NewClientViewModel>();
             services.AddTransient<ServicesViewModel>();
+            services.AddTransient<OtherParamsViewModel>();
+            services.AddTransient<ClientRegisterViewModel>();
+            services.AddTransient<ClientResultViewModel>();
+            services.AddTransient<ClientCheckCodeViewModel>();
+            services.AddTransient<ViewModels.WorkersViewModel>();
 
 
             //Services/////////////////////////////////
@@ -37,12 +41,15 @@ namespace Main
             services.AddTransient<StylesService>();
             services.AddTransient<EditStylesService>();
             services.AddSingleton<OrderService>();
-            services.AddSingleton<OrderDetailsService>();
             services.AddTransient<IServicesModelService, ServicesModelSerivce>();
-
-
-            
-
+            services.AddSingleton<IEmailCodeGenerator, EmailCodeGenerator>();
+            services.AddTransient<IEmailMessageSender, EmailMessageSender>();
+            services.AddSingleton<IUserRegisterService, UserRegisterService>();
+            services.AddTransient<IOrderParamsCalculatorService, OrderCalculatorServiceUsual>();
+            services.AddTransient<PageAnimationService>();
+            services.AddTransient<EmployeeForClientService>();
+            services.AddTransient<ViewModels.ClientOrdersViewModel>();
+            services.AddSingleton<MVVM_Core.EventBus>();
 
 
             Services = services.BuildServiceProvider();
@@ -54,7 +61,12 @@ namespace Main
         public  EditStylesViewModel EditStylesViewModel => Services.GetRequiredService<EditStylesViewModel>();
         public  DesignParamsViewModel DesignParamsViewModel => Services.GetRequiredService<DesignParamsViewModel>();
         public  OrderConfirmViewModel OrderConfirmViewModel => Services.GetRequiredService<OrderConfirmViewModel>();
-        public  NewClientViewModel NewClientViewModel => Services.GetRequiredService<NewClientViewModel>();
         public  ServicesViewModel ServicesViewModel => Services.GetRequiredService<ServicesViewModel>();
+        public  OtherParamsViewModel OtherParamsViewModel => Services.GetRequiredService<OtherParamsViewModel>();
+        public  ClientRegisterViewModel ClientRegisterViewModel => Services.GetRequiredService<ClientRegisterViewModel>();
+        public  ClientResultViewModel ClientResultViewModel => Services.GetRequiredService<ClientResultViewModel>();
+        public  ClientCheckCodeViewModel ClientCheckCodeViewModel => Services.GetRequiredService<ClientCheckCodeViewModel>();
+        public  WorkersViewModel WorkersViewModel => Services.GetRequiredService<WorkersViewModel>();
+        public  ClientOrdersViewModel ClientOrdersViewModel => Services.GetRequiredService<ClientOrdersViewModel>();
     }
 }

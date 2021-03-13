@@ -100,7 +100,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Pages\DesignParamsPage.xaml.cs">
+    <Compile Include="MVVM_Core\EventBus.cs" />
+    <Compile Include="MVVM_Core\EventSubscriber.cs" />
+    <Compile Include="MVVM_Core\Events\AccountEntered.cs" />
+    <Compile Include="MVVM_Core\Events\ClientRegistered.cs" />
+    <Compile Include="MVVM_Core\Events\IEvent.cs" />
+    <Compile Include="MVVM_Core\Events\OrderCompleted.cs" />
+    <Compile Include="Pages\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\AddressAndDateTimePage.xaml.cs">
+      <DependentUpon>AddressAndDateTimePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\ClientEmailCodeConfirmPage.xaml.cs">
+      <DependentUpon>ClientEmailCodeConfirmPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\ClientEnterPassword.xaml.cs">
+      <DependentUpon>ClientEnterPassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\ClientRegisterPage.xaml.cs">
+      <DependentUpon>ClientRegisterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\ClientRegisterResultPage.xaml.cs">
+      <DependentUpon>ClientRegisterResultPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\DesignParamsPage.xaml.cs">
       <DependentUpon>DesignParamsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\EditStylesPage.xaml.cs">
@@ -109,30 +133,43 @@
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\OrderConfirmPage.xaml.cs">
+    <Compile Include="Pages\Client\OrderConfirmPage.xaml.cs">
       <DependentUpon>OrderConfirmPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ServicesPage.xaml.cs">
+    <Compile Include="Pages\Client\ServicesPage.xaml.cs">
       <DependentUpon>ServicesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\StylesPage.xaml.cs">
+    <Compile Include="Pages\Client\StylesPage.xaml.cs">
       <DependentUpon>StylesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\UserHomePage.xaml.cs">
+    <Compile Include="Pages\Client\UserHomePage.xaml.cs">
       <DependentUpon>UserHomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\WorkerFormPage.xaml.cs">
+      <DependentUpon>WorkerFormPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Client\WorkersPage.xaml.cs">
+      <DependentUpon>WorkersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Converters\Converters.cs" />
     <Compile Include="MVVM_Core\BaseViewModel.cs" />
     <Compile Include="MVVM_Core\BasePageViewModel.cs" />
-    <Compile Include="ViewModels\DesignParamsViewModel.cs" />
+    <Compile Include="Rules\PageBranches.cs" />
+    <Compile Include="ViewModels\Clients\ClientOrdersViewModel.cs" />
+    <Compile Include="ViewModels\Clients\ClientCheckCodeViewModel.cs" />
+    <Compile Include="ViewModels\Clients\ClientRegisterViewModel.cs" />
+    <Compile Include="ViewModels\Clients\ClientResultViewModel.cs" />
+    <Compile Include="ViewModels\Clients\DesignParamsViewModel.cs" />
+    <Compile Include="ViewModels\Components\NotificationItem.cs" />
     <Compile Include="ViewModels\EditStylesViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\NewClientViewModel.cs" />
-    <Compile Include="ViewModels\OrderConfirmViewModel.cs" />
-    <Compile Include="ViewModels\ServicesViewModel.cs" />
-    <Compile Include="ViewModels\StylesViewModel.cs" />
-    <Compile Include="ViewModels\ClientHomeViewModel.cs" />
+    <Compile Include="ViewModels\Clients\OrderConfirmViewModel.cs" />
+    <Compile Include="ViewModels\Clients\OtherParamsViewModel.cs" />
+    <Compile Include="ViewModels\Clients\ServicesViewModel.cs" />
+    <Compile Include="ViewModels\Clients\StylesViewModel.cs" />
+    <Compile Include="ViewModels\Clients\ClientHomeViewModel.cs" />
+    <Compile Include="ViewModels\Clients\WorkersViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -146,7 +183,31 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\DesignParamsPage.xaml">
+    <Page Include="Pages\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Client\AddressAndDateTimePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Client\ClientEmailCodeConfirmPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Client\ClientEnterPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Client\ClientRegisterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Client\ClientRegisterResultPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Client\DesignParamsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,19 +219,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\OrderConfirmPage.xaml">
+    <Page Include="Pages\Client\OrderConfirmPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ServicesPage.xaml">
+    <Page Include="Pages\Client\ServicesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\StylesPage.xaml">
+    <Page Include="Pages\Client\StylesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\UserHomePage.xaml">
+    <Page Include="Pages\Client\UserHomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Client\WorkerFormPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Client\WorkersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,7 +287,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
-    <Folder Include="ServicesLocal\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -331,6 +399,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\vinatge.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\female_01.jpg" />
+    <Resource Include="Resources\female_02.jpeg" />
+    <Resource Include="Resources\male_01.png" />
+    <Resource Include="Resources\male_02.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

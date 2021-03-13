@@ -49,20 +49,21 @@ namespace Main.ViewModels
 
         public ICommand Next => new Command(name =>
         {
-            paramsService.Order.Service = Selected;
-
+            paramsService.SetupService(Selected);
 
             if (Selected.NeedDetails)
             {
-                pageService.ChangePage<StylesPage>(AnimateTo.Left);
+                pageService.ChangePage<StylesPage>(AnimateTo.Left, Rules.Pages.SERVICES_POOL);
             }
             else
             {
-                pageService.ChangePage<OrderConfirmPage>(AnimateTo.Left);
+                paramsService.Clear();
+                pageService.ChangePage<AddressAndDateTimePage>(AnimateTo.Left, Rules.Pages.SERVICES_POOL);
             }
 
         }, x => Selected != null);
 
+        public override int PoolIndex => Rules.Pages.SERVICES_POOL;
     }
 
 }

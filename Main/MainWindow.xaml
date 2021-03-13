@@ -9,7 +9,271 @@
         DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
         Title="MainWindow" Height="450">
     <Grid>
-        <Frame NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Visibility="{Binding HeaderPanelVisibility, Converter={StaticResource BoolToVis}}">
+
+
+           
+
+                <StackPanel  Orientation="Horizontal">
+
+                <!--<ListView SelectedIndex="{Binding SelectedItemIndex}"
+                          SelectedItem="{Binding SelectedItemBar}"
+                          BorderBrush="{x:Null}">
+                    <ListViewItem Content="Выбрать услугу"/>
+                    <ListViewItem Content="Наши сотрудники"/>
+                    <ListViewItem Content="О Нас"/>
+
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="TextBlock.FontSize" Value="16"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="10 0"/>
+                            <Setter Property="Background" Value="#BFD3D3D3"/>
+                            <Setter Property="FontFamily" Value="Candara"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="Template" Value="{DynamicResource listViewHeaderBarT }"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    
+                </ListView>-->
+
+                <RadioButton VerticalAlignment="Center" 
+                             Content="Главная" 
+                             Margin="10 0"
+                             IsChecked="True"
+                             Command="{Binding ToMainPageCommand}"
+                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                             Style="{DynamicResource radioHeaderBar}"
+                             Template="{DynamicResource radioHeaderBarT}"/>
+
+                <RadioButton VerticalAlignment="Center" 
+                             Content="Выбрать услугу" 
+                             Margin="10 0"
+                             Command="{Binding ChooseService}"
+                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                             Style="{DynamicResource radioHeaderBar}"
+                             Template="{DynamicResource radioHeaderBarT}"/>
+                    
+                <RadioButton VerticalAlignment="Center" 
+                             Style="{DynamicResource radioHeaderBar}"
+                             Margin="10 0" Content="Наши сотрудники"                              
+                             Command="{Binding OurEmployees}"
+                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                             Template="{DynamicResource radioHeaderBarT}"/>
+
+                <RadioButton VerticalAlignment="Center" 
+                             Style="{DynamicResource radioHeaderBar}"                             
+                             Command="{Binding About}"
+                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                             Margin="10 0" Content="О Нас" 
+                             Template="{DynamicResource radioHeaderBarT}"/>
+            </StackPanel>
+
+            <DockPanel 
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="25 15"
+                Grid.Column="1">
+
+                <Menu >
+                    <MenuItem FontSize="16" Header="{Binding UserName}">
+                        <MenuItem Visibility="{Binding IsGuest, Converter={StaticResource BoolToVis}}" 
+                                  Command="{Binding ToLoginPageCommand}"
+                                  Header="Авторизоваться"/>
+                        <MenuItem 
+                            Visibility="{Binding IsGuest, Converter={StaticResource BoolToVisInvert}}"
+                            Header="Мои заказы"
+                            Command="{Binding ToOrdersViewCommand}"/>
+                        <MenuItem Visibility="{Binding IsGuest, Converter={StaticResource BoolToVisInvert}}" 
+                                  Command="{Binding ToLoginPageCommand}"
+                                  Header="Выйти"/>
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+            
+        </Grid>
+        
+        <Frame Grid.Row="1" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
 
     </Grid>
+    <Window.Resources>
+        <Style TargetType="Control" x:Key="radioHeaderBar">
+            <Setter Property="TextBlock.FontSize" Value="18"/>
+            <Setter Property="Background" Value="#7F66AD64"/>
+            <Setter Property="FontFamily" Value="Microsoft YaHei"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderBrush" Value="#FF66AD65"/>
+        </Style>
+        <ControlTemplate x:Key="radioHeaderBarT" TargetType="RadioButton">
+            <Grid>
+                <Rectangle x:Name="rect" 
+                            RenderTransformOrigin="0.0,0.5" 
+                            Fill="{TemplateBinding Background}">
+
+                    <Rectangle.RenderTransform>
+                        <ScaleTransform ScaleX="0"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+
+                <ContentControl Margin="3 5" Content="{TemplateBinding Content}"/>
+
+
+                <Border VerticalAlignment="Bottom" x:Name="border" Margin="0 5 0 0" 
+                                            Background="{TemplateBinding BorderBrush}" 
+                                            Height="2" 
+                                            RenderTransformOrigin="0.0,0.5">
+                    <Border.RenderTransform>
+                        <ScaleTransform ScaleX="0"/>
+                    </Border.RenderTransform>
+                </Border>
+
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="1"
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="1"
+                                                    Storyboard.TargetName="rect"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="0"
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="0"
+                                                    Storyboard.TargetName="rect"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+
+                </Trigger>
+            </ControlTemplate.Triggers>
+
+        </ControlTemplate>
+        <ControlTemplate x:Key="listViewHeaderBarT" TargetType="ListViewItem">
+            <Grid>
+                <Rectangle x:Name="rect" 
+                            RenderTransformOrigin="0.0,0.5" 
+                            Fill="{TemplateBinding Background}">
+
+                    <Rectangle.RenderTransform>
+                        <ScaleTransform ScaleX="0"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+
+                <ContentControl Margin="3 5" Content="{TemplateBinding Content}"/>
+
+
+                <Border VerticalAlignment="Bottom" x:Name="border" Margin="0 5 0 0" 
+                                            Background="{TemplateBinding BorderBrush}" 
+                                            Height="2" 
+                                            RenderTransformOrigin="0.0,0.5">
+                    <Border.RenderTransform>
+                        <ScaleTransform ScaleX="0"/>
+                    </Border.RenderTransform>
+                </Border>
+
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="1"
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="1"
+                                                    Storyboard.TargetName="rect"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="0"
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="0"
+                                                    Storyboard.TargetName="rect"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+
+                </Trigger>
+            </ControlTemplate.Triggers>
+
+        </ControlTemplate>
+    </Window.Resources>
 </Window>

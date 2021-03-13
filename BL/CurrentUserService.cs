@@ -13,19 +13,25 @@ namespace BL
     {
         public IUser CurrentUser { get; private set; }
 
-
-
         public bool IsAutorized { get; private set; }
 
         public bool IsSkipped { get; set; }
 
         public event Action Autorized;
         public event Action Exited;
+        public event Action Skipped;
+
+        public void Skip()
+        {
+            IsSkipped = true;
+            IsAutorized = false;
+            Skipped?.Invoke();
+        }
 
         public void Logout()
         {
             CurrentUser = null;
-            IsAutorized = false;
+            IsAutorized = IsSkipped = false;
             Exited?.Invoke();
         }
 
@@ -35,5 +41,6 @@ namespace BL
             IsAutorized = true;
             Autorized?.Invoke();
         }
+        
     }
 }

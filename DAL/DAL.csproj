@@ -100,6 +100,22 @@
     <Compile Include="Migrations\202103051415189_new2.designer.cs">
       <DependentUpon>202103051415189_new2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103051522092_new3.cs" />
+    <Compile Include="Migrations\202103051522092_new3.designer.cs">
+      <DependentUpon>202103051522092_new3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103071030035_EmailForClient.cs" />
+    <Compile Include="Migrations\202103071030035_EmailForClient.designer.cs">
+      <DependentUpon>202103071030035_EmailForClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103071118286_datetime.cs" />
+    <Compile Include="Migrations\202103071118286_datetime.designer.cs">
+      <DependentUpon>202103071118286_datetime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103130831050_EmpImage.cs" />
+    <Compile Include="Migrations\202103130831050_EmpImage.designer.cs">
+      <DependentUpon>202103130831050_EmpImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\WorkingStatus.cs" />
     <Compile Include="Models\Client.cs" />
@@ -155,6 +171,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103051415189_new2.resx">
       <DependentUpon>202103051415189_new2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103051522092_new3.resx">
+      <DependentUpon>202103051522092_new3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103071030035_EmailForClient.resx">
+      <DependentUpon>202103071030035_EmailForClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103071118286_datetime.resx">
+      <DependentUpon>202103071118286_datetime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103130831050_EmpImage.resx">
+      <DependentUpon>202103130831050_EmpImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

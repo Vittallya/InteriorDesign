@@ -46,7 +46,7 @@ namespace Main.ViewModels
 
             if (res)
             {
-                pageService.ChangePage<UserHomePage>();
+                pageService.ChangePage<ClientHomePage>();
             }
             else
             {
@@ -59,7 +59,7 @@ namespace Main.ViewModels
         public ICommand AcceptCommand => new Command(x =>
         {
             loginService.Skip();
-            pageService.ChangePage<UserHomePage>();
+            pageService.ChangePage<ClientHomePage>();
         });
 
     }

@@ -13,21 +13,21 @@ using Main.Pages;
 
 namespace Main.ViewModels
 {
-    public class StylesViewModel: BasePageViewModel
+    public class StylesViewModel: BaseViewModel
     {
         private readonly StylesService service;
         private readonly PageService pageService;
-        private readonly OrderDetailsService designParams;
+        private readonly OrderService orderService;
 
         public ObservableCollection<Style> Styles { get; set; }
 
         public Style Selected { get; set; }
 
-        public StylesViewModel(StylesService service, PageService pageService, OrderDetailsService designParams):base(pageService)
+        public StylesViewModel(StylesService service, PageService pageService, OrderService designParams)
         {
             this.service = service;
             this.pageService = pageService;
-            this.designParams = designParams;
+            this.orderService = designParams;
             Init();
         }
 
@@ -39,8 +39,8 @@ namespace Main.ViewModels
 
         public ICommand NextPage => new Command(x =>
         {
-            designParams.Style = Selected;
-            pageService.ChangePage<DesignParamsPage>(AnimateTo.Left);
+            orderService.SetupStyle(Selected);
+            pageService.ChangePage<DesignParamsPage>(AnimateTo.Left, Rules.Pages.SERVICES_POOL);
 
         }, y => Selected != null);
     }

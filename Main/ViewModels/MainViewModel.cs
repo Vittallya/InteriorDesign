@@ -1,45 +1,117 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.IO;
-using DAL;
-using DAL.Models;
+﻿using BL;
 using Main.MVVM_Core;
-using BL;
-using System.Windows.Controls;
-using Main.Pages;
-using System.Reflection;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Main.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        private readonly PageService pageService;
+        private readonly ICurrentUserService userService;
+        private readonly PageAnimationService animationService;
 
-        public MainViewModel(PageService pageService, ICurrentUserService userService)
+        public MainViewModel(PageService pageService, ICurrentUserService userService, PageAnimationService animationService)
         {
+            this.animationService = animationService;
+            this.pageService = pageService;
+            this.userService = userService;
+
             pageService.PageChanged += PageService_PageChanged;
             userService.Autorized += UserService_Autorized;
             userService.Exited += UserService_Exited;
-            pageService.ChangePage<LoginPage>(AnimateTo.None);
+            userService.Skipped += UserService_Skipped;
+            pageService.ChangePage<Main.Pages.LoginPage>();
         }
+
+
+        public string UserName { get; set; }
+
+        private void UserService_Skipped()
+        {
+            UserName = "Гость";
+            HeaderPanelVisibility = true;
+            IsGuest = true;
+        }
+
+        public bool HeaderPanelVisibility { get; set; }
+        public bool IsGuest { get; set; }
 
         private void UserService_Exited()
         {
-            
+            pageService.ClearAllPools();
+            HeaderPanelVisibility = false;
+            pageService.ChangePage<Main.Pages.LoginPage>();
         }
 
         private void UserService_Autorized()
         {
-            
+            UserName = userService.CurrentUser?.Name;
+            HeaderPanelVisibility = true;
+            IsGuest = false;
         }
+
+        public ICommand ToLoginPageCommand => new Command(x =>
+        {
+            userService.Logout();
+        });
+
+        
+
+        public ICommand ToOrdersViewCommand => new Command(x =>
+        {
+            MessageBox.Show("...ждите в дипломной =)..");
+        });
+
+        public ICommand ToMainPageCommand => new Command(x =>
+        {
+            if (x is RadioButton radio && radio != _selected)
+            {
+                _selected = radio;                
+                pageService.ChangePage<Main.Pages.ClientHomePage>();                
+            }
+        });
+
+        public ICommand ChooseService => new Command(x =>
+        {
+            if (x is RadioButton radio && radio != _selected)
+            {
+                _selected = radio;
+                if (pageService.HasActualPool())
+                {
+                    pageService.ChangeToLastByActualPool();
+                }
+                else
+                {
+                    pageService.ChangePage<Main.Pages.ServicesPage>(1);
+                }
+            }
+        });
+
+        public ICommand OurEmployees => new Command(x =>
+        {
+            if (x is RadioButton radio && radio != _selected)
+            {
+                _selected = radio;
+                pageService.ChangePage<Main.Pages.WorkersPage>();
+            }
+        });
+
+        public ICommand About => new Command(x =>
+        {
+            if (x is RadioButton radio && radio != _selected)
+            {
+                _selected = radio;
+                pageService.ChangePage<Main.Pages.AboutPage>();
+            }
+        });
+
+        RadioButton _selected;
+
+        public ListViewItem SelectedItemBar { get; set; }
+        public int SelectedItemIndex { get; set; }
 
         public int Width { get; set; } = 800;
 
@@ -49,53 +121,22 @@ namespace Main.ViewModels
 
         private async void PageService_PageChanged(Page page, AnimateTo animate)
         {
+
             if (CurrentPage != null)
             {
-                await fadeOut(CurrentPage.Content as UIElement);
-                
+                await animationService.fadeOut(CurrentPage.Content as UIElement);                
             }
 
-            CurrentPage = page;
+            CurrentPage = page;           
 
             if (animate != AnimateTo.None)
             {
-                Play(page.Content as UIElement, animate);
+                animationService.Play(page.Content as UIElement, animate, Width);
             }
-
-            //await fadeIn(page.Content as UIElement);
-        }
-
-        void Play(UIElement uI, AnimateTo animate)
-        {
-            int from =  animate == AnimateTo.Left ? Width : -Width;
-
-            uI.RenderTransform = new TranslateTransform(from, 0);
-            uI.Opacity = 1;
-
-            DoubleAnimation anim = new DoubleAnimation(from, 0, TimeSpan.FromSeconds(0.5));
-
-            anim.EasingFunction = new ElasticEase() { Oscillations = 0 };
-            uI.RenderTransform.BeginAnimation(TranslateTransform.XProperty, anim);
-        }
-
-        async Task fadeOut(UIElement element)
-        {
-            for (double i = 1; i >= 0; i-= 0.1)
+            else
             {
-                element.Opacity = i;
-                await Task.Delay(5);
+                await animationService.fadeIn(CurrentPage.Content as UIElement);
             }
-            element.Opacity = 0;
         }
-        async Task fadeIn(UIElement element)
-        {
-            for (double i = 0; i <= 1; i += 0.05)
-            {
-                element.Opacity = i;
-                await Task.Delay(10);
-            }
-            element.Opacity = 1;
-        }
-
     }
 }

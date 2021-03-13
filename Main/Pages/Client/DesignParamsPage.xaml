@@ -46,7 +46,7 @@
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBox Width="75" Text="{Binding Order.Area}"/>
+                    <TextBox Width="75" Text="{Binding Order.Area, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <TextBlock 
                         DockPanel.Dock="Left"
@@ -64,7 +64,7 @@
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBox Width="75" Text="{Binding Order.FloorsHeight}"/>
+                    <TextBox Width="75" Text="{Binding Order.FloorsHeight, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <TextBlock 
                         DockPanel.Dock="Left"
@@ -114,7 +114,7 @@
                         Width="250"
                         FontSize="14"/>
 
-                    <TextBox  Text="{Binding Order.RoomsCount}"/>
+                    <TextBox  Text="{Binding Order.Rooms, UpdateSourceTrigger=PropertyChanged}"/>
 
                 </DockPanel>
 

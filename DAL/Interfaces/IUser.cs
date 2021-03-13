@@ -8,6 +8,7 @@ namespace DAL
 {
     public interface IUser
     {
+        int Id { get; }
         string Name { get; }
     }
 }

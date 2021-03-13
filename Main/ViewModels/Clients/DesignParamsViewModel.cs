@@ -13,33 +13,35 @@ using System.Windows;
 
 namespace Main.ViewModels
 {
-    public class DesignParamsViewModel: BasePageViewModel
+    public class DesignParamsViewModel : BasePageViewModel
     {
         private readonly PageService pageService;
-        private readonly OrderDetailsService paramsService;
+        private readonly OrderService paramsService;
 
-        public OrderDetail Order { get; set; }
+        public OrderParams Order { get; set; }
 
-        public DesignParamsViewModel(PageService pageService, OrderDetailsService paramsService) : base(pageService)
+
+
+        public DesignParamsViewModel(PageService pageService, OrderService paramsService) : base(pageService)
         {
             this.pageService = pageService;
             this.paramsService = paramsService;
 
-            HouseTypes = new Dictionary<HouseType, string>
-            {
-                {HouseType.Apartment, "Квартира" },
-                {HouseType.House, "Дом" },
-                {HouseType.Office, "Офис" },
-            };
+            HouseTypes = OrderParamsExtensions.HouseTypes;
 
-            if (!paramsService.IsBeginned)
+            if (!paramsService.IsWrited)
             {
-                Order = new OrderDetail();
-                Order.RoomsCount = 3;
-                Order.FloorsHeight = 4;
-                Order.Area = 75;
+                Order = new OrderParams();
+                Order.Area = 75.0;
+                Order.FloorsHeight = 3.0;
+                Order.Rooms = 3;
             }
-            paramsService.IsBeginned = true;
+            else
+            {
+                Order = paramsService.OrderParams;
+            }
+
+            paramsService.IsWrited = true;
         }
 
         public ICommand Next => new Command(x =>
@@ -47,9 +49,9 @@ namespace Main.ViewModels
             Order.HouseType = SelectedHouseType;
             Order.IsWallAlignment = !Convert.ToBoolean(WallAlignmentIndex);
 
-            if (paramsService.Setup(Order))
+            if (paramsService.SetupOrderParams(Order))
             {
-                pageService.ChangePage<OrderConfirmPage>(AnimateTo.Left);
+                pageService.ChangePage<AddressAndDateTimePage>(AnimateTo.Left, Rules.Pages.SERVICES_POOL);
             }
             else
             {
@@ -62,5 +64,7 @@ namespace Main.ViewModels
 
         public Dictionary<HouseType, string> HouseTypes { get; set; }
         public HouseType SelectedHouseType { get; set; }
+
+        public override int PoolIndex => Rules.Pages.SERVICES_POOL;
     }
 }

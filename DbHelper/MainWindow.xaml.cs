@@ -154,12 +154,12 @@ namespace DbHelper
             UpdateLists();
         }
 
-        private async void Button_Click_4(object sender, RoutedEventArgs e)
+        private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             Execute(SqlInstructions.ExecuteServices);
         }
 
-        private async void Button_Click_5(object sender, RoutedEventArgs e)
+        private void Button_Click_5(object sender, RoutedEventArgs e)
         {
             Execute(SqlInstructions.ExecuteStyles);
         }
@@ -171,5 +171,9 @@ namespace DbHelper
             IsEnabled = true;
         }
 
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            Execute(SqlInstructions.ExecuteEmployee);
+        }
     }
 }
