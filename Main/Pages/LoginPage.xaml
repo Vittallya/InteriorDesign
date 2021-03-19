@@ -32,11 +32,12 @@
                 <ContentControl 
                     VerticalAlignment="Top"
                     Content="{Binding PassBox}"/>
-                <CheckBox IsChecked="{Binding IamAdmin}" Margin="0 10" Content="Я администратор"/>
+                <!--<CheckBox IsChecked="{Binding IamAdmin}" Margin="0 10" Content="Я администратор"/>-->
 
             </StackPanel>
             
-            <TextBlock                 
+            <TextBlock         
+                Style="{StaticResource SprigniessText}"
                 FontSize="14"
                 Foreground="Red"
                 Visibility="{Binding IsErrorVisible, Converter={StaticResource BoolToVis}}"

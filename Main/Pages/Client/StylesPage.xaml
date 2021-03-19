@@ -32,7 +32,14 @@
         </StackPanel>
 
 
-
+        <StackPanel
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="0 0 15 10"
+            Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="Поиск по имени:"/>
+            <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 0 0" Width="200" />
+        </StackPanel>
 
         <ListBox 
                 Grid.Row="1"

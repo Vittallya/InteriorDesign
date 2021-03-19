@@ -13,7 +13,33 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="SprigniessText" TargetType="TextBlock">
+        <Style.Triggers>
+            <Trigger Property="Visibility" Value="Visible">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                                <EasingThicknessKeyFrame 
+                                                                                KeyTime="0:0:0.1" Value="-40 20 0 0"/>
+
+                                <EasingThicknessKeyFrame 
+                                                                                KeyTime="0:0:0.5" Value="0 20 0 0">
+                                    <EasingThicknessKeyFrame.EasingFunction>
+                                        <ElasticEase Oscillations="5"/>
+                                    </EasingThicknessKeyFrame.EasingFunction>
+                                </EasingThicknessKeyFrame>
+
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <SolidColorBrush x:Key="Button.Static.Background" Color="#FF168BEF"/>
     <SolidColorBrush x:Key="Button.Static.Background1" Color="White"/>
     <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>

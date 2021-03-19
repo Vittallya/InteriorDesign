@@ -43,11 +43,11 @@ namespace Main.ViewModels
 
             if (Rules.Pages.EMAIL_CONFIRM_REQUIRED)
             {
-                pageService.ChangePage<Pages.ClientEmailCodeConfirmPage>(AnimateTo.Left, Rules.Pages.CLIENT_REGISTRATION_POOL);
+                pageService.ChangePage<Pages.ClientEmailCodeConfirmPage>(Rules.Pages.CLIENT_REGISTRATION_POOL, AnimateTo.Left);
             }
             else
             {
-                pageService.ChangePage<Pages.ClientEnterPasswordPage>(AnimateTo.Left, Rules.Pages.SERVICES_POOL);
+                pageService.ChangePage<Pages.ClientEnterPasswordPage>(Rules.Pages.SERVICES_POOL, AnimateTo.Left);
             }
         }, y => Email != null && Name != null);
 
@@ -104,6 +104,17 @@ namespace Main.ViewModels
         PasswordBoxConfirm.Password != null);
 
         public override int PoolIndex => Rules.Pages.CLIENT_REGISTRATION_POOL;
+
+        public override ICommand BackCommand => new Command(x =>
+        {
+            if (registerService.NameAndEmailSetted)
+            {
+                pageService.Back<Pages.ClientRegisterPage>(PoolIndex);
+                registerService.NameAndEmailSetted = false;
+            }
+            else
+                pageService.Back(PoolIndex);
+        });
 
         public void Dispose()
         {

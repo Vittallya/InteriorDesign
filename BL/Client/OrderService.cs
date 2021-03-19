@@ -116,8 +116,6 @@ namespace BL
                 ErrorMessage = ex.Message;
                 return false;
             }
-
-            Clear();
             return true;
         }
 
@@ -135,6 +133,9 @@ namespace BL
         {
             OrderParams = default(OrderParams);
             IsWrited = false;
+            _style = null;
+            _service = null;
+            Order = new Order();
         }
     }
 }

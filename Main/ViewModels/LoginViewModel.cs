@@ -16,30 +16,23 @@ namespace Main.ViewModels
     {
         private readonly ILoginService loginService;
         private readonly PageService pageService;
-
         public PasswordBox PassBox { get; set; } = new PasswordBox
         {
             
         };
-
         public string Login { get; set; }
-
         public LoginViewModel(ILoginService loginService, PageService pageService)
         {
             this.loginService = loginService;
             this.pageService = pageService;
         }
-
-        public bool IamAdmin { get; set; }
-
         public bool IsErrorVisible { get; set; }
-
         public string ErrorMessage { get; set; }
 
         public bool IsAnimationVisible { get; set; }
-
         public ICommand LoginCommand => new CommandAsync(async x =>
         {
+            IsErrorVisible = false;
             IsAnimationVisible = true;
             bool res = await loginService.TryLogin(Login, PassBox.Password, IamAdmin);
             IsAnimationVisible = false;
@@ -55,12 +48,11 @@ namespace Main.ViewModels
             }
 
         });
-
         public ICommand AcceptCommand => new Command(x =>
         {
             loginService.Skip();
             pageService.ChangePage<ClientHomePage>();
         });
-
+        public bool IamAdmin { get; set; }
     }
 }

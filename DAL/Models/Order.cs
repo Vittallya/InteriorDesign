@@ -21,9 +21,9 @@ namespace DAL.Models
         public double CommonCost { get; set; }
 
         public Client Client { get; set; }
-        public Service Service { get; set; }
+        public virtual Service Service { get; set; }
 
-        public OrderDetail OrderDetail { get; set; }
+        public virtual OrderDetail OrderDetail { get; set; }
 
         public string Address { get; set; }
     }

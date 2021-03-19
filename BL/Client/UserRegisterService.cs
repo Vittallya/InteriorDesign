@@ -30,7 +30,7 @@ namespace BL
         public string Email { get; private set; }
         public string Name => _name;
 
-        public bool NameAndEmailSetted { get; private set; }
+        public bool NameAndEmailSetted { get; set; }
 
         public void SetClientNameAndEmail(string name, string email)
         {

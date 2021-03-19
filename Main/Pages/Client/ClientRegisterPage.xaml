@@ -67,6 +67,12 @@
                 </DockPanel>
 
 
+                <TextBlock Text="{Binding Message}" 
+                           Style="{StaticResource SprigniessText}"
+                           Margin="0 15"
+                           Foreground="Red"
+                           Visibility="{Binding MessageVisible, Converter={StaticResource BoolToVis}}"/>
+
             </StackPanel>
         </Border>
 

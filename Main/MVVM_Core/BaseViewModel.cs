@@ -16,8 +16,6 @@ namespace Main.MVVM_Core
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
-
         
-
     }
 }

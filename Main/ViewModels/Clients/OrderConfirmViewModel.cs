@@ -26,7 +26,7 @@ namespace Main.ViewModels
         public OrderService orderService { get; }
         public string HouseType { get; set; }
         public OrderDetail Order { get; set; }
-        public Service Service { get; set; }
+        public string ServiceName { get; set; }
 
         public Dictionary<HouseType, string> HouseTypes { get; set; }
 
@@ -41,7 +41,7 @@ namespace Main.ViewModels
             this.Params = paramsService.OrderParams;
             this.userService = userService;
             this.eventBus = eventBus;
-            Service = paramsService.SelectedService;
+            ServiceName = paramsService.SelectedService.Name;
 
             IsDetailsOrder = paramsService.HasOrderParams;
 
@@ -53,7 +53,7 @@ namespace Main.ViewModels
                 Style = paramsService.SelectedStyle;
                 IsWallAlignment = Params.IsWallAlignment ? "Да" : "Нет";
                 HouseType = OrderParamsExtensions.HouseTypes[Params.HouseType];
-                UnitName = "\\" + Service.CostUnitName;
+                UnitName = "\\" + paramsService.SelectedService.CostUnitName;
             }
             Cost = paramsService.GetCommonCost();
         }
@@ -76,7 +76,7 @@ namespace Main.ViewModels
             }
             else
             {
-                pageService.ChangePage<ClientRegisterPage>(AnimateTo.Left, Rules.Pages.CLIENT_REGISTRATION_POOL);
+                pageService.ChangePage<ClientRegisterPage>(Rules.Pages.CLIENT_REGISTRATION_POOL, AnimateTo.Left);
                 eventBus.Subscribe<MVVM_Core.Events.ClientRegistered, OrderConfirmViewModel>(CompleteOrderPorcess);                
             }
         });
@@ -86,8 +86,9 @@ namespace Main.ViewModels
         private async Task CompleteOrderPorcess(MVVM_Core.Events.ClientRegistered @event)
         {
             pageService.ClearHistoryByPool(Rules.Pages.SERVICES_POOL);
-            await orderService.ApplyOrderAndCompleteAsync(@event.User.Id);
-            await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(Service.Name));
+            await orderService.ApplyOrderAndCompleteAsync(@event.User.Id);            
+            await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName));
+            orderService.Clear();
         }
 
         private async void UserService_Registered()

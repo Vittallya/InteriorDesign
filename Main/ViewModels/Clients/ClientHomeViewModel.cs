@@ -39,8 +39,8 @@ namespace Main.ViewModels
             this.pageService = pageService;
 
             //registerService.Registered += UserService_Registered;
-            eventBus.Subscribe<MVVM_Core.Events.OrderCompleted, ClientHomeViewModel>(OrderCompleted);
-            eventBus.Subscribe<MVVM_Core.Events.ClientRegistered, ClientHomeViewModel>(OnClientRegistered);
+            eventBus.Subscribe<MVVM_Core.Events.OrderCompleted, ClientHomeViewModel>(OrderCompleted, false);
+            eventBus.Subscribe<MVVM_Core.Events.ClientRegistered, ClientHomeViewModel>(OnClientRegistered, false);
             
         }
 

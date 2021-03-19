@@ -1,6 +1,9 @@
 ﻿using BL;
 using Main.MVVM_Core;
+using Main.ViewModels.Components;
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,109 +28,122 @@ namespace Main.ViewModels
             userService.Skipped += UserService_Skipped;
             pageService.ChangePage<Main.Pages.LoginPage>();
         }
-
-
         public string UserName { get; set; }
-
         private void UserService_Skipped()
         {
             UserName = "Гость";
             HeaderPanelVisibility = true;
             IsGuest = true;
         }
-
         public bool HeaderPanelVisibility { get; set; }
         public bool IsGuest { get; set; }
-
         private void UserService_Exited()
         {
             pageService.ClearAllPools();
             HeaderPanelVisibility = false;
             pageService.ChangePage<Main.Pages.LoginPage>();
         }
-
         private void UserService_Autorized()
         {
             UserName = userService.CurrentUser?.Name;
             HeaderPanelVisibility = true;
             IsGuest = false;
         }
-
         public ICommand ToLoginPageCommand => new Command(x =>
         {
             userService.Logout();
         });
-
-        
-
         public ICommand ToOrdersViewCommand => new Command(x =>
         {
-            MessageBox.Show("...ждите в дипломной =)..");
+            pageService.ChangePage<Main.Pages.Client.ClientOrdersPage>();
         });
 
-        public ICommand ToMainPageCommand => new Command(x =>
+        public ObservableCollection<HeaderBarItem> HeaderItems { get; set; } = new ObservableCollection<Components.HeaderBarItem>
         {
-            if (x is RadioButton radio && radio != _selected)
+            new Components.HeaderBarItem
             {
-                _selected = radio;                
-                pageService.ChangePage<Main.Pages.ClientHomePage>();                
-            }
-        });
+                Header = "Главная",
+                PageType = typeof(Pages.ClientHomePage)
+            },
+            new Components.HeaderBarItem
+            {
+                Header = "Услуги",
+                PageType = typeof(Pages.ServicesPage)
+            },
+            new Components.HeaderBarItem
+            {
+                Header = "Наши сотрудники",
+                PageType = typeof(Pages.WorkersPage)
+            },
+            new Components.HeaderBarItem
+            {
+                Header = "О Нас",
+                PageType = typeof(Pages.AboutPage)
+            },
+        };
+        public HeaderBarItem SelectedHeader 
+        { 
+            get => selectedHeader;
+            set 
+            { 
+                selectedHeader = value;
+                OnPropertyChanged();
 
-        public ICommand ChooseService => new Command(x =>
+                if (!changedFromVm)
+                {
+                    HeaderPageSelected(value.PageType);
+                }
+            } 
+        }
+
+        bool changedFromVm;
+
+        public bool HeaderVisible { get; set; } = true;
+
+        void HeaderPageSelected(Type pageType)
         {
-            if (x is RadioButton radio && radio != _selected)
+            if(pageType == typeof(Pages.ServicesPage))
             {
-                _selected = radio;
                 if (pageService.HasActualPool())
                 {
                     pageService.ChangeToLastByActualPool();
                 }
                 else
                 {
-                    pageService.ChangePage<Main.Pages.ServicesPage>(Rules.Pages.SERVICES_POOL);
+                    pageService.ChangePage<Pages.ServicesPage>(Rules.Pages.SERVICES_POOL);
                 }
             }
-        });
-
-        public ICommand OurEmployees => new Command(x =>
-        {
-            if (x is RadioButton radio && radio != _selected)
+            else
             {
-                _selected = radio;
-                pageService.ChangePage<Main.Pages.WorkersPage>();
+                pageService.ChangePage(pageType);
             }
-        });
+        }
 
-        public ICommand About => new Command(x =>
+        void HeaderSelector(Type pageType)
         {
-            if (x is RadioButton radio && radio != _selected)
+            HeaderPanelVisibility = HeaderItems.Any(x => x.PageType == pageType);
+
+            if (HeaderPanelVisibility)
             {
-                _selected = radio;
-                pageService.ChangePage<Main.Pages.AboutPage>();
+                changedFromVm = true;
+                SelectedHeader = HeaderItems.First(x => x.PageType == pageType);
+                changedFromVm = false;                
             }
-        });
+        }
 
-        RadioButton _selected;
-
-        public ListViewItem SelectedItemBar { get; set; }
-        public int SelectedItemIndex { get; set; }
+        private HeaderBarItem selectedHeader;
 
         public int Width { get; set; } = 800;
-
-        public ObservableCollection<Page> Pages { get; set; } = new ObservableCollection<Page>();
-
         public Page CurrentPage { get; set; }
-
         private async void PageService_PageChanged(Page page, AnimateTo animate)
         {
-
+            HeaderSelector(page.GetType());
             if (CurrentPage != null)
             {
-                await animationService.fadeOut(CurrentPage.Content as UIElement);                
+                await animationService.fadeOut(CurrentPage.Content as UIElement);
             }
 
-            CurrentPage = page;           
+            CurrentPage = page;
 
             if (animate != AnimateTo.None)
             {
@@ -136,7 +152,7 @@ namespace Main.ViewModels
             else
             {
                 await animationService.fadeIn(CurrentPage.Content as UIElement);
-            }
+            }            
         }
     }
 }

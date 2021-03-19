@@ -15,6 +15,6 @@ namespace DAL.Models
         public string Name { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

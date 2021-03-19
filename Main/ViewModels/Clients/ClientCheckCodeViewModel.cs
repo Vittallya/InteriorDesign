@@ -1,5 +1,6 @@
 ﻿using BL;
 using Main.MVVM_Core;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -39,9 +40,9 @@ namespace Main.ViewModels
         public string Message { get; set; }
 
         public bool IsMessageVisible { get; set; }
-        public bool IsNoteVisible { get; set; } = true;
+        public bool IsNoteVisible { get; set; }
 
-
+        public bool IsTextBoxEnabled { get; set; }
 
         public ICommand CloseNote => new Command(x =>
         {
@@ -50,9 +51,22 @@ namespace Main.ViewModels
 
         async Task GenetateAndSendCode()
         {
+            IsMessageVisible = false;
             codeGenerator.GenerateCode();
-            await codeGenerator.SendCodeByEmail(registerService.Email, messageSender);
-            Counter();
+            try
+            {
+                await codeGenerator.SendCodeByEmail(registerService.Email, messageSender);
+                Counter();
+                IsNoteVisible = true;
+                IsTextBoxEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                IsMessageVisible = true;
+                Message = ex.Message;
+                SendAgainEnabled = false;
+                IsTextBoxEnabled = false;
+            }
         }
 
         public ICommand SendCodeAgain => new MVVM_Core.CommandAsync(async x =>
@@ -63,14 +77,24 @@ namespace Main.ViewModels
         public ICommand Next => new MVVM_Core.CommandAsync(async x =>
         {
             IsMessageVisible = false;
-            if (codeGenerator.CheckCode(Code))
+
+            try
             {
-                pageService.ChangePage<Pages.ClientEnterPasswordPage>(AnimateTo.Left, Rules.Pages.CLIENT_REGISTRATION_POOL);
+
+                if (codeGenerator.CheckCode(Code))
+                {
+                    pageService.ChangePage<Pages.ClientEnterPasswordPage>(Rules.Pages.CLIENT_REGISTRATION_POOL, AnimateTo.Left);
+                }
+                else
+                {
+                    IsMessageVisible = true;
+                    Message = "Код неверный";
+                }
             }
-            else
+            catch(Exception ex)
             {
                 IsMessageVisible = true;
-                Message = "Код неверный";
+                Message = ex.Message;
             }
         }, x => Code != null && Code.Length > 0);
 

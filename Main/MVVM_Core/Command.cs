@@ -37,6 +37,11 @@ namespace Main.MVVM_Core
         }
     }
 
+
+
+
+
+
     class Command<T> : ICommand where T: class
     {
         public event EventHandler CanExecuteChanged

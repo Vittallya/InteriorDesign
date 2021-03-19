@@ -15,7 +15,7 @@ namespace Main
             IServiceCollection services = new ServiceCollection();
 
             //ViewModels//////////////////////////////////
-            services.AddTransient<MainViewModel>();
+            services.AddSingleton<MainViewModel>();
             services.AddTransient<LoginViewModel>();
             services.AddSingleton<ClientHomeViewModel>();
             services.AddTransient<StylesViewModel>();
@@ -50,6 +50,7 @@ namespace Main
             services.AddTransient<EmployeeForClientService>();
             services.AddTransient<ViewModels.ClientOrdersViewModel>();
             services.AddSingleton<MVVM_Core.EventBus>();
+            services.AddTransient<IClientOrders, ClientOrders>();
 
 
             Services = services.BuildServiceProvider();

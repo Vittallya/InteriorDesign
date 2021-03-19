@@ -13,21 +13,21 @@ namespace BL
     public class PageService
     {
         public event Action<Page, AnimateTo> PageChanged;
+        public PagesBinder PagesBinder { get; set; } = new PagesBinder();
 
+        public void ChangePage(Type pageType, AnimateTo animate = AnimateTo.None)
+        {
+            var page = Activator.CreateInstance(pageType) as Page;
+            OnChangePage(page, animate);
 
+        }
         public void ChangePage<TPage>(AnimateTo animate = AnimateTo.None) where TPage : Page, new()
         {
             var page = new TPage();
             OnChangePage(page, animate);
 
         }
-
-        public void ChangePage<TPage>(int poolIndex) where TPage : Page, new()
-        {
-            ChangePage<TPage>(AnimateTo.None, poolIndex);
-        }
-
-        public void ChangePage<TPage>(AnimateTo animate, int poolIndex) where TPage: Page, new()
+        public void ChangePage<TPage>(int poolIndex, AnimateTo animate = AnimateTo.None) where TPage: Page, new()
         {
 
             Page page = null;
@@ -65,15 +65,11 @@ namespace BL
 
             OnChangePage(page, animate);
         }
-
-
-
         public void OnChangePage<TPage>(TPage target, AnimateTo animateTo) where TPage : Page, new()
         {
             PageChanged?.Invoke(target, animateTo);
+            PagesBinder.CheckBind<TPage>();
         }
-
-
 
         #region ByType
         
@@ -154,11 +150,29 @@ namespace BL
                 else if(_poolHistory.IndexOf(poolIndex) > 0)
                 {
                     int index = _poolHistory.IndexOf(poolIndex) - 1;
-                    int oldPool = _poolHistory[index];
-                    ActualPool = oldPool;
+                    ActualPool = _poolHistory[index];
 
-                    ChangeToLastByPool(oldPool, animatePlaying ? AnimateTo.Rigth : AnimateTo.None);
+                    ChangeToLastByPool(ActualPool, animatePlaying ? AnimateTo.Rigth : AnimateTo.None);
                 }
+            }
+
+        }
+
+        public void Back<TPage>(int poolIndex, bool animatePlaying = true) where TPage : Page, new()
+        {
+            if (_pool.ContainsKey(poolIndex) &&
+                _pool[poolIndex].Count > 1 &&
+                _pool[poolIndex].Any(x => x.GetType() == typeof(TPage)))
+            {
+                var list = _pool[poolIndex];
+
+                var target = list.Find(x => x.GetType() == typeof(TPage));
+                int index = list.IndexOf(target);
+
+
+                _pool[poolIndex].RemoveRange(index + 1, list.Count - index - 1);
+                OnChangePage(target, animatePlaying ? AnimateTo.Rigth : AnimateTo.None);
+
             }
 
         }

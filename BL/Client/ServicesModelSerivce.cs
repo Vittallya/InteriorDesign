@@ -21,7 +21,7 @@ namespace BL
         public async Task<IEnumerable<Service>> GetServicesAsync(string name = null)
         {
             await alldbcontext.Services.LoadAsync();
-            return name != null ? alldbcontext.Services.Where(x => x.Name == name) : alldbcontext.Services;
+            return name != null ? alldbcontext.Services.Where(x => x.Name.Contains(name)) : alldbcontext.Services;
         }
     }
 }

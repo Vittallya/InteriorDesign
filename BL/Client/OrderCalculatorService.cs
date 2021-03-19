@@ -13,8 +13,11 @@ namespace BL
             OrderPrice price = new OrderPrice();
 
             price.AreaCost = serviceCost * od.Area;
-            price.FloorsCost = (od.FloorsHeight - 3) * (serviceCost / 25) * od.Area;
-            price.RoomsCost = (od.Rooms - 2) * (serviceCost / 30) * od.Area;
+            
+            if(od.FloorsHeight > 3)
+                price.FloorsCost = (od.FloorsHeight - 3) * (serviceCost / 25) * od.Area;
+            if(od.Rooms > 2)
+                price.RoomsCost = (od.Rooms - 2) * (serviceCost / 30) * od.Area;
             price.HouseTypeCost = od.HouseType == DAL.Models.HouseType.Apartment ? 0 : 0.02;
             price.WallAlignmentCost = od.IsWallAlignment ? 
                 ((od.Rooms * 2 + od.FloorsHeight - 3) * 5000) : 0;

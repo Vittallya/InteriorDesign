@@ -93,6 +93,7 @@
                         FontSize="14"/>
 
                         <TextBox 
+                            IsEnabled="{Binding IsTextBoxEnabled}"
                         HorizontalAlignment="Left"
                         Width="150"  Text="{Binding Code, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -111,6 +112,7 @@
                     <TextBlock 
                         Margin="0 10"
                         Text="{Binding Message}"
+                        Style="{StaticResource SprigniessText}"
                         Foreground="Red"
                         Visibility="{Binding IsMessageVisible, Converter={StaticResource BoolToVis}}"/>
 

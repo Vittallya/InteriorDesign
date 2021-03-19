@@ -14,7 +14,7 @@ namespace BL
         void SetClientNameAndEmail(string name, string email);
         string Email { get; }
         string Name { get; }
-        bool NameAndEmailSetted { get; }
+        bool NameAndEmailSetted { get; set; }
     }
 
 }

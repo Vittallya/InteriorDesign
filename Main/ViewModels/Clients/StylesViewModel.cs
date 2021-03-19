@@ -13,17 +13,18 @@ using Main.Pages;
 
 namespace Main.ViewModels
 {
-    public class StylesViewModel: BaseViewModel
+    public class StylesViewModel : BasePageViewModel
     {
         private readonly StylesService service;
         private readonly PageService pageService;
         private readonly OrderService orderService;
+        private string searchText;
 
         public ObservableCollection<Style> Styles { get; set; }
 
         public Style Selected { get; set; }
 
-        public StylesViewModel(StylesService service, PageService pageService, OrderService designParams)
+        public StylesViewModel(StylesService service, PageService pageService, OrderService designParams) : base(pageService)
         {
             this.service = service;
             this.pageService = pageService;
@@ -36,12 +37,32 @@ namespace Main.ViewModels
             Styles = await service.GetStyles();
         }
 
+        public string SearchText
+        {
+            get => searchText;
+            set 
+            {
+                searchText = value;
+                Search(value);
+                OnPropertyChanged();
+            }
+        }
+
+        async void Search(string name)
+        {
+            if (name != null && name.Length == 0)
+                name = null;
+
+            Styles = await service.GetStyles(name);
+        }
 
         public ICommand NextPage => new Command(x =>
         {
             orderService.SetupStyle(Selected);
-            pageService.ChangePage<DesignParamsPage>(AnimateTo.Left, Rules.Pages.SERVICES_POOL);
+            pageService.ChangePage<DesignParamsPage>(Rules.Pages.SERVICES_POOL, AnimateTo.Left);
 
         }, y => Selected != null);
+
+        public override int PoolIndex => Rules.Pages.SERVICES_POOL;
     }
 }

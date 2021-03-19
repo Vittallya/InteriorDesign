@@ -51,7 +51,7 @@ namespace Main.ViewModels
 
             if (paramsService.SetupOrderParams(Order))
             {
-                pageService.ChangePage<AddressAndDateTimePage>(AnimateTo.Left, Rules.Pages.SERVICES_POOL);
+                pageService.ChangePage<AddressAndDateTimePage>(Rules.Pages.SERVICES_POOL, AnimateTo.Left);
             }
             else
             {

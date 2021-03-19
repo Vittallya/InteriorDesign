@@ -32,7 +32,7 @@ namespace Main.ViewModels
         {
             paramsService.Order.StartWorkingDate1 = DateSelected.Value;
             paramsService.Order.Address = Address;
-            pageService.ChangePage<OrderConfirmPage>(AnimateTo.Left, Rules.Pages.SERVICES_POOL);
+            pageService.ChangePage<OrderConfirmPage>(Rules.Pages.SERVICES_POOL, AnimateTo.Left);
 
         }, x => Address != null && Address.Length > 0 && DateSelected.HasValue);
 
