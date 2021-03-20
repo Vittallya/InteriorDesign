@@ -10,5 +10,6 @@ namespace BL
     public interface IClientOrders
     {
         Task<IEnumerable<Order>> GetOrdersAsync();
+        Task RemoveOrder(Order order);
     }
 }

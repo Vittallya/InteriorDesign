@@ -16,6 +16,9 @@ namespace Main.ViewModels.Components
         }
 
         public bool HasDetails => Order.OrderDetail != null;
+
+        public bool MayBeDeleted => (DateTime.Now.Day - Order.CreationDate.Day) < 2;
+
         public Order Order { get; }
     }
 }

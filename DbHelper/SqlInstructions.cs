@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using DAL;
 
@@ -13,18 +10,13 @@ namespace DbHelper
     {
         static string StylesTableStatement { get; } =
             "INSERT INTO Styles VALUES (@name, @img)";
-
         static string ServicesTableStatement { get; } =
             "INSERT INTO Services VALUES (@name, @cost, @costUnitName, @descr, @need)";
-
-
         static string EmpAdminTableStatement { get; } =
             "INSERT INTO [EmployeeAdmins] VALUES((SELECT[Id] FROM(SELECT ROW_NUMBER() OVER(ORDER BY[Id] ASC) AS rownumber, " +
             "[Id] FROM[Employees]) AS foo WHERE rownumber = @row), @login, @pass, @code)";
-
         static string EmployeesTableStatement { get; } =
             "INSERT INTO [Employees] VALUES(@name, @spec, @isShow, @startWorking, @salary, @workStatus, @imagePath)";
-
         static SqlParameter[][] ServicesTableParams { get; } = new SqlParameter[][]
         {
             new SqlParameter[]
@@ -62,7 +54,6 @@ namespace DbHelper
             },
 
         };
-
         static SqlParameter[][] StylesTableParams { get; } = new SqlParameter[][]
         {
             new SqlParameter[] 
@@ -88,7 +79,7 @@ namespace DbHelper
             new SqlParameter[]
             {
                 new SqlParameter("name", "Винтаж"),
-                new SqlParameter("img", "/Main;component/Resources/vintage.jpg")
+                new SqlParameter("img", "/Main;component/Resources/vinatge.jpg")
             },
             new SqlParameter[]
             {
@@ -116,8 +107,6 @@ namespace DbHelper
                 new SqlParameter("img", "/Main;component/Resources/russian.jpg")
             },
         };
-
-
         static SqlParameter[][] EmpAdminsTableParams { get; } = new SqlParameter[][]
         {
             new SqlParameter[]
@@ -128,7 +117,6 @@ namespace DbHelper
                 new SqlParameter("code", new byte[]{ 1,2,3}),
             },
         };
-
         static SqlParameter[][] EmployeesTableParams { get; } = new SqlParameter[][]
         {
             new SqlParameter[]
@@ -149,7 +137,7 @@ namespace DbHelper
                 new SqlParameter("startWorking", new DateTime(2012, 3, 2)),
                 new SqlParameter("salary", 32457),
                 new SqlParameter("workStatus", DAL.Models.WorkingStatus.Working),
-                new SqlParameter("imagePath", "/Main;component/Resources/male_02.png"),
+                new SqlParameter("imagePath", "/Main;component/Resources/male_02.jpg"),
             },
             new SqlParameter[]
             {
@@ -159,7 +147,7 @@ namespace DbHelper
                 new SqlParameter("startWorking", new DateTime(2011, 3, 2)),
                 new SqlParameter("salary", 32457),
                 new SqlParameter("workStatus", DAL.Models.WorkingStatus.Working),
-                new SqlParameter("imagePath", "/Main;component/Resources/female_01.png"),
+                new SqlParameter("imagePath", "/Main;component/Resources/female_01.jpg"),
             },
             new SqlParameter[]
             {
@@ -169,7 +157,7 @@ namespace DbHelper
                 new SqlParameter("startWorking", new DateTime(2014, 3, 2)),
                 new SqlParameter("salary", 32457),
                 new SqlParameter("workStatus", DAL.Models.WorkingStatus.Working),
-                new SqlParameter("imagePath", "/Main;component/Resources/female_02.png"),
+                new SqlParameter("imagePath", "/Main;component/Resources/female_02.jpeg"),
             },
             new SqlParameter[]
             {
@@ -182,7 +170,6 @@ namespace DbHelper
                 new SqlParameter("imagePath", DBNull.Value),
             },
         };
-
         public static async Task ExecuteStatement(AllDbContext context, string text, SqlParameter[][] @params)
         {
             
@@ -194,14 +181,12 @@ namespace DbHelper
             }
             
         }
-
         public static async Task ExecuteAll()
         {
             await ExecuteStyles();
             await ExecuteServices();
             await ExecuteEmployee();
         }
-
         public static async Task ExecuteStyles()
         {
             using (AllDbContext context = new AllDbContext())

@@ -33,5 +33,11 @@ namespace BL
             }
             return null;
         }
+
+        public async Task RemoveOrder(Order order)
+        {
+            dbContext.Orders.Remove(order);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

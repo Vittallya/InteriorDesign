@@ -60,7 +60,7 @@
 
                         <TextBlock 
                             HorizontalAlignment="Left"
-                            Text="{Binding Service.Name}"/>
+                            Text="{Binding ServiceName}"/>
                     </DockPanel>
 
                     <DockPanel Margin="5 5">
@@ -73,7 +73,7 @@
 
                     <TextBlock 
                                HorizontalAlignment="Left">
-                        <Run Text="{Binding Service.Cost, StringFormat='{}{0} р.'}"/>
+                        <Run Text="{Binding ServiceCost, StringFormat='{}{0} р.'}"/>
                         <Run Text="{Binding UnitName}"/>
                         </TextBlock>
                 </DockPanel>

@@ -46,8 +46,11 @@ namespace Main.ViewModels
 
         private async Task OrderCompleted(MVVM_Core.Events.OrderCompleted @event)
         {
+
+            string result = @event.Result == 0 ? "отравлен" : "отменен";
+
             Notifications.Add(
-                new NotificationItem($"Заказ по усулуге \"{@event.ServiceName}\" отравлен!", type: NotificationType.Success));
+                new NotificationItem($"Заказ по усулуге \"{@event.ServiceName}\" {result}!", type: NotificationType.Success));
             
         }
 

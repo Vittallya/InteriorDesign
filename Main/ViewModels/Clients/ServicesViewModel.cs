@@ -35,6 +35,7 @@ namespace Main.ViewModels
         async void Init()
         {
             Services = new ObservableCollection<Service>(await modelService.GetServicesAsync());
+            //if (editing) -> SelectedService - param.Service
         }
 
 

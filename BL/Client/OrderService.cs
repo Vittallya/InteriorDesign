@@ -57,6 +57,8 @@ namespace BL
             return true;
         }
 
+
+
         public async Task<bool> ApplyOrderAndCompleteAsync(int clientId)
         {
             if(_service == null)

@@ -45,7 +45,13 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel >
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="350"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                    
+                        <StackPanel >
                         <TextBlock 
                                     x:Name="text"
                                 Foreground="Black"
@@ -53,7 +59,7 @@
                                 >
                             <Run FontWeight="DemiBold" 
                                  Text="{Binding Order.StartWorkingDate, StringFormat='dd.MM.yyyy'}"/>
-                            <Run  Text="{Binding Order.Service.Name}"/>
+                            <Run Text="{Binding Order.Service.Name}"/>
                         </TextBlock>
                         
 
@@ -63,9 +69,31 @@
                                 Foreground="Black"
                                 FontSize="14"
                                 TextWrapping="Wrap"                            
-                                Text="{Binding Order.CommonCost}"/>
+                                Text="{Binding Order.CommonCost, StringFormat='{}{0} р.'}"/>
+                        
+                        
 
                     </StackPanel>
+
+                        <DockPanel 
+                            Grid.Column="1"
+                            Visibility="{Binding MayBeDeleted, Converter={StaticResource BoolToVis}}">
+                            <Button Grid.Column="1"
+                                    IsEnabled="{Binding MayBeDeleted, Converter={StaticResource BoolToVis}}"
+                                    VerticalAlignment="Center"
+                                    Padding="15 2"    
+                                    Content="Отменить заказ"
+                                    DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}}" 
+                                    Command="{Binding DeleteOrder}"/>
+
+                            <DockPanel.ToolTip>
+
+                                <TextBlock Text="Отменить заказ невозможно спустя 2 дня после даты его заказа"
+                                               Visibility="{Binding MayBeDeleted, Converter={StaticResource BoolToVis}}"/>
+                            </DockPanel.ToolTip>
+                        </DockPanel>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
             
@@ -139,6 +167,14 @@
             <TextBlock HorizontalAlignment="Left" Margin="0 5" FontSize="16">
                 <Run Text="Адрес: "/>
                 <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.Address}"/>
+            </TextBlock>
+
+            <TextBlock 
+                Visibility="{Binding SelectedOrderItem.MayBeDeleted, Converter={StaticResource BoolToVisInvert}}" 
+                HorizontalAlignment="Left" 
+                Margin="0 5" 
+                FontSize="12">
+                <Run Text="(Отменить невозмножно, прошло более 2-х дней с момента заказа)"/>
             </TextBlock>
 
             <TextBlock FontSize="16" Margin="0 5" 

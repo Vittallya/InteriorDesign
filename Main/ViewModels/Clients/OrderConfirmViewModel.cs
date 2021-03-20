@@ -42,7 +42,7 @@ namespace Main.ViewModels
             this.userService = userService;
             this.eventBus = eventBus;
             ServiceName = paramsService.SelectedService.Name;
-
+            ServiceCost = paramsService.SelectedService.Cost;
             IsDetailsOrder = paramsService.HasOrderParams;
 
 
@@ -63,6 +63,8 @@ namespace Main.ViewModels
         public string UnitName { get; set; }
 
         public double Cost { get; set; }
+
+        public double ServiceCost { get; set; }
 
         public string IsWallAlignment { get; set; }
 
