@@ -45,6 +45,8 @@
             HorizontalContentAlignment="Stretch"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+            SelectionMode="Multiple"
+            x:Name="lb"
                 ItemsSource="{Binding Services}" 
                 SelectedItem="{Binding Selected}">
 
@@ -203,6 +205,7 @@
         <Button 
             Grid.Column="1"
             Command="{Binding Next}"
+            CommandParameter="{Binding ElementName=lb, Path=SelectedItems}"
             Grid.Row="2"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"

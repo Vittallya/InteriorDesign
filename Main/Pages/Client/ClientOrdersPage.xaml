@@ -84,7 +84,7 @@
                     </StackPanel>
 
                         <DockPanel 
-                                    IsEnabled="{Binding MayBeDeleted, Converter={StaticResource BoolToVisInvert}}"
+                                    IsEnabled="{Binding MayBeDeleted}"
                             Grid.Column="1">
                             <Button Grid.Column="1"
                                     VerticalAlignment="Center"
@@ -166,13 +166,43 @@
             Visibility="{Binding IsSelected, Converter={StaticResource BoolToVis}}" 
             Grid.Row="1">
 
+
+                
                 <TextBlock 
                 Style="{DynamicResource H1_5}"
                 HorizontalAlignment="Center">
-                <Run Text="Заказ по услуге: "/>
-                <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.Service.Name}"/>
+                <Run Text="Заказ по услугам: "/>
                 </TextBlock>
 
+                <ItemsControl ItemsSource="{Binding SelectedOrderItem.Order.Services}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel  Orientation="Horizontal">
+                                
+                                
+                                
+                                <TextBlock
+                                    MinWidth="280"
+                                    Style="{DynamicResource H3}"
+                                    Text="{Binding Name}"/>
+                                <TextBlock
+                                    Visibility="{Binding NeedDetails, Converter={StaticResource BoolToVisInvert}}"
+                                    Style="{DynamicResource H3}"
+                                    Text="{Binding Cost, StringFormat=\{0:N\} р.}"/>
+
+                                <TextBlock
+                                    Visibility="{Binding NeedDetails, Converter={StaticResource BoolToVis}}"
+                                    Style="{DynamicResource H3}">
+                                    <Run 
+                                    Text="{Binding Cost, StringFormat=\{0:N\} р.}"/>
+                                    <Run Text="\"/>
+                                    <Run Text="{Binding CostUnitName}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
                 <TextBlock 
                 Style="{DynamicResource H3}"
                 HorizontalAlignment="Left" Margin="0 15 0 5" >
@@ -199,13 +229,6 @@
                 <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.Address}"/>
                 </TextBlock>
 
-                <TextBlock 
-                Style="{DynamicResource H4}"
-                Visibility="{Binding SelectedOrderItem.MayBeDeleted, Converter={StaticResource BoolToVisInvert}}" 
-                HorizontalAlignment="Left" 
-                Margin="0 5" >
-                <Run Text="(Отменить невозмножно, прошло более 2-х дней с момента заказа)"/>
-                </TextBlock>
 
                 <TextBlock FontSize="16" Margin="0 5" 
                 Style="{DynamicResource H3}"
@@ -238,6 +261,13 @@
                     </TextBlock>
                 </StackPanel>
 
+                <TextBlock 
+                Style="{DynamicResource H4}"
+                Visibility="{Binding SelectedOrderItem.MayBeDeleted, Converter={StaticResource BoolToVisInvert}}" 
+                HorizontalAlignment="Left" 
+                Margin="0 5" >
+                <Run Text="(Отменить невозмножно, прошло более 2-х дней с момента заказа)"/>
+                </TextBlock>
 
             </StackPanel>
         </ScrollViewer>

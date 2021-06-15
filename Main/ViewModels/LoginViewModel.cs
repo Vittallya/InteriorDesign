@@ -39,7 +39,13 @@ namespace Main.ViewModels
 
             if (res)
             {
-                pageService.ChangePage<ClientHomePage>();
+
+                if (IamAdmin)
+                    pageService.ChangePage<Pages.Admin.AdminPage>();
+                else
+                {
+                    pageService.ChangePage<ClientHomePage>();
+                }
             }
             else
             {

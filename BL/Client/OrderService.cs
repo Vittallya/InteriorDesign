@@ -20,15 +20,17 @@ namespace BL
 
         public OrderParams OrderParams { get; private set; }
 
-        public bool HasOrderParams => _service?.NeedDetails ?? false;
+        public bool HasOrderParams { get; private set; }
 
         public string ErrorMessage { get; private set; }
 
-        public Service SelectedService => _service;
+        public Service ServiceDetail => _service;
         public Style SelectedStyle => _style;
 
+        public IEnumerable<Service> SelectedServices => _services;
+
         private Service _service;
-        private ICollection<int> _services;
+        private IEnumerable<Service> _services;
         private Style _style;
 
         private double _serviceCost;
@@ -36,7 +38,10 @@ namespace BL
 
         public void SetupServices(IEnumerable<Service> services)
         {
-            _services = services.Select(x => x.Id).ToList();
+            _services = services;
+            HasOrderParams = services.Any(x => x.NeedDetails);
+            if (HasOrderParams)
+                _service = services.First(x => x.NeedDetails);
         }
 
         public void SetupStyle(Style style)
@@ -61,11 +66,6 @@ namespace BL
 
         public async Task<bool> ApplyOrderAndCompleteAsync(int clientId)
         {
-            if(_service == null)
-            {
-                ErrorMessage = "Service is not setted";
-                return false;
-            }
 
             if(HasOrderParams && _style == null)
             {
@@ -79,10 +79,13 @@ namespace BL
             order.CommonCost = GetCommonCost();
             order.ClientId = clientId;
 
-            foreach(var sId in _services)
+            await dbContext.Services.Include(x => x.Orders).LoadAsync();
+
+            foreach(var sId in _services.Select(x => x.Id))
             {
-                var serv = dbContext.Services.FindAsync(sId);
-                
+                var serv = await dbContext.Services.FindAsync(sId);
+                serv.Orders?.Add(order);
+                dbContext.Entry(serv).State = EntityState.Modified;
             }
 
             if (order.StartWorkingDate1.HasValue)
@@ -128,12 +131,17 @@ namespace BL
 
         public double GetCommonCost()
         {
-            return !HasOrderParams ? _serviceCost : calculatorService.GetPrices(_serviceCost, OrderParams).CommonCost;
+            double cost = HasOrderParams ?
+                GetPrices().CommonCost - ServiceDetail.Cost : 0;
+
+            cost += _services.Sum(x => x.Cost);
+
+            return cost;
         }
 
         public OrderPrice GetPrices()
         {
-            return calculatorService.GetPrices(_serviceCost, OrderParams);
+            return calculatorService.GetPrices(ServiceDetail.Cost, OrderParams);
         }
 
         public void Clear()
@@ -142,6 +150,7 @@ namespace BL
             IsWrited = false;
             _style = null;
             _service = null;
+            _services = null;
             Order = new Order();
         }
     }

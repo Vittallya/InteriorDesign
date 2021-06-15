@@ -14,5 +14,7 @@ namespace DAL.Models
         public string CostUnitName { get; set; }
         public string Description { get; set; }
         public bool NeedDetails { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }

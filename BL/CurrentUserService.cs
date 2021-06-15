@@ -17,6 +17,8 @@ namespace BL
 
         public bool IsSkipped { get; set; }
 
+        public bool IsAdmin { get; private set; }
+
         public event Action Autorized;
         public event Action Exited;
         public event Action Skipped;
@@ -35,12 +37,12 @@ namespace BL
             Exited?.Invoke();
         }
 
-        public void SetupUser(IUser user)
+        public void SetupUser(IUser user, bool isAdmin = false)
         {
             CurrentUser = user;
             IsAutorized = true;
+            IsAdmin = isAdmin;
             Autorized?.Invoke();
         }
-        
     }
 }

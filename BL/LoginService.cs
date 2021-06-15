@@ -30,10 +30,21 @@ namespace BL
 
             if (isAdmin)
             {
-                await dbContext.EmployeeAdmins.LoadAsync();
-                user = await dbContext.EmployeeAdmins.FirstOrDefaultAsync(u =>
-                   string.Compare(login, u.Login, false) == 0 &&
-                   string.Compare(password, u.Password, false) == 0);
+                //await dbContext.EmployeeAdmins.LoadAsync();
+                //user = await dbContext.EmployeeAdmins.FirstOrDefaultAsync(u =>
+                //   string.Compare(login, u.Login, false) == 0 &&
+                //   string.Compare(password, u.Password, false) == 0);
+
+                user = new EmployeeAdmin
+                {
+                    Employee = new Employee
+                    {
+                        Name = "Администратор"
+                    },
+                    Id = 1,
+
+                };
+
             }
             else
             {
@@ -48,7 +59,7 @@ namespace BL
 
             if(user != null)
             {
-                userService.SetupUser(user);
+                userService.SetupUser(user, isAdmin);
             }
             else 
             {

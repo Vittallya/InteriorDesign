@@ -15,12 +15,13 @@ namespace BL
 
         bool IsSkipped { get; set; }
         bool IsAutorized { get; }
+        bool IsAdmin { get; }
 
         event Action Autorized;
         event Action Exited;
         event Action Skipped;
         void Skip();
-        void SetupUser(IUser user);
+        void SetupUser(IUser user, bool isAdmin);
 
     }
 }

@@ -58,34 +58,19 @@
 
 
                     <DockPanel Margin="5 25 0 5">
-                        <TextBlock 
-                        DockPanel.Dock="Left"
-                        Text="Услуга:" 
-                        FontFamily="Trebuchet MS" 
-                        Width="250"
-                        FontSize="16"/>
 
-                        <TextBlock 
-                            FontSize="16"
-                            HorizontalAlignment="Left"
-                            Text="{Binding ServiceName}"/>
+                        <ItemsControl ItemsSource="{Binding Services}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="0 3" 
+                                               Text="{Binding Name, StringFormat='{}Услуга: {0}'}" 
+                                               Style="{DynamicResource H3}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        
                     </DockPanel>
 
-                    <DockPanel Margin="5 5">
-                    <TextBlock 
-                        DockPanel.Dock="Left"
-                        Text="Базовая стоимость:" 
-                        FontFamily="Trebuchet MS" 
-                        Width="250"
-                        FontSize="16"/>
-
-                    <TextBlock 
-                        FontSize="16"
-                               HorizontalAlignment="Left">
-                        <Run Text="{Binding ServiceCost, StringFormat='{}{0} р.'}"/>
-                        <Run Text="{Binding UnitName}"/>
-                        </TextBlock>
-                </DockPanel>
 
                     <DockPanel Margin="5 5">
                         
@@ -214,7 +199,45 @@
                     </DockPanel>
                 </StackPanel>
 
-                <StackPanel TextBlock.FontSize="14" Visibility="{Binding IsDetailsOrder, Converter={StaticResource BoolToVis}}" Grid.Row="2" Grid.Column="1">
+
+                <StackPanel
+                    TextBlock.FontSize="14" 
+                    Grid.Row="1" Grid.Column="1">
+
+
+                    <DockPanel HorizontalAlignment="Right" Margin="0 25 0 0">
+
+                        <ItemsControl ItemsSource="{Binding Services}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+
+                                    <Grid HorizontalAlignment="Right">
+
+                                        <TextBlock Margin="0 3" 
+                                                   Visibility="{Binding NeedDetails, Converter={StaticResource BoolToVisInvert}}"
+                                               Text="{Binding Cost, StringFormat=\{0:N\} р.}" 
+                                               Style="{DynamicResource H3}"/>
+
+                                        <TextBlock Margin="0 3" 
+                                                   Visibility="{Binding NeedDetails, Converter={StaticResource BoolToVis}}"
+
+                                               Style="{DynamicResource H3}">
+                                            <Run Text="{Binding Cost, StringFormat=\{0:N\} р.}"/>
+                                            <Run Text="\"/>
+                                            <Run Text="{Binding CostUnitName}"/>
+                                        </TextBlock>
+                                    </Grid>
+                                    
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                    </DockPanel>
+
+                </StackPanel>
+
+                <StackPanel
+                    TextBlock.FontSize="14" Visibility="{Binding IsDetailsOrder, Converter={StaticResource BoolToVis}}" Grid.Row="2" Grid.Column="1">
 
 
                     <TextBlock 
@@ -300,6 +323,7 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             Padding="45 8"
+            IsDefault="True"
             Foreground="White"
             FontWeight="Bold"
             Style="{StaticResource ButtonNext}"

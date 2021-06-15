@@ -8,6 +8,7 @@ using BL;
 using DAL.Models;
 using System.Windows.Input;
 using Main.Pages;
+using System.Collections.ObjectModel;
 
 namespace Main.ViewModels
 {
@@ -19,7 +20,7 @@ namespace Main.ViewModels
         private readonly EventBus eventBus;
 
         public OrderParams Params { get; }
-        public OrderPrice Prices { get; }
+        public OrderPrice Prices { get; private set; }
 
         public bool IsDetailsOrder { get; set; }
 
@@ -32,8 +33,13 @@ namespace Main.ViewModels
 
         public Style Style { get; set; }
 
-        public OrderConfirmViewModel(PageService pageService, IUserRegisterService registerService,  OrderService paramsService, 
-            ICurrentUserService userService, EventBus eventBus) : base(pageService)
+        public ObservableCollection<Service> Services { get; set; }
+
+        public OrderConfirmViewModel(PageService pageService,
+                                     IUserRegisterService registerService,
+                                     OrderService paramsService,
+                                     ICurrentUserService userService,
+                                     EventBus eventBus) : base(pageService)
         {
             this.pageService = pageService;
             this.registerService = registerService;
@@ -41,23 +47,30 @@ namespace Main.ViewModels
             this.Params = paramsService.OrderParams;
             this.userService = userService;
             this.eventBus = eventBus;
-            ServiceName = paramsService.SelectedService.Name;
-            ServiceCost = paramsService.SelectedService.Cost;
-            IsDetailsOrder = paramsService.HasOrderParams;
+            Init();
+        }
+        void Init()
+        {
+
+            Services = new ObservableCollection<Service>(orderService.SelectedServices);
+
+            IsDetailsOrder = orderService.HasOrderParams;
 
 
             if (IsDetailsOrder)
             {
-                Prices = paramsService.GetPrices();
+                Prices = orderService.GetPrices();
                 HouseTypePercent = Prices.HouseTypeCost * 100;
-                Style = paramsService.SelectedStyle;
+                Style = orderService.SelectedStyle;
                 IsWallAlignment = Params.IsWallAlignment ? "Да" : "Нет";
                 HouseType = OrderParamsExtensions.HouseTypes[Params.HouseType];
-                UnitName = "\\" + paramsService.SelectedService.CostUnitName;
-            }
-            Cost = paramsService.GetCommonCost();
-        }
 
+
+
+                UnitName = "\\" + Services.First(x => x.NeedDetails).CostUnitName;
+            }
+            Cost = orderService.GetCommonCost();
+        }
         public double HouseTypePercent { get; set; }
 
         public string UnitName { get; set; }
@@ -87,15 +100,34 @@ namespace Main.ViewModels
 
         private async Task CompleteOrderPorcess(MVVM_Core.Events.ClientRegistered @event)
         {
-            pageService.ClearHistoryByPool(Rules.Pages.SERVICES_POOL);
-            await orderService.ApplyOrderAndCompleteAsync(@event.User.Id);            
-            await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName));
-            orderService.Clear();
+
+            var w = new Windwos.DogovorWindow();
+
+            var dc = new DogovorViewModel
+            {
+                IsConfirmRequiered = true,
+                Address = orderService.Order.Address,
+                Customer = @event.User.Name,
+                Area = orderService.OrderParams?.Area ?? 0,
+            };
+
+            w.DataContext = dc;
+
+            w.ShowDialog();
+
+            if (dc.IsConfirmed)
+            {
+
+                pageService.ClearHistoryByPool(Rules.Pages.SERVICES_POOL);
+                await orderService.ApplyOrderAndCompleteAsync(@event.User.Id);
+                await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName));
+                orderService.Clear();
+            }
+            else
+            {
+                await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName, 2));
+            }
         }
 
-        private async void UserService_Registered()
-        {
-            await orderService.ApplyOrderAndCompleteAsync(userService.CurrentUser.Id);
-        }
     }
 }

@@ -4,6 +4,7 @@ using Main.ViewModels;
 using DAL;
 using BL;
 using System.Threading.Tasks;
+using Main.ViewModels.Admin;
 
 namespace Main
 {
@@ -27,6 +28,7 @@ namespace Main
             services.AddTransient<ClientResultViewModel>();
             services.AddTransient<ClientCheckCodeViewModel>();
             services.AddTransient<ViewModels.WorkersViewModel>();
+            services.AddTransient<ViewModels.Admin.AdminViewModel>();
 
 
             //Services/////////////////////////////////
@@ -69,5 +71,6 @@ namespace Main
         public  ClientCheckCodeViewModel ClientCheckCodeViewModel => Services.GetRequiredService<ClientCheckCodeViewModel>();
         public  WorkersViewModel WorkersViewModel => Services.GetRequiredService<WorkersViewModel>();
         public  ClientOrdersViewModel ClientOrdersViewModel => Services.GetRequiredService<ClientOrdersViewModel>();
+        public  AdminViewModel AdminViewModel => Services.GetRequiredService<AdminViewModel>();
     }
 }

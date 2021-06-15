@@ -55,7 +55,7 @@ namespace BL
             try
             {
                 await allDbContext.SaveChangesAsync();
-                userService.SetupUser(client);
+                userService.SetupUser(client, false);
                 Registered?.Invoke();
             }
             catch(Exception ex)

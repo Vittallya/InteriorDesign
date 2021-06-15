@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
+    public enum OrderStatus
+    {
+        Active, Completed, Canceled, CanceledByAdmin
+    }
+
     public class Order
     {
         public int Id { get; set; }
         public int ClientId { get; set; } 
         public DateTime CreationDate { get; set; }
-        public int ServiceId { get; set; }
         public DateTime StartWorkingDate { get; set; }
 
         [NotMapped]
@@ -20,8 +24,8 @@ namespace DAL.Models
 
         public double CommonCost { get; set; }
 
-        public Client Client { get; set; }
-        public virtual Service Service { get; set; }
+        public virtual Client Client { get; set; }
+        public virtual ICollection<Service> Services { get; set; }
 
         public virtual OrderDetail OrderDetail { get; set; }
 

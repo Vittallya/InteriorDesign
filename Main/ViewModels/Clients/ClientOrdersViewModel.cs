@@ -15,16 +15,21 @@
     {
         private readonly IClientOrders clientOrders;
         private readonly PageService pageService;
+        private readonly ICurrentUserService userService;
         private readonly EventBus bus;
 
         public ObservableCollection<Components.OrderItem> Orders { get; set; }
 
         public bool AnimationVisible { get; set; }
 
-        public ClientOrdersViewModel(IClientOrders clientOrders, PageService pageService, EventBus bus)
+        public ClientOrdersViewModel(IClientOrders clientOrders,
+                                     PageService pageService,
+                                     ICurrentUserService userService,
+                                     EventBus bus)
         {
             this.clientOrders = clientOrders;
             this.pageService = pageService;
+            this.userService = userService;
             this.bus = bus;
             Init();
         }
@@ -34,6 +39,8 @@
             pageService.ChangePage<Pages.ClientHomePage>();
         });
 
+
+
         public ICommand DeleteOrder => new CommandAsync(async x =>
         {
             
@@ -42,10 +49,10 @@
             {
                 if (MessageBox.Show("Оменить заказ?", "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    string serviceName = item.Order.Service.Name;
+                    //string serviceName = item.Order.Services.Name;
 
                     await clientOrders.RemoveOrder(item.Order);
-                    await bus.Publish(new MVVM_Core.Events.OrderCompleted(serviceName, 1));
+                    //await bus.Publish(new MVVM_Core.Events.OrderCompleted(serviceName, 1));
                     Init();                    
                 }
             }
@@ -58,8 +65,9 @@
         async void Init()
         {
             AnimationVisible = true;
+            await clientOrders.ReloadAsync();
 
-            var orders = (await clientOrders.GetOrdersAsync()).ToList();
+            var orders = clientOrders.GetOrders(userService.CurrentUser.Id);
 
             orders = orders.OrderBy(x => x.StartWorkingDate).ToList();
 

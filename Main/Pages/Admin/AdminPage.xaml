@@ -1,0 +1,96 @@
+﻿<Page x:Class="Main.Pages.Admin.AdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Main.Pages.Admin"
+      mc:Ignorable="d" 
+      DataContext="{Binding Source={StaticResource Locator}, Path=AdminViewModel}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdminPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock 
+            Grid.Row="0"
+            VerticalAlignment="Center"
+            Grid.Column="1"
+            Style="{DynamicResource H1}"
+            Text="Панель администратора"/>
+
+
+        <ScrollViewer
+            Grid.Column="1"
+            Grid.Row="1"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            
+        
+            <ItemsControl
+            ItemsSource="{Binding Orders}">
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="270"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Margin="0 10">
+                            <TextBlock
+                            Style="{DynamicResource H3}">
+                            <Run Text="Номер заказа: "/>
+                            <Run Text="{Binding Id, StringFormat='{}{0}'}"/>
+                            </TextBlock>
+                            <TextBlock
+                            Style="{DynamicResource H3}">
+                            
+                            <Run Text="Дата заказа: "/>
+                            <Run Text="{Binding CreationDate, StringFormat='dd.MM.yyyy hh:mm'}"/>
+                            </TextBlock>
+
+                            <TextBlock
+                            Style="{DynamicResource H3}">
+                            
+                            <Run Text="Заказчик: "/>
+                            <Run Text="{Binding Client.Name, StringFormat='dd.MM.yyyy hh:mm'}"/>
+                            </TextBlock>
+
+                        </StackPanel>
+
+
+                            <Button 
+                            Grid.Column="1"
+                            Padding="45 5"
+                            FontSize="15"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Command="{Binding ShowDog}"
+                            DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Path=DataContext}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext}"
+                            
+                            Content="Договор"/>
+                    </Grid>
+                    
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            
+        </ItemsControl>
+
+
+        </ScrollViewer>
+    </Grid>
+</Page>

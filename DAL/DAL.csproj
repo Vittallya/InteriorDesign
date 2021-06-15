@@ -116,9 +116,13 @@
     <Compile Include="Migrations\202103130831050_EmpImage.designer.cs">
       <DependentUpon>202103130831050_EmpImage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202106031650020_seed.cs" />
-    <Compile Include="Migrations\202106031650020_seed.designer.cs">
-      <DependentUpon>202106031650020_seed.cs</DependentUpon>
+    <Compile Include="Migrations\202106151632373_manyServicesInOrder.cs" />
+    <Compile Include="Migrations\202106151632373_manyServicesInOrder.designer.cs">
+      <DependentUpon>202106151632373_manyServicesInOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106151633280_seed.cs" />
+    <Compile Include="Migrations\202106151633280_seed.designer.cs">
+      <DependentUpon>202106151633280_seed.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\WorkingStatus.cs" />
@@ -193,8 +197,11 @@
     <EmbeddedResource Include="Migrations\202103130831050_EmpImage.resx">
       <DependentUpon>202103130831050_EmpImage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106031650020_seed.resx">
-      <DependentUpon>202106031650020_seed.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106151632373_manyServicesInOrder.resx">
+      <DependentUpon>202106151632373_manyServicesInOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106151633280_seed.resx">
+      <DependentUpon>202106151633280_seed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

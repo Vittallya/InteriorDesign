@@ -17,7 +17,7 @@ namespace Main.MVVM_Core.Events
         public string ServiceName { get; set; }
 
         /// <summary>
-        /// Результат обработки заказа: 0 - успех, 1 - неуспех
+        /// Результат обработки заказа: 0 - успех, 1 - неуспех, 2 - договор не подписан
         /// </summary>
         public int Result { get; set; }
     }

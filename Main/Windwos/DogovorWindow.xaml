@@ -1,0 +1,124 @@
+﻿<Window x:Class="Main.Windwos.DogovorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Main.Windwos" xmlns:viewmodels="clr-namespace:Main.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:DogovorViewModel}"
+        mc:Ignorable="d"
+        Title="DogovorWindow" Height="450" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        
+        
+        <FlowDocumentScrollViewer 
+            Grid.Column="1"
+            Background="White"
+            x:Name="viewer"
+            HorizontalAlignment="Center"
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Disabled">
+            <FlowDocument 
+                x:Name="flow"
+                FontSize="15" FontFamily="Times New Roman">
+                <Paragraph FontSize="32">
+
+                    <Run Text="Договор №"/>
+                    <Run Text="{Binding DogovorNumber, StringFormat='{}{0}'}"/>
+                    <LineBreak />
+                    <Run FontSize="20" Text="на оказание услуг по разработке дизайн-проекта"/>
+                </Paragraph>
+
+                <BlockUIContainer TextBlock.FontSize="18">
+                    <Grid>
+                        <TextBlock Text="г. Набережные Челны" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{Binding Date}" HorizontalAlignment="Right">
+                            <Run Text=""/>
+                            <Run Text="___________"/>
+                            <Run Text="20___г."/>
+                        </TextBlock>
+
+                    </Grid>
+                </BlockUIContainer>
+
+                <Paragraph FontSize="18" TextAlignment="Justify">
+                    Общество с Ограниченной Ответственностью «Софт-Декор» в лице Генерального директора Майорова Павла Андреевича, действующего на основании Устава, именуемое в дальнейшем Исполнитель, с одной стороны и
+                    <Run FontWeight="DemiBold" Text="{Binding Customer}"/> , именуемый(ая) в дальнейшем Заказчик, с другой стороны, совместно именуемые Стороны, заключили между собой настоящий Договор о нижеследующем. Материал взят с сайта http://polinov.ru
+
+                </Paragraph>
+
+                <Section >
+                    <Paragraph FontSize="18">
+                        <Run FontSize="25" FontWeight="Bold" Text="1.Предмет договора"/>
+                        <LineBreak/>
+                        <LineBreak/>
+                        
+                        
+                        
+                        1.1.Заказчик поручает, а Исполнитель принимает на себя обязательства по выполнению дизайн - проекта помещения(ий), расположенного по адресу:
+                        <Run FontWeight="DemiBold" Text="{Binding Address}"/>. Предварительный размер общей площади помещения(ий) составляет
+                        <Run FontWeight="DemiBold" Text="{Binding Area, StringFormat=\{0:N\}}"/> кв.м. по полу.
+
+                        
+                        <ItemsControl ItemsSource="{Binding Services}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        
+                        <LineBreak />
+
+                        1.2.Дизайн – проект (далее – проект) разрабатывается по заданию Заказчика (Техническому заданию – Приложение №1), согласованному с Исполнителем и представляет собой рабочий проект, существующий в виде эскизов и чертежей. Состав проекта – Приложение №2.
+
+                        <LineBreak/>
+                        1.3.3аказчик обязуется принять и оплатить выполненные работы, на условиях, предусмотренных настоящим Договором. Материал взят с сайта http://polinov.ru
+                    </Paragraph>
+                </Section>
+            </FlowDocument>
+        </FlowDocumentScrollViewer>
+
+
+        <StackPanel
+            Grid.Column="1"
+            Grid.Row="1">
+
+            <Button 
+            Style="{DynamicResource ButtonNext}"
+            FontSize="16"
+            FontWeight="Bold"
+            IsDefault="True"
+                Padding="0 10"
+            Foreground="White"
+            Command="{Binding Confirm}"
+            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+            Visibility="{Binding IsConfirmRequiered, Converter={StaticResource BoolToVis}}"
+            Content="Прянять условия договра"/>
+
+            <Button 
+            Margin="0 10"
+            Grid.Column="1"
+            Grid.Row="1"
+            FontSize="16"
+                Padding="0 5"
+            FontWeight="Bold"
+            IsDefault="True"
+                Click="Button_Click"
+            Content="На печать"/>
+        </StackPanel>
+
+
+    </Grid>
+</Window>

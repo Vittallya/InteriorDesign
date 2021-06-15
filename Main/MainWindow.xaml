@@ -136,7 +136,7 @@
                         Header="Авторизоваться"/>
                 <MenuItem  
                             Command="{Binding ToOrdersViewCommand}"
-                            Visibility="{Binding IsGuest, Converter={StaticResource BoolToVisInvert}}"
+                            Visibility="{Binding IsOrdersVis, Converter={StaticResource BoolToVis}}"
                             HorizontalContentAlignment="Stretch"
                         Foreground="Black"
                         Template="{DynamicResource MenuItemUser}"
@@ -213,7 +213,7 @@
                         Header="Авторизоваться"/>
                 <MenuItem  
                             Command="{Binding ToOrdersViewCommand}"
-                            Visibility="{Binding IsGuest, Converter={StaticResource BoolToVisInvert}}"
+                            Visibility="{Binding IsOrdersVis, Converter={StaticResource BoolToVis}}"
                             HorizontalContentAlignment="Stretch"
                         Foreground="Black"
                         Template="{DynamicResource MenuItemUser}"

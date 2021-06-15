@@ -10,6 +10,7 @@ using DAL.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Main.Pages;
+using System.Collections;
 
 namespace Main.ViewModels
 {
@@ -73,19 +74,26 @@ namespace Main.ViewModels
                 modelService.GetServicesAsync(name?.ToString()));
         });
 
-        public ICommand Next => new Command(name =>
+        public ICommand Next => new Command(obj =>
         {
 
-            if (Selected.NeedDetails)
+            if(obj is IList list)
             {
-                pageService.ChangePage<StylesPage>(Rules.Pages.SERVICES_POOL, AnimateTo.Left);
+                var services = list.OfType<Service>();
+
+                if (services.Any(x => x.NeedDetails))
+                {
+                    paramsService.SetupServices(services);
+                    pageService.ChangePage<StylesPage>(Rules.Pages.SERVICES_POOL, AnimateTo.Left);
+                }
+                else
+                {
+                    paramsService.Clear();
+                    paramsService.SetupServices(services);
+                    pageService.ChangePage<AddressAndDateTimePage>(Rules.Pages.SERVICES_POOL, AnimateTo.Left);
+                }
             }
-            else
-            {
-                paramsService.Clear();
-                pageService.ChangePage<AddressAndDateTimePage>(Rules.Pages.SERVICES_POOL, AnimateTo.Left);
-            }
-            paramsService.SetupServices(Selected);
+
 
         }, x => Selected != null);
 

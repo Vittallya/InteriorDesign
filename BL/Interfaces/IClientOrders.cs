@@ -9,7 +9,9 @@ namespace BL
 {
     public interface IClientOrders
     {
-        Task<IEnumerable<Order>> GetOrdersAsync();
+        Task ReloadAsync();
         Task RemoveOrder(Order order);
+
+        IEnumerable<Order> GetOrders(int clientId);
     }
 }

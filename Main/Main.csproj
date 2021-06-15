@@ -110,6 +110,9 @@
     <Compile Include="Pages\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Admin\AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Client\AddressAndDateTimePage.xaml.cs">
       <DependentUpon>AddressAndDateTimePage.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,7 @@
     <Compile Include="MVVM_Core\BaseViewModel.cs" />
     <Compile Include="MVVM_Core\BasePageViewModel.cs" />
     <Compile Include="Rules\PageBranches.cs" />
+    <Compile Include="ViewModels\Admin\AdminViewModel.cs" />
     <Compile Include="ViewModels\Clients\ClientOrdersViewModel.cs" />
     <Compile Include="ViewModels\Clients\ClientCheckCodeViewModel.cs" />
     <Compile Include="ViewModels\Clients\ClientRegisterViewModel.cs" />
@@ -173,6 +177,7 @@
     <Compile Include="ViewModels\Components\HeaderBarItem.cs" />
     <Compile Include="ViewModels\Components\NotificationItem.cs" />
     <Compile Include="ViewModels\Components\OrderItem.cs" />
+    <Compile Include="ViewModels\DogovorViewModel.cs" />
     <Compile Include="ViewModels\EditStylesViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -182,6 +187,12 @@
     <Compile Include="ViewModels\Clients\StylesViewModel.cs" />
     <Compile Include="ViewModels\Clients\ClientHomeViewModel.cs" />
     <Compile Include="ViewModels\Clients\WorkersViewModel.cs" />
+    <Compile Include="Windwos\DogovorWindow.xaml.cs">
+      <DependentUpon>DogovorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windwos\OrderDetails.xaml.cs">
+      <DependentUpon>OrderDetails.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -196,6 +207,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Admin\AdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -280,6 +295,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Xaml\Text.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windwos\DogovorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windwos\OrderDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

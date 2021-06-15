@@ -30,6 +30,7 @@ namespace Main.ViewModels
             pageService.ChangePage<Main.Pages.LoginPage>();
         }
         public string UserName { get; set; }
+        public bool IsClient { get; set; }
         private void UserService_Skipped()
         {
             UserName = "Гость";
@@ -38,6 +39,9 @@ namespace Main.ViewModels
         }
         public bool HeaderPanelVisibility { get; set; }
         public bool IsGuest { get; set; }
+
+        public bool IsOrdersVis { get; set; }
+
         private void UserService_Exited()
         {
             pageService.ClearAllPools();
@@ -49,6 +53,7 @@ namespace Main.ViewModels
             UserName = userService.CurrentUser?.Name;
             HeaderPanelVisibility = true;
             IsGuest = false;
+            IsOrdersVis = !userService.IsAdmin;
         }
         public ICommand ToLoginPageCommand => new Command(x =>
         {

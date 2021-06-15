@@ -20,18 +20,19 @@ namespace BL
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Order>> GetOrdersAsync()
+        private IEnumerable<Order> _orders;
+
+        public async Task ReloadAsync()
         {
-            if(_client != null)
-            {
-                await dbContext.Orders.Include(x => x.Service).LoadAsync();
-                await dbContext.OrderDetails.Include(x => x.Style).LoadAsync();
+            await dbContext.Orders.Include(x => x.Services).LoadAsync();
+            await dbContext.OrderDetails.Include(x => x.Style).LoadAsync();
 
-                var orders = dbContext.Orders.Where(x => x.ClientId == _client.Id).ToList();
+            _orders = await dbContext.Orders.AsNoTracking().ToListAsync();
+        }
 
-                return orders;
-            }
-            return null;
+        public IEnumerable<Order> GetOrders(int clientId)
+        {
+            return _orders.Where(x => x.ClientId == clientId);
         }
 
         public async Task RemoveOrder(Order order)
