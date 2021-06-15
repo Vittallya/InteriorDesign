@@ -19,18 +19,25 @@
         </Grid.RowDefinitions>
 
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+
         <Border 
+            Grid.Column="1"
             TextBlock.FontSize="14"
-            Grid.ColumnSpan="2"
-            Grid.Column="0" 
             BorderThickness="5"
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
             CornerRadius="4"
+            Padding="45 15"
             Grid.Row="1" 
             BorderBrush="White" Background="White">
 
-            <Grid Margin="45 15 45 10" HorizontalAlignment="Center">
+            <Grid>
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
@@ -56,9 +63,10 @@
                         Text="Услуга:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
-                        FontSize="14"/>
+                        FontSize="16"/>
 
                         <TextBlock 
+                            FontSize="16"
                             HorizontalAlignment="Left"
                             Text="{Binding ServiceName}"/>
                     </DockPanel>
@@ -69,9 +77,10 @@
                         Text="Базовая стоимость:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
-                        FontSize="14"/>
+                        FontSize="16"/>
 
                     <TextBlock 
+                        FontSize="16"
                                HorizontalAlignment="Left">
                         <Run Text="{Binding ServiceCost, StringFormat='{}{0} р.'}"/>
                         <Run Text="{Binding UnitName}"/>
@@ -85,10 +94,11 @@
                             Text="Дата начала работ:" 
                             FontFamily="Trebuchet MS" 
                             Width="250"
-                            FontSize="14"/>
+                            FontSize="16"/>
 
                         <TextBlock 
                             HorizontalAlignment="Left"
+                        FontSize="16"
                             Text="{Binding orderService.Order.StartWorkingDate1, StringFormat='dd.MM.yyyy'}"/>
                         
                     </DockPanel>
@@ -99,10 +109,11 @@
                         Text="Стиль:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
-                        FontSize="14"/>
+                        FontSize="16"/>
 
                     <TextBlock 
                                HorizontalAlignment="Left"
+                        FontSize="16"
                                Text="{Binding Style.Name}"/>
 
                 </DockPanel>
@@ -120,11 +131,11 @@
                         Text="Общая площадь помещения:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
-                        FontSize="14"/>
+                        FontSize="16"/>
 
                         <TextBlock 
                             HorizontalAlignment="Left"
-                            >
+                        FontSize="16" >
                             <Run Text="{Binding Params.Area}"/>
                             <Run Text="кв. м."/>
                         </TextBlock>
@@ -138,9 +149,10 @@
                         Text="Высота потолков:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
-                        FontSize="14"/>
+                        FontSize="16"/>
 
                         <TextBlock 
+                        FontSize="16"
                             HorizontalAlignment="Left"
                             Width="80">
                             <Run Text="{Binding Params.FloorsHeight}"/>
@@ -156,9 +168,10 @@
                         Text="Тип помещения:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
-                        FontSize="14"/>
+                        FontSize="16"/>
 
                         <TextBlock 
+                        FontSize="16"
                         HorizontalAlignment="Left"
                         Width="80"
                         Text="{Binding HouseType}"/>
@@ -171,10 +184,11 @@
                         Text="Нужно ли выравнивание стен:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
-                        FontSize="14"/>
+                        FontSize="16"/>
 
                         <TextBlock 
                         Width="80"
+                        FontSize="16"
                         HorizontalAlignment="Left"
                         Text="{Binding IsWallAlignment}"/>
 
@@ -188,9 +202,12 @@
                         Text="Количество комнат:" 
                         FontFamily="Trebuchet MS" 
                         Width="250"
-                        FontSize="14"/>
+                        FontSize="16"/>
 
-                        <TextBlock HorizontalAlignment="Left" Text="{Binding Params.Rooms}"/>
+                        <TextBlock 
+                            HorizontalAlignment="Left"
+                            FontSize="16" 
+                            Text="{Binding Params.Rooms}"/>
 
                         
 
@@ -204,13 +221,14 @@
                             HorizontalAlignment="Right"
                             DockPanel.Dock="Left"
                             FontWeight="Bold"
-                            FontSize="16"
+                            FontSize="18"
                             Text="{Binding Prices.AreaCost, Mode=OneWay, StringFormat='{}{0} р.'}"
                             Margin="15 5"/>
 
                     <TextBlock 
                             HorizontalAlignment="Right"
                             DockPanel.Dock="Left"
+                            FontSize="17"
                             Text="{Binding Prices.FloorsCost, Mode=OneWay, StringFormat='{}+{0} р.'}"
                             FontWeight="Medium"
                             Margin="15 5"/>
@@ -220,6 +238,7 @@
                             DockPanel.Dock="Left"
                             Text="{Binding HouseTypePercent, Mode=OneWay, StringFormat='{}+{0} % от общ. суммы'}"
                             FontWeight="Medium"
+                            FontSize="17"
                             Margin="15 5"/>
 
                     <TextBlock 
@@ -227,6 +246,7 @@
                             DockPanel.Dock="Left"
                             Text="{Binding Prices.WallAlignmentCost, Mode=OneWay, StringFormat='{}+{0} р.'}"
                             FontWeight="Medium"
+                            FontSize="17"
                             Margin="15 5"/>
 
                     <TextBlock 
@@ -234,6 +254,7 @@
                             DockPanel.Dock="Left"
                             Text="{Binding Prices.RoomsCost,Mode=OneWay, StringFormat='{}+{0} р.'}"
                             FontWeight="Medium"
+                            FontSize="17"
                             Margin="15 5"/>
 
                 </StackPanel>
@@ -242,13 +263,13 @@
                     Margin="0 25" 
                     Grid.Row="3" 
                     Grid.ColumnSpan="2" 
-                    TextBlock.FontSize="14"
+                    TextBlock.FontSize="18"
                     VerticalAlignment="Bottom">
 
                     <Border Height="1" Background="Black" DockPanel.Dock="Top" />
 
 
-                    <TextBlock FontSize="16" Margin="0 0 15 0" FontWeight="Bold"  DockPanel.Dock="Right">
+                    <TextBlock FontSize="20" Margin="0 0 15 0" FontWeight="Bold"  DockPanel.Dock="Right">
                         <Run Text="{Binding Cost, StringFormat='{}{0} р.'}"/>
                     </TextBlock>
                     <TextBlock  Text="Итого:"/>

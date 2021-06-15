@@ -16,7 +16,7 @@ namespace BL
 
         public async Task<bool> SendCode(string code, string emailReciever)
         {
-            MailAddress from = new MailAddress("testInteriorDesign@mail.ru", "Дизайн интерьеров");
+            MailAddress from = new MailAddress("dizaynintererov@mail.ru", "Дизайн интерьеров");
             // кому отправляем
             MailAddress to = new MailAddress(emailReciever);
             // создаем объект сообщения
@@ -30,7 +30,7 @@ namespace BL
             // адрес smtp-сервера и порт, с которого будем отправлять письмо
             SmtpClient smtp = new SmtpClient("smtp.mail.ru", 587);
             // логин и пароль
-            smtp.Credentials = new NetworkCredential("testInteriorDesign@mail.ru", "hgfhP6ER%423EJv");
+            smtp.Credentials = new NetworkCredential("dizaynintererov@mail.ru", "eVOYYmrui42(");
             smtp.EnableSsl = true;
 
             try

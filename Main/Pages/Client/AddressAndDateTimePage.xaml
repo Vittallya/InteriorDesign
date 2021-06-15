@@ -8,6 +8,9 @@
       DataContext="{Binding Source={StaticResource Locator}, Path=OtherParamsViewModel}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddressAndDateTimePage">
+    <Page.Background>
+        <SolidColorBrush Color="White"/>
+    </Page.Background>
 
     <Grid>
 
@@ -20,15 +23,16 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="12*" />
+            <ColumnDefinition Width="*" />
 
         </Grid.ColumnDefinitions>
 
         <TextBlock 
                 Grid.Column="1"
                 Grid.Row="0" 
+                Style="{DynamicResource H1}"
                 Text="Ввыберите дату и адрес:" 
-                VerticalAlignment="Center"
-                FontSize="24" FontFamily="Candara"/>
+                VerticalAlignment="Center"/>
 
 
         <Border 

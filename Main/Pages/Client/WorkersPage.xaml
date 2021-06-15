@@ -8,6 +8,9 @@
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{Binding Source={StaticResource Locator}, Path=WorkersViewModel}"
       Title="WorkersPage">
+    <Page.Background>
+        <SolidColorBrush Color="White"/>
+    </Page.Background>
 
     <Grid>
         <Grid.RowDefinitions>

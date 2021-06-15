@@ -6,108 +6,231 @@
         xmlns:local="clr-namespace:Main"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Width="{Binding Width}"
+        Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
         Title="MainWindow" Height="450">
-    <Grid>
+
+    <Window.Background>
+        <ImageBrush 
+                Stretch="UniformToFill"
+                ImageSource="/Main;component/Resources/MainScreen.jpg"/>
+    </Window.Background>
+
+    <Grid Background="{Binding GridBackground}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Visibility="{Binding HeaderPanelVisibility, Converter={StaticResource BoolToVis}}">
 
 
-           
 
-                <StackPanel  Orientation="Horizontal">
 
-                <ListView 
-                        ItemsSource="{Binding HeaderItems}"
-                        DisplayMemberPath="Header"                        
-                        SelectedItem="{Binding SelectedHeader}"
-                        BorderBrush="{x:Null}">
 
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
 
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="FontFamily" Value="Candara"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-                            <Setter Property="Margin" Value="10 0"/>
-                            <Setter Property="TextBlock.FontSize" Value="18"/>
-                            <Setter Property="Background" Value="#7F66AD64"/>
-                            <Setter Property="BorderBrush" Value="#FF66AD65"/>
-                            <Setter Property="Template" Value="{DynamicResource listViewHeaderBarT }"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    
-                </ListView>
 
-                <!--<RadioButton VerticalAlignment="Center" 
-                             Content="Главная" 
-                             Margin="10 0"
-                             IsChecked="True"
-                             Command="{Binding ToMainPageCommand}"
-                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                             Style="{DynamicResource radioHeaderBar}"
-                             Template="{DynamicResource radioHeaderBarT}"/>
 
-                <RadioButton VerticalAlignment="Center" 
-                             Content="Выбрать услугу" 
-                             Margin="10 0"
-                             Command="{Binding ChooseService}"
-                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                             Style="{DynamicResource radioHeaderBar}"
-                             Template="{DynamicResource radioHeaderBarT}"/>
-                    
-                <RadioButton VerticalAlignment="Center" 
-                             Style="{DynamicResource radioHeaderBar}"
-                             Margin="10 0" Content="Наши сотрудники"                              
-                             Command="{Binding OurEmployees}"
-                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                             Template="{DynamicResource radioHeaderBarT}"/>
+        <Frame Grid.Row="1" Grid.RowSpan="2" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
+        <Grid Background="Transparent"
+              Visibility="{Binding HeaderPanelVisibility, Converter={StaticResource BoolToVis}}">
 
-                <RadioButton VerticalAlignment="Center" 
-                             Style="{DynamicResource radioHeaderBar}"                             
-                             Command="{Binding About}"
-                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                             Margin="10 0" Content="О Нас" 
-                             Template="{DynamicResource radioHeaderBarT}"/>-->
-            </StackPanel>
 
-            <DockPanel 
+
+
+            <ListView 
+                    Margin="0 25"
+                TextBlock.Foreground="{Binding MenuForeground}"
+                    HorizontalAlignment="Center"
+                            ItemsSource="{Binding HeaderItems}"
+                            DisplayMemberPath="Header"    
+                        Background="Transparent"
+                            SelectedItem="{Binding SelectedHeader}"
+                            BorderBrush="{x:Null}">
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="FontFamily" Value="Candara"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Margin" Value="10 0"/>
+                        <Setter Property="TextBlock.FontSize" Value="18"/>
+                        <!--<Setter Property="Foreground" Value="White"/>-->
+                        <Setter Property="Background" Value="#7F66AD64"/>
+                        <Setter Property="BorderBrush" Value="#FF66AD65"/>
+                        <Setter Property="FontSize" Value="25"/>
+                        <Setter Property="Template" Value="{DynamicResource listViewHeaderBarT }"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+            </ListView>
+
+        </Grid>
+
+        <Menu
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
-                Margin="25 15"
+                Grid.RowSpan="2"
+                Background="Transparent"
+                Margin="25 5"
+                Visibility="{Binding LeftUserIconVis, Converter={StaticResource BoolToVis}}"
                 Grid.Column="1">
 
-                <Menu >
-                    <MenuItem FontSize="16" Header="{Binding UserName}">
-                        <MenuItem Visibility="{Binding IsGuest, Converter={StaticResource BoolToVis}}" 
-                                  Command="{Binding ToLoginPageCommand}"
-                                  Header="Авторизоваться"/>
-                        <MenuItem 
-                            Visibility="{Binding IsGuest, Converter={StaticResource BoolToVisInvert}}"
-                            Header="Мои заказы"
-                            Command="{Binding ToOrdersViewCommand}"/>
-                        <MenuItem Visibility="{Binding IsGuest, Converter={StaticResource BoolToVisInvert}}" 
-                                  Command="{Binding ToLoginPageCommand}"
-                                  Header="Выйти"/>
-                    </MenuItem>
-                </Menu>
-            </DockPanel>
-            
-        </Grid>
-        
-        <Frame Grid.Row="1" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
+            <MenuItem Background="White" Template="{DynamicResource MenuIconUser}">
+                <MenuItem.Header>
+                    <DockPanel 
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Grid.RowSpan="2"
+                Margin="25 5"
+                Visibility="{Binding IsHomePage, Converter={StaticResource BoolToVisInvert}}"
+                Grid.Column="1">
 
+
+                        <DockPanel DockPanel.Dock="Left" HorizontalAlignment="Center">
+
+                            <Ellipse Width="10" Height="10" Fill="Red"/>
+
+                            <Image 
+                                Margin="5 0 0 0"
+                                Height="60" Source="Resources/user14.png">
+
+                            </Image>
+                        </DockPanel>
+
+                        <Border
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="-10 0 0 0"
+                Padding="5 2 1 2"
+                CornerRadius="2"
+                Background="#FF4B4B4B">
+                            <TextBlock 
+                           FontSize="14"
+                    FontFamily="Microsoft YaHei"
+                    
+                    VerticalAlignment="Center"
+                           Foreground="White"
+                           Text="{Binding UserName}"/>
+
+                        </Border>
+
+                    </DockPanel>
+                </MenuItem.Header>
+
+
+
+
+                <MenuItem  
+                            Command="{Binding ToLoginPageCommand}"
+                            Visibility="{Binding IsGuest, Converter={StaticResource BoolToVis}}"
+                            HorizontalContentAlignment="Stretch"
+                        Foreground="Black"
+                        Template="{DynamicResource MenuItemUser}"
+                        Header="Авторизоваться"/>
+                <MenuItem  
+                            Command="{Binding ToOrdersViewCommand}"
+                            Visibility="{Binding IsGuest, Converter={StaticResource BoolToVisInvert}}"
+                            HorizontalContentAlignment="Stretch"
+                        Foreground="Black"
+                        Template="{DynamicResource MenuItemUser}"
+                        Header="Мои Заказы"/>
+                <MenuItem  
+                            Command="{Binding ToLoginPageCommand}"
+                            Visibility="{Binding IsGuest, Converter={StaticResource BoolToVisInvert}}"
+                            HorizontalContentAlignment="Stretch"
+                        Foreground="Black" 
+                        Template="{DynamicResource MenuItemUser}"
+                        Header="Выйти"/>
+
+            </MenuItem>
+
+        </Menu>
+
+        <Menu
+                Grid.RowSpan="2"
+                Margin="55 25"
+                Grid.Column="1"
+                Background="Transparent"
+                Visibility="{Binding RightUserIconVis, Converter={StaticResource BoolToVis}}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top">
+
+            <MenuItem Background="#FFDFAD52" Template="{DynamicResource MenuIconUser}">
+                <MenuItem.Header>
+
+                    <DockPanel >
+
+
+                        <Ellipse Width="10" Height="10" Fill="AliceBlue"/>
+                        
+                        <Grid Margin="5 0 0 0" DockPanel.Dock="Left" HorizontalAlignment="Center">
+                            <Ellipse Fill="#FFDFAD52"/>
+                            <Image 
+                    
+                    Height="80" Source="Resources/user7.png">
+
+                            </Image>
+                        </Grid>
+
+                        <Border
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="-15 0 0 0"
+                            Padding="5 2 1 2"
+                            CornerRadius="2"
+                            Background="#FFEDA41E">
+                            <TextBlock 
+                                FontSize="20"
+                                FontFamily="Microsoft YaHei"                    
+                                VerticalAlignment="Center"
+                           Foreground="White"
+                           Text="{Binding UserName}"/>
+
+                        </Border>
+
+
+
+
+                    </DockPanel>
+                </MenuItem.Header>
+
+
+
+
+                <MenuItem  
+                            Command="{Binding ToLoginPageCommand}"
+                            Visibility="{Binding IsGuest, Converter={StaticResource BoolToVis}}"
+                            HorizontalContentAlignment="Stretch"
+                        Foreground="Black"
+                        Template="{DynamicResource MenuItemUser}"
+                        Header="Авторизоваться"/>
+                <MenuItem  
+                            Command="{Binding ToOrdersViewCommand}"
+                            Visibility="{Binding IsGuest, Converter={StaticResource BoolToVisInvert}}"
+                            HorizontalContentAlignment="Stretch"
+                        Foreground="Black"
+                        Template="{DynamicResource MenuItemUser}"
+                        Header="Мои Заказы"/>
+                <MenuItem  
+                            Command="{Binding ToLoginPageCommand}"
+                            Visibility="{Binding IsGuest, Converter={StaticResource BoolToVisInvert}}"
+                            HorizontalContentAlignment="Stretch"
+                        Foreground="Black" 
+                        Template="{DynamicResource MenuItemUser}"
+                        Header="Выйти"/>
+
+            </MenuItem>
+
+        </Menu>
+        
+        
     </Grid>
     <Window.Resources>
         <Style TargetType="Control" x:Key="radioHeaderBar">
@@ -221,7 +344,7 @@
 
             </Grid>
             <ControlTemplate.Triggers>
-                
+
                 <Trigger Property="IsSelected" Value="True">
                     <Trigger.EnterActions>
                         <BeginStoryboard>
@@ -275,6 +398,185 @@
                 </Trigger>
             </ControlTemplate.Triggers>
 
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="MenuItemUser" TargetType="{x:Type MenuItem}">
+            <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="5 3"
+                    HorizontalAlignment="Stretch"
+                    CornerRadius="5"
+                    Cursor="Hand"
+                    RenderTransformOrigin="0.5 0.5"
+                    Background="{TemplateBinding Background}" 
+                    SnapsToDevicePixels="True">
+                
+                <Grid Margin="-1">
+                    <ContentPresenter x:Name="menuHeaderContainer" 
+                                      TextBlock.FontSize="17"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                      Content="{TemplateBinding Header}" Grid.Column="0" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="menuGestureText" Grid.Column="4" 
+                               Margin="{TemplateBinding Padding}" 
+                               Opacity="0.7" Text="{TemplateBinding InputGestureText}" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+
+
+
+
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter Property="Background" TargetName="templateRoot" Value="#FF26A0DA"/>
+                    <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF26A0DA"/>
+                    <Setter Property="TextBlock.Foreground" TargetName="menuHeaderContainer" Value="White"  />
+                </Trigger>
+
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#FF707070"/>
+                    <Trigger.EnterActions>
+                        
+                        <BeginStoryboard>
+                            <Storyboard>
+                                
+                            </Storyboard>    
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    
+                    <Trigger.ExitActions>
+
+                        <BeginStoryboard>
+                            <Storyboard>
+
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+
+
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsHighlighted" Value="True"/>
+                        <Condition Property="IsEnabled" Value="False"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" TargetName="templateRoot" Value="#0A000000"/>
+                    <Setter Property="BorderBrush" TargetName="templateRoot" Value="#21000000"/>
+                </MultiTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="MenuIconUser" TargetType="{x:Type MenuItem}">
+            <Border x:Name="templateRoot" 
+                    BorderBrush="{TemplateBinding BorderBrush}" 
+                    RenderTransformOrigin="0.5 0.5"
+                    Cursor="Hand"
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    Background="Transparent" SnapsToDevicePixels="True">
+
+                <Border.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Border.RenderTransform>
+                
+                <Grid x:Name="Grid" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Grid.Column="1" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom">
+                        <Border 
+                            CornerRadius="3"
+                            Padding="5 2"
+                            x:Name="SubMenuBorder"  BorderThickness="1" Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="SubMenuScrollViewer" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                <Grid x:Name="Grid1" RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas
+                                            Visibility="Collapsed"
+                                            x:Name="Canvas" 
+                                            HorizontalAlignment="Left" 
+                                        Height="0" VerticalAlignment="Top" Width="0">
+                                        <Rectangle x:Name="OpaqueRect" 
+                                                   Fill="{Binding Background, ElementName=SubMenuBorder}" 
+                                                   Height="{Binding ActualHeight, ElementName=SubMenuBorder}" 
+                                                   Width="{Binding ActualWidth, ElementName=SubMenuBorder}"/>
+                                    </Canvas>
+                                    <ItemsPresenter x:Name="ItemsPresenter"
+                                                    KeyboardNavigation.DirectionalNavigation="Cycle" 
+                                                    Grid.IsSharedSizeScope="True" 
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                    KeyboardNavigation.TabNavigation="Cycle"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </Popup>
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                    <Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
+                </Trigger>
+                <Trigger Property="IsHighlighted" Value="True">
+
+
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="1.03"
+                                                    Storyboard.TargetName="templateRoot"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="1.03"
+                                                    Storyboard.TargetName="templateRoot"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="1"
+                                                    Storyboard.TargetName="templateRoot"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation 
+                                                    Duration="0:0:0.5"
+                                                    To="1"
+                                                    Storyboard.TargetName="templateRoot"
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ElasticEase Oscillations="0"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+
+
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#FF707070"/>
+                </Trigger>
+                <Trigger Property="CanContentScroll" SourceName="SubMenuScrollViewer" Value="False">
+                    <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
+                    <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
         </ControlTemplate>
     </Window.Resources>
 </Window>

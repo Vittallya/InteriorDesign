@@ -8,10 +8,13 @@
       DataContext="{Binding Source={StaticResource Locator},Path=ClientOrdersViewModel}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ClientOrdersPage">
+    <Page.Background>
+        <SolidColorBrush Color="White"/>
+    </Page.Background>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="80" />
             <RowDefinition Height="*"/>
             <RowDefinition Height="75" />
 
@@ -19,21 +22,26 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         
         <TextBlock 
+            Grid.Column="1"
                 Grid.Row="0" 
-                Text="Мои заказы" 
-                VerticalAlignment="Center"
+            VerticalAlignment="Center"
+                Text="Мои заказы"
+            Style="{DynamicResource H1}"
                 Margin="15 0"
-                FontSize="24" FontFamily="Candara"/>
+                FontFamily="Candara"/>
 
 
 
 <!--5275-->
         
         <ListView 
+            Grid.Column="1"
                 BorderBrush="{x:Null}"
                 Grid.Row="1"
                 Margin="25 0"
@@ -76,12 +84,15 @@
                     </StackPanel>
 
                         <DockPanel 
-                            Grid.Column="1"
-                            Visibility="{Binding MayBeDeleted, Converter={StaticResource BoolToVis}}">
+                                    IsEnabled="{Binding MayBeDeleted, Converter={StaticResource BoolToVisInvert}}"
+                            Grid.Column="1">
                             <Button Grid.Column="1"
-                                    IsEnabled="{Binding MayBeDeleted, Converter={StaticResource BoolToVis}}"
                                     VerticalAlignment="Center"
-                                    Padding="15 2"    
+                                    Padding="15 3"   
+                                    Style="{DynamicResource ButtonLogin}"
+                                    FontSize="15"
+                                    Foreground="White"
+                                    FontWeight="DemiBold"
                                     Content="Отменить заказ"
                                     DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}}" 
@@ -90,7 +101,7 @@
                             <DockPanel.ToolTip>
 
                                 <TextBlock Text="Отменить заказ невозможно спустя 2 дня после даты его заказа"
-                                               Visibility="{Binding MayBeDeleted, Converter={StaticResource BoolToVis}}"/>
+                                               Visibility="{Binding MayBeDeleted, Converter={StaticResource BoolToVisInvert}}"/>
                             </DockPanel.ToolTip>
                         </DockPanel>
                     </Grid>
@@ -142,69 +153,95 @@
 
         </ListView>
 
-        <StackPanel Visibility="{Binding IsSelected, Converter={StaticResource BoolToVis}}" Grid.Column="1" Grid.Row="1">
 
-            <TextBlock HorizontalAlignment="Center" FontSize="18">
+        <ScrollViewer
+            Grid.Column="2"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto"
+            Visibility="{Binding IsSelected, Converter={StaticResource BoolToVis}}" 
+            Grid.Row="1">
+
+            <StackPanel
+            Grid.Column="2"
+            Visibility="{Binding IsSelected, Converter={StaticResource BoolToVis}}" 
+            Grid.Row="1">
+
+                <TextBlock 
+                Style="{DynamicResource H1_5}"
+                HorizontalAlignment="Center">
                 <Run Text="Заказ по услуге: "/>
                 <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.Service.Name}"/>
-            </TextBlock>
+                </TextBlock>
 
-            <TextBlock HorizontalAlignment="Left" Margin="0 15 0 5" FontSize="16">
+                <TextBlock 
+                Style="{DynamicResource H3}"
+                HorizontalAlignment="Left" Margin="0 15 0 5" >
                 <Run Text="Общая стоимость: "/>
                 <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.CommonCost, StringFormat='{}{0}р.'}"/>
-            </TextBlock>
+                </TextBlock>
 
-            <TextBlock HorizontalAlignment="Left" Margin="0 5" FontSize="16">
+                <TextBlock
+                Style="{DynamicResource H3}" HorizontalAlignment="Left" Margin="0 5">
                 <Run Text="Дата заказа: "/>
                 <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.CreationDate, StringFormat='dd.MM.yyyy'}"/>
-            </TextBlock>
-            
-            <TextBlock HorizontalAlignment="Left" Margin="0 5" FontSize="16">
+                </TextBlock>
+
+                <TextBlock
+                Style="{DynamicResource H3}" HorizontalAlignment="Left" Margin="0 5">
                 <Run Text="Дата начала работ: "/>
                 <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.StartWorkingDate, StringFormat='dd.MM.yyyy'}"/>
-            </TextBlock>
+                </TextBlock>
 
-            <TextBlock HorizontalAlignment="Left" Margin="0 5" FontSize="16">
+                <TextBlock 
+                Style="{DynamicResource H3}" 
+                HorizontalAlignment="Left" Margin="0 5">
                 <Run Text="Адрес: "/>
                 <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.Address}"/>
-            </TextBlock>
+                </TextBlock>
 
-            <TextBlock 
+                <TextBlock 
+                Style="{DynamicResource H4}"
                 Visibility="{Binding SelectedOrderItem.MayBeDeleted, Converter={StaticResource BoolToVisInvert}}" 
                 HorizontalAlignment="Left" 
-                Margin="0 5" 
-                FontSize="12">
+                Margin="0 5" >
                 <Run Text="(Отменить невозмножно, прошло более 2-х дней с момента заказа)"/>
-            </TextBlock>
+                </TextBlock>
 
-            <TextBlock FontSize="16" Margin="0 5" 
+                <TextBlock FontSize="16" Margin="0 5" 
+                Style="{DynamicResource H3}"
                        Visibility="{Binding SelectedOrderItem.HasDetails, Converter={StaticResource BoolToVis}}" Text="Детали заказа:"/>
 
-            <StackPanel Margin="15 5" Visibility="{Binding SelectedOrderItem.HasDetails, Converter={StaticResource BoolToVis}}" >
+                <StackPanel Margin="15 5" Visibility="{Binding SelectedOrderItem.HasDetails, Converter={StaticResource BoolToVis}}" >
 
-                <TextBlock HorizontalAlignment="Left" Margin="0 5" >
+                    <TextBlock
+                Style="{DynamicResource H4}" HorizontalAlignment="Left" Margin="0 5" >
                             <Run Text="Высота потолков "/>
                             <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.OrderDetail.FloorsHeight, StringFormat='{}{0} м.'}"/>
-                </TextBlock>
+                    </TextBlock>
 
-                <TextBlock HorizontalAlignment="Left" Margin="0 5" >
+                    <TextBlock
+                Style="{DynamicResource H4}" HorizontalAlignment="Left" Margin="0 5" >
                             <Run Text="Общая площадь: "/>
                             <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.OrderDetail.Area, StringFormat='{}{0} кв.м'}"/>
-                </TextBlock>
+                    </TextBlock>
 
-                <TextBlock HorizontalAlignment="Left" Margin="0 5" >
+                    <TextBlock
+                Style="{DynamicResource H4}" HorizontalAlignment="Left" Margin="0 5" >
                             <Run Text="Количество комнат: "/>
                             <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.OrderDetail.RoomsCount}"/>
-                </TextBlock>
+                    </TextBlock>
 
-                <TextBlock HorizontalAlignment="Left" Margin="0 5" >
+                    <TextBlock
+                Style="{DynamicResource H4}" HorizontalAlignment="Left" Margin="0 5" >
                             <Run Text="Выбранный стиль: "/>
                             <Run FontWeight="DemiBold" Text="{Binding SelectedOrderItem.Order.OrderDetail.Style.Name}"/>
-                </TextBlock>
-            </StackPanel>
-            
+                    </TextBlock>
+                </StackPanel>
 
-        </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+        
         
         <!--<StackPanel
             HorizontalAlignment="Right"
@@ -218,6 +255,7 @@
         <Button 
             Command="{Binding BackCommand}"
             Grid.Row="2"
+            Grid.Column="1"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Padding="45 8"

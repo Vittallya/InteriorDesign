@@ -28,15 +28,15 @@ namespace BL
         public Style SelectedStyle => _style;
 
         private Service _service;
+        private ICollection<int> _services;
         private Style _style;
 
         private double _serviceCost;
         private int _styleId;
 
-        public void SetupService(Service service)
+        public void SetupServices(IEnumerable<Service> services)
         {
-            _service = service;
-            _serviceCost = _service.Cost;
+            _services = services.Select(x => x.Id).ToList();
         }
 
         public void SetupStyle(Style style)
@@ -78,7 +78,12 @@ namespace BL
 
             order.CommonCost = GetCommonCost();
             order.ClientId = clientId;
-            order.ServiceId = _service.Id;
+
+            foreach(var sId in _services)
+            {
+                var serv = dbContext.Services.FindAsync(sId);
+                
+            }
 
             if (order.StartWorkingDate1.HasValue)
             {

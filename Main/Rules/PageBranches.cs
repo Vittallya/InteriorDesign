@@ -11,6 +11,6 @@ namespace Main.Rules
         public const int SERVICES_POOL = 1;
         public const int CLIENT_REGISTRATION_POOL = 2;        
 
-        public const bool EMAIL_CONFIRM_REQUIRED = true;
+        public const bool EMAIL_CONFIRM_REQUIRED = false;
     }
 }

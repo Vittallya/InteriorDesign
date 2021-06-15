@@ -34,7 +34,8 @@ namespace Main.ViewModels
 
         async void Init()
         {
-            Services = new ObservableCollection<Service>(await modelService.GetServicesAsync());
+            await modelService.ReloadAsync();
+            Services = new ObservableCollection<Service>(modelService.GetServicesAsync());
             //if (editing) -> SelectedService - param.Service
         }
 
@@ -54,22 +55,22 @@ namespace Main.ViewModels
             }
         }
 
-        async void SearchByName(string name)
+        void SearchByName(string name)
         {
             if (name != null && name.Length == 0)
                 name = null;
 
             Services = new ObservableCollection<Service>(
-                await modelService.GetServicesAsync(name));
+                modelService.GetServicesAsync(name));
         }
 
-        public ICommand Search => new CommandAsync(async name =>
+        public ICommand Search => new Command(name =>
         {
             if (name != null && name.ToString().Length == 0)
                 name = null;
 
             Services = new ObservableCollection<Service>(
-                await modelService.GetServicesAsync(name?.ToString()));
+                modelService.GetServicesAsync(name?.ToString()));
         });
 
         public ICommand Next => new Command(name =>
@@ -84,7 +85,7 @@ namespace Main.ViewModels
                 paramsService.Clear();
                 pageService.ChangePage<AddressAndDateTimePage>(Rules.Pages.SERVICES_POOL, AnimateTo.Left);
             }
-            paramsService.SetupService(Selected);
+            paramsService.SetupServices(Selected);
 
         }, x => Selected != null);
 

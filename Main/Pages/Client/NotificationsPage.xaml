@@ -1,0 +1,86 @@
+﻿<Page x:Class="Main.Pages.Client.NotificationsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Main.Pages.Client"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="NotificationsPage">
+
+    <Grid>
+        <ListView 
+                BorderBrush="{x:Null}"
+                Grid.Row="1"
+                Margin="15 0"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                ItemsSource="{Binding Notifications}">
+
+
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="BorderBrush" Value="LightGray"/>
+                    <Setter Property="Background" Value="LightGray"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="FontFamily" Value="TrebuchetMs"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="MinWidth" Value="400"/>
+                    <Setter Property="Template">
+
+                        <Setter.Value>
+                            <ControlTemplate 
+                                TargetType="ListBoxItem">
+
+                                <Border 
+                                    Margin="0 10"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="5"
+                                    Padding="5 7 5 5"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Background="{TemplateBinding Background}">
+
+                                    <DockPanel>
+
+                                        <TextBlock 
+                                            Margin="25 10"
+                                            Foreground="{TemplateBinding Foreground}"
+                                            FontFamily="TrebuchetMs"
+                                            FontSize="16"
+                                            Text="{Binding Body}"/>
+                                        <Button 
+                                            HorizontalAlignment="Right"
+                                            Style="{StaticResource ButtonEmpty}"
+                                            Template="{StaticResource ButtonEmptyT}"
+                                            Command="{Binding RemoveNotification}"
+                                            DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}}" 
+                                            FontSize="16"
+                                            Margin="0 0 10 0"
+                                            VerticalAlignment="Top"
+                                            Foreground="Black">x</Button>
+
+
+
+                                    </DockPanel>
+                                </Border>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+
+        </ListView>
+    </Grid>
+</Page>

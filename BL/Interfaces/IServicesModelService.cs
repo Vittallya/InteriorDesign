@@ -10,6 +10,8 @@ namespace BL
 {
     public interface IServicesModelService
     {
-        Task<IEnumerable<Service>> GetServicesAsync(string name = null);
+
+        Task ReloadAsync();
+        IEnumerable<Service> GetServicesAsync(string name = null);
     }
 }

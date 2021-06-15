@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Resources/Xaml/Converters.xaml"/>
                 <ResourceDictionary Source="Resources/Xaml/LocatorXAML.xaml"/>
                 <ResourceDictionary Source="Resources/Xaml/ControlsStyles.xaml"/>
+                <ResourceDictionary Source="Resources/Xaml/Text.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

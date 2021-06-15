@@ -18,7 +18,14 @@
 
         </Grid.RowDefinitions>
 
-        <StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        
+        <StackPanel Grid.Column="1">
             <TextBlock HorizontalAlignment="Left"
                        Margin="15 10"
                        Text="Начнем со стилей" 
@@ -33,6 +40,7 @@
 
 
         <StackPanel
+            Grid.Column="1"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Margin="0 0 15 10"
@@ -43,9 +51,11 @@
 
         <ListBox 
                 Grid.Row="1"
+                Grid.Column="1"
+                BorderBrush="{x:Null}"
                 Margin="15 0"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
                 ItemsSource="{Binding Styles}" 
                 SelectedItem="{Binding Selected}">
 
@@ -190,6 +200,7 @@
         <Button 
             Command="{Binding NextPage}"
             Grid.Row="2"
+            Grid.Column="1"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             Padding="45 8"
@@ -202,6 +213,7 @@
         <Button 
             Command="{Binding BackCommand}"
             Grid.Row="2"
+            Grid.Column="1"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Padding="45 8"

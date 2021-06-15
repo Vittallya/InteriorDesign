@@ -44,6 +44,18 @@ namespace Main.ViewModels
             
         }
 
+        public ICommand ChooseDesign => new Command(x =>
+        {
+            if (pageService.HasActualPool())
+            {
+                pageService.ChangeToLastByActualPool();
+            }
+            else
+            {
+                pageService.ChangePage<Pages.ServicesPage>(Rules.Pages.SERVICES_POOL);
+            }
+        });
+
         private async Task OrderCompleted(MVVM_Core.Events.OrderCompleted @event)
         {
 

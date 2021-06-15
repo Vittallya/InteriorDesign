@@ -9,81 +9,162 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserHomePage">
 
+
+
     <Grid>
 
-        <ListView 
-                BorderBrush="{x:Null}"
-                Grid.Row="1"
-                Margin="15 0"
-                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                ItemsSource="{Binding Notifications}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+
+
+        <Button 
+            Margin="0 125 0 0"
+            Grid.Row="1"
+            Template="{DynamicResource  ButtonOnMainT}"
+            Padding="55 5"
+            FontSize="25"
+            Grid.ColumnSpan="2"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Foreground="Black"
+            Cursor="Hand"
+            Command="{Binding ChooseDesign}"
+            Content="Выбрать дизайн">
+            <Button.Background>
+                <SolidColorBrush Color="DarkOrange" Opacity="0.8" />
+            </Button.Background>
+        </Button>
+
+
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Grid.Column="0">
+            <TextBlock 
+                FontSize="88"
+                Foreground="White"
+                FontWeight="DemiBold"
+                HorizontalAlignment="Right"
+                Text="Дизайн интерьера"/>
             
-
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="BorderThickness" Value="2"/>
-                    <Setter Property="BorderBrush" Value="LightGray"/>
-                    <Setter Property="Background" Value="LightGray"/>
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="FontSize" Value="16"/>
-                    <Setter Property="FontFamily" Value="TrebuchetMs"/>
-                    <Setter Property="Cursor" Value="Hand"/>
-                    <Setter Property="MinWidth" Value="400"/>
-                    <Setter Property="Template">
-
-                        <Setter.Value>
-                            <ControlTemplate 
-                                TargetType="ListBoxItem">
-
-                                <Border 
-                                    Margin="0 10"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="5"
-                                    Padding="5 7 5 5"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    Background="{TemplateBinding Background}">
-                                    
-                                    <DockPanel>
-
-                                        <TextBlock 
-                                            Margin="25 10"
-                                            Foreground="{TemplateBinding Foreground}"
-                                            FontFamily="TrebuchetMs"
-                                            FontSize="16"
-                                            Text="{Binding Body}"/>
-                                        <Button 
-                                            HorizontalAlignment="Right"
-                                            Style="{StaticResource ButtonEmpty}"
-                                            Template="{StaticResource ButtonEmptyT}"
-                                            Command="{Binding RemoveNotification}"
-                                            DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}}" 
-                                            FontSize="16"
-                                            Margin="0 0 10 0"
-                                            VerticalAlignment="Top"
-                                            Foreground="Black">x</Button>
+            <TextBlock 
+                FontSize="56"
+                Foreground="Yellow"
+                HorizontalAlignment="Right"
+                FontWeight="Bold"
+                Text="под ключ"/>
 
 
+            <Grid Margin="0 25 0 0" >
 
-                                    </DockPanel>
-                                </Border>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                
+                
+                <StackPanel  HorizontalAlignment="Left" Orientation="Horizontal">
 
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
+                    <Border 
+                            VerticalAlignment="Center" BorderThickness="0">
+                        <Path 
+                                Fill="Wheat"
+                                Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Stretch="None">
+                            <Path.LayoutTransform>
+                                <ScaleTransform ScaleX="1.8" ScaleY="1.5"/>
+                            </Path.LayoutTransform>
 
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel HorizontalAlignment="Center"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+                        </Path>
+
+                    </Border>
+                    <TextBlock 
+                        Margin="5 0 0 0"
+                        FontSize="18"
+                        Foreground="Wheat"
+                        Text="Концепция"/>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Left" Grid.Column="2" Orientation="Horizontal">
+
+                    <Border 
+                            VerticalAlignment="Center" BorderThickness="0">
+                        <Path 
+                                Fill="Wheat"
+                                Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Stretch="None">
+                            <Path.LayoutTransform>
+                                <ScaleTransform ScaleX="1.8" ScaleY="1.5"/>
+                            </Path.LayoutTransform>
+                            
+                        </Path>
+
+                    </Border>
+
+                    <TextBlock 
+                        Margin="5 0 0 0"
+                        FontSize="18"
+                        Foreground="Wheat"
+                        Text="3D визуализация"/>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Left" Grid.Column="4" Orientation="Horizontal">
+
+                    <Border 
+                            VerticalAlignment="Center" BorderThickness="0">
+                        <Path 
+                                Fill="Wheat"
+                                Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Stretch="None">
+                            <Path.LayoutTransform>
+                                <ScaleTransform ScaleX="1.8" ScaleY="1.5"/>
+                            </Path.LayoutTransform>
+
+                        </Path>
+
+                    </Border>
+                    <TextBlock     
+                        Margin="5 0 0 0"                    
+                        FontSize="18"
+                        Foreground="Wheat"
+                        Text="Строительные чертежи"/>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Right" Grid.Column="6"  Orientation="Horizontal">
+
+                    <Border 
+                            VerticalAlignment="Center" BorderThickness="0">
+                        <Path 
+                                Fill="Wheat"
+                                Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Stretch="None">
+                            <Path.LayoutTransform>
+                                <ScaleTransform ScaleX="1.8" ScaleY="1.5"/>
+                            </Path.LayoutTransform>
+
+                        </Path>
+
+                    </Border>
+                    <TextBlock 
+                        Margin="5 0 0 0"
+                        FontSize="18"
+                        Foreground="Wheat"
+                        Text="Авторский надзор"/>
+                </StackPanel>
+            </Grid>
+            
+        </StackPanel>
 
 
-        </ListView>
 
         <!--<Rectangle 
             Style="{DynamicResource AnimHide}"

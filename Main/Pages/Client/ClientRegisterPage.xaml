@@ -8,6 +8,9 @@
       DataContext="{Binding Source={StaticResource Locator}, Path=ClientRegisterViewModel}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ClientRegisterPage">
+    <Page.Background>
+        <SolidColorBrush Color="White"/>
+    </Page.Background>
 
     <Grid>
 
@@ -20,6 +23,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="12*" />
+            <ColumnDefinition Width="*" />
 
         </Grid.ColumnDefinitions>
 

@@ -18,10 +18,16 @@ namespace BL
             this.alldbcontext = alldbcontext;
         }
 
-        public async Task<IEnumerable<Service>> GetServicesAsync(string name = null)
+        private IEnumerable<Service> _services;
+        public async Task ReloadAsync()
         {
             await alldbcontext.Services.LoadAsync();
-            return name != null ? alldbcontext.Services.Where(x => x.Name.Contains(name)) : alldbcontext.Services;
+            _services = await alldbcontext.Services.AsNoTracking().ToListAsync();
+        }
+
+        public IEnumerable<Service> GetServicesAsync(string name = null)
+        {
+            return name != null ? _services.Where(x => x.Name.Contains(name)) : _services;
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Main.ViewModels
 {
@@ -57,6 +58,8 @@ namespace Main.ViewModels
         {
             pageService.ChangePage<Main.Pages.Client.ClientOrdersPage>();
         });
+
+        public bool RightUserIconVis { get; set; }
 
         public ObservableCollection<HeaderBarItem> HeaderItems { get; set; } = new ObservableCollection<Components.HeaderBarItem>
         {
@@ -135,8 +138,30 @@ namespace Main.ViewModels
 
         public int Width { get; set; } = 800;
         public Page CurrentPage { get; set; }
+
+        public SolidColorBrush GridBackground { get; set; }
+        public SolidColorBrush MenuForeground { get; set; }
+
+
+        public bool LeftUserIconVis { get; set; }
+
         private async void PageService_PageChanged(Page page, AnimateTo animate)
         {
+            RightUserIconVis = page.GetType() == typeof(Pages.ClientHomePage);
+
+            LeftUserIconVis = !RightUserIconVis && page.GetType() != typeof(Pages.LoginPage);
+
+            if (RightUserIconVis)
+            {
+                GridBackground = new SolidColorBrush(Colors.Black) {Opacity = 0.4 };
+                MenuForeground = new SolidColorBrush(Colors.White);
+            }
+            else
+            {
+                MenuForeground = new SolidColorBrush(Colors.Black);
+                GridBackground = new SolidColorBrush(Colors.White);
+            }
+
             HeaderSelector(page.GetType());
             if (CurrentPage != null)
             {
@@ -152,7 +177,10 @@ namespace Main.ViewModels
             else
             {
                 await animationService.fadeIn(CurrentPage.Content as UIElement);
-            }            
+
+            }     
+            
+
         }
     }
 }
