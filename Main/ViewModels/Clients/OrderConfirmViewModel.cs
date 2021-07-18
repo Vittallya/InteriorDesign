@@ -9,6 +9,7 @@ using DAL.Models;
 using System.Windows.Input;
 using Main.Pages;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Main.ViewModels
 {
@@ -31,7 +32,7 @@ namespace Main.ViewModels
 
         public Dictionary<HouseType, string> HouseTypes { get; set; }
 
-        public Style Style { get; set; }
+        public DAL.Models.Style Style { get; set; }
 
         public ObservableCollection<Service> Services { get; set; }
 
@@ -115,16 +116,19 @@ namespace Main.ViewModels
 
             w.ShowDialog();
 
+
             if (dc.IsConfirmed)
             {
+                MessageBox.Show("Заказ оформлен успешно", "", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                pageService.ClearHistoryByPool(Rules.Pages.SERVICES_POOL);
                 await orderService.ApplyOrderAndCompleteAsync(@event.User.Id);
                 await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName));
+                pageService.ClearHistoryByPool(Rules.Pages.SERVICES_POOL);
                 orderService.Clear();
             }
             else
             {
+                MessageBox.Show("Оформление заказа прервано. Для оформления заказа необходимо принять условия договора. Чтобы возобновить заказ, перейдите во вкладку \"Услуги\"", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName, 2));
             }
         }
