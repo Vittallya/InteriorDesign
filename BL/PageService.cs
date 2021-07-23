@@ -21,13 +21,15 @@ namespace BL
             OnChangePage(page, animate);
 
         }
-        public void ChangePage<TPage>(AnimateTo animate = AnimateTo.None) where TPage : Page, new()
+        public void ChangePage<TPage>(AnimateTo animate = AnimateTo.None, object dataContext = null) where TPage : Page, new()
         {
             var page = new TPage();
+            if (dataContext != null)
+                page.DataContext = dataContext;
             OnChangePage(page, animate);
 
         }
-        public void ChangePage<TPage>(int poolIndex, AnimateTo animate = AnimateTo.None) where TPage: Page, new()
+        public void ChangePage<TPage>(int poolIndex, AnimateTo animate = AnimateTo.None, object dataContext = null) where TPage: Page, new()
         {
 
             Page page = null;
@@ -44,6 +46,8 @@ namespace BL
                 if (hasSame)
                 {
                     page = _pool[poolIndex].FirstOrDefault(x => x.GetType() == typeof(TPage));
+                    if (dataContext != null)
+                        page.DataContext = dataContext;
                     isExist = true;
                 }
             }
@@ -55,6 +59,9 @@ namespace BL
             if(!isExist)
             {
                 page = new TPage();
+                if (dataContext != null)
+                    page.DataContext = dataContext;
+
                 if (!poolContains)
                 {
                     _pool.Add(poolIndex, new List<Page>());

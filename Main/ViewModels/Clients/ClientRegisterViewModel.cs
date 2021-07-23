@@ -47,7 +47,7 @@ namespace Main.ViewModels
             }
             else
             {
-                pageService.ChangePage<Pages.ClientEnterPasswordPage>(Rules.Pages.SERVICES_POOL, AnimateTo.Left);
+                pageService.ChangePage<Pages.ClientEnterPasswordPage>(Rules.Pages.CLIENT_REGISTRATION_POOL, AnimateTo.Left);
             }
         }, y => Email != null && Name != null);
 
@@ -85,10 +85,7 @@ namespace Main.ViewModels
             }
 
             if (await registerService.SetClientPassAndRegister(PasswordBox.Password, Login))
-            {
-                
-                pageService.ChangePage<Pages.ClientHomePage>();
-                
+            {                
                 pageService.ClearHistoryByPool(Rules.Pages.CLIENT_REGISTRATION_POOL);
                 await eventBus.Publish(new MVVM_Core.Events.ClientRegistered(userService.CurrentUser));
                 this.Dispose();
@@ -113,7 +110,7 @@ namespace Main.ViewModels
                 registerService.NameAndEmailSetted = false;
             }
             else
-                pageService.Back(PoolIndex);
+                pageService.ChangeToLastByPool(Rules.Pages.SERVICES_POOL);
         });
 
         public void Dispose()

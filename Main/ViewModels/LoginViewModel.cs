@@ -15,15 +15,19 @@ namespace Main.ViewModels
     public class LoginViewModel: BaseViewModel
     {
         private readonly ILoginService loginService;
+        private readonly DbContextLoader loader;
         private readonly PageService pageService;
         public PasswordBox PassBox { get; set; } = new PasswordBox
         {
             
         };
         public string Login { get; set; }
-        public LoginViewModel(ILoginService loginService, PageService pageService)
+        public LoginViewModel(ILoginService loginService,
+                                DbContextLoader loader,
+                              PageService pageService)
         {
             this.loginService = loginService;
+            this.loader = loader;
             this.pageService = pageService;
         }
         public bool IsErrorVisible { get; set; }
@@ -32,6 +36,11 @@ namespace Main.ViewModels
         public bool IsAnimationVisible { get; set; }
         public ICommand LoginCommand => new CommandAsync(async x =>
         {
+            while (!loader.IsLoaded)
+            {
+                await Task.Delay(200);
+            }
+
             IsErrorVisible = false;
             IsAnimationVisible = true;
             bool res = await loginService.TryLogin(Login, PassBox.Password, IamAdmin);

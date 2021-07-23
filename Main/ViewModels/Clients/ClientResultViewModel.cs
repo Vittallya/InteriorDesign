@@ -19,13 +19,12 @@ namespace Main.ViewModels
             BL.PageService pageService)
         {
             this.pageService = pageService;
-            
+            Message = "Заказ успешно оформлен";
         }
 
 
         public ICommand ToHomePage => new Command(x =>
         {
-            pageService.ClearHistoryByPool(Rules.Pages.SERVICES_POOL);
             pageService.ChangePage<Pages.ClientHomePage>(AnimateTo.Rigth);
         });
 

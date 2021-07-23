@@ -33,7 +33,7 @@ namespace Main.ViewModels.Admin
         {
             if (x is Order o)
             {
-                var w = new Windwos.DogovorWindow();
+                var w = new Windows.DogovorWindow();
                 var dc = new DogovorViewModel
                 {
                     Address = o.Address,

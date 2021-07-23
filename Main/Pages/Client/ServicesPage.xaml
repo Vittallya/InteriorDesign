@@ -13,6 +13,25 @@
     </Page.Background>
 
     <Grid>
+
+        <StackPanel
+                    VerticalAlignment="Center"
+                    Background="White"
+                    Visibility="{Binding IsLoaded, Converter={StaticResource BoolToVisInvert}}"
+                    HorizontalAlignment="Center">
+            
+            <TextBlock Style="{StaticResource H2}"
+                   Text="Подождите, идет загрузка"/>
+
+            
+            
+            
+        </StackPanel>
+        
+
+        <Grid 
+            
+            Visibility="{Binding IsLoaded, Converter={StaticResource BoolToVis}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="75" />
             <RowDefinition Height="*"/>
@@ -227,5 +246,6 @@
             Style="{StaticResource ButtonSkip}"
             Margin="25 0 0 0"
             Content="Назад"/>-->
+        </Grid>
     </Grid>
 </Page>

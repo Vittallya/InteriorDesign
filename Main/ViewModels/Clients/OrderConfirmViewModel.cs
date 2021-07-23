@@ -88,7 +88,6 @@ namespace Main.ViewModels
             if (userService.IsAutorized)
             {
                 await CompleteOrderPorcess(new MVVM_Core.Events.ClientRegistered(userService.CurrentUser));
-                pageService.ChangePage<ClientHomePage>(AnimateTo.Rigth);
             }
             else
             {
@@ -102,35 +101,33 @@ namespace Main.ViewModels
         private async Task CompleteOrderPorcess(MVVM_Core.Events.ClientRegistered @event)
         {
 
-            var w = new Windwos.DogovorWindow();
-
             var dc = new DogovorViewModel
             {
                 IsConfirmRequiered = true,
                 Address = orderService.Order.Address,
                 Customer = @event.User.Name,
                 Area = orderService.OrderParams?.Area ?? 0,
+
             };
 
-            w.DataContext = dc;
-
-            w.ShowDialog();
-
-
-            if (dc.IsConfirmed)
+            dc.Confirmed += async () =>
             {
-                MessageBox.Show("Заказ оформлен успешно", "", MessageBoxButton.OK, MessageBoxImage.Information);
-
                 await orderService.ApplyOrderAndCompleteAsync(@event.User.Id);
                 await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName));
                 pageService.ClearHistoryByPool(Rules.Pages.SERVICES_POOL);
                 orderService.Clear();
-            }
-            else
+                pageService.ChangePage<Pages.ClientResultPage>(AnimateTo.Left);
+
+            };
+            dc.Cansel += async () =>
             {
                 MessageBox.Show("Оформление заказа прервано. Для оформления заказа необходимо принять условия договора. Чтобы возобновить заказ, перейдите во вкладку \"Услуги\"", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName, 2));
-            }
+
+            };
+
+
+            pageService.ChangePage<Pages.Dobovor>(PoolIndex, AnimateTo.Left, dc);
         }
 
     }

@@ -4,8 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Main.Pages"
+      xmlns:viewmodels="clr-namespace:Main.ViewModels" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+        d:DataContext="{d:DesignInstance Type=viewmodels:DogovorViewModel}"
       Title="Dobovor">
 
     <Grid>
@@ -15,56 +17,144 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         
-        <FlowDocumentScrollViewer 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+
+        <Button 
+            Margin="0 10"
             Grid.Column="1"
+            FontSize="16"
+            Padding="15 5"
+            FontWeight="Bold"
+            IsDefault="True"
+            HorizontalAlignment="Left"
+                Click="Button_Click"
+            Content="На печать"/>
+
+        <ScrollViewer
+            Grid.ColumnSpan="2"
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Disabled"
+            Grid.Row="1">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <FlowDocumentScrollViewer 
+                    Grid.Column="1"
             Background="White"
+            x:Name="viewer"
             HorizontalAlignment="Center"
             VerticalScrollBarVisibility="Auto"
             HorizontalScrollBarVisibility="Disabled">
-            <FlowDocument 
-                
+                    <FlowDocument 
+                x:Name="flow"
                 FontSize="15" FontFamily="Times New Roman">
-                <Paragraph FontSize="28">
+                        <Paragraph FontSize="32">
 
-                    <Run Text="Договор №"/>
-                    <Run Text="{Binding s, StringFormat='{}{0}'}"/>
-                    <LineBreak />
-                    <Run FontSize="20" Text="на оказание услуг по разработке дизайн-проекта"/>
-                </Paragraph>
+                            <Run Text="Договор №"/>
+                            <Run Text="{Binding DogovorNumber, StringFormat='{}{0}'}"/>
+                            <LineBreak />
+                            <Run FontSize="20" Text="на оказание услуг по разработке дизайн-проекта"/>
+                        </Paragraph>
 
-                <BlockUIContainer>
-                    <Grid>
-                        <TextBlock Text="г. Набережные Челны" HorizontalAlignment="Left"/>
-                        <TextBlock Text="fasdf" HorizontalAlignment="Right">
+                        <BlockUIContainer TextBlock.FontSize="18">
+                            <Grid>
+                                <TextBlock Text="г. Набережные Челны" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding Date}" HorizontalAlignment="Right">
                             <Run Text=""/>
                             <Run Text="___________"/>
                             <Run Text="20___г."/>
-                        </TextBlock>
+                                </TextBlock>
 
-                    </Grid>
-                </BlockUIContainer>
-                
-                <Paragraph TextAlignment="Justify" FontSize="14">
-                    Общество с Ограниченной Ответственностью «Софт-Декор» в лице Генерального директора Майорова Павла Андреевича, действующего на основании Устава, именуемое в дальнейшем Исполнитель, с одной стороны и _______________________________, именуемый(ая) в дальнейшем Заказчик, с другой стороны, совместно именуемые Стороны, заключили между собой настоящий Договор о нижеследующем. Материал взят с сайта http://polinov.ru
+                            </Grid>
+                        </BlockUIContainer>
 
-                </Paragraph>
+                        <Paragraph FontSize="18" TextAlignment="Justify">
+                            Общество с Ограниченной Ответственностью «Софт-Декор» в лице Генерального директора Майорова Павла Андреевича, действующего на основании Устава, именуемое в дальнейшем Исполнитель, с одной стороны и
+                            <Run FontWeight="DemiBold" Text="{Binding Customer}"/> , именуемый(ая) в дальнейшем Заказчик, с другой стороны, совместно именуемые Стороны, заключили между собой настоящий Договор о нижеследующем. Материал взят с сайта http://polinov.ru
 
-                <Section >
-                    <Paragraph>
-                        <Run FontSize="20" FontWeight="Bold" Text="1.Предмет договора"/>
-                        <LineBreak/>
-                        <LineBreak/>
-                        1.1.Заказчик поручает, а Исполнитель принимает на себя обязательства по выполнению дизайн - проекта помещения(ий), расположенного по адресу: г. Санкт-Петербург, ___________________________________________. Предварительный размер общей площади помещения(ий) составляет _________________ кв.м. по полу.
+                        </Paragraph>
 
-                        <LineBreak />
-                        
-                        1.2.Дизайн – проект (далее – проект) разрабатывается по заданию Заказчика (Техническому заданию – Приложение №1), согласованному с Исполнителем и представляет собой рабочий проект, существующий в виде эскизов и чертежей. Состав проекта – Приложение №2.
+                        <Section >
+                            <Paragraph FontSize="18">
+                                <Run FontSize="25" FontWeight="Bold" Text="1.Предмет договора"/>
+                                <LineBreak/>
+                                <LineBreak/>
 
-                        <LineBreak/>
-                        1.3.3аказчик обязуется принять и оплатить выполненные работы, на условиях, предусмотренных настоящим Договором. Материал взят с сайта http://polinov.ru
-                    </Paragraph>                    
-                </Section>
-            </FlowDocument>
-        </FlowDocumentScrollViewer>
+
+
+                                1.1.Заказчик поручает, а Исполнитель принимает на себя обязательства по выполнению дизайн - проекта помещения(ий), расположенного по адресу:
+                                <Run FontWeight="DemiBold" Text="{Binding Address}"/> . Предварительный размер общей площади помещения(ий) составляет
+                                <Run FontWeight="DemiBold" Text="{Binding Area, StringFormat=\{0:N\}}"/> кв.м. по полу.
+
+
+                                <ItemsControl ItemsSource="{Binding Services}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <LineBreak />
+
+                                1.2.Дизайн – проект (далее – проект) разрабатывается по заданию Заказчика (Техническому заданию – Приложение №1), согласованному с Исполнителем и представляет собой рабочий проект, существующий в виде эскизов и чертежей. Состав проекта – Приложение №2.
+
+                                <LineBreak/>
+                                1.3.3аказчик обязуется принять и оплатить выполненные работы, на условиях, предусмотренных настоящим Договором. Материал взят с сайта http://polinov.ru
+                            </Paragraph>
+                        </Section>
+                    </FlowDocument>
+                </FlowDocumentScrollViewer>
+            </Grid>
+            
+
+
+        </ScrollViewer>
+
+        <DockPanel
+            Grid.Column="1"
+            Grid.Row="2">
+
+            <Button 
+                DockPanel.Dock="Bottom"
+            Style="{DynamicResource ButtonNext}"
+                Background="#FF9C0000"
+            FontSize="16"
+            FontWeight="Bold"
+            IsDefault="True"
+                Padding="0 10"
+            Foreground="White"
+                Margin="0 10 0 0"
+            Command="{Binding Back}"
+            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+            Visibility="{Binding IsConfirmRequiered, Converter={StaticResource BoolToVis}}"
+            Content="Отклонить"/>
+
+            
+            <Button 
+                DockPanel.Dock="Left"
+            Style="{DynamicResource ButtonNext}"
+            FontSize="16"
+            FontWeight="Bold"
+            IsDefault="True"
+                Padding="0 10"
+            Foreground="White"
+            Command="{Binding Confirm}"
+            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+            Visibility="{Binding IsConfirmRequiered, Converter={StaticResource BoolToVis}}"
+            Content="Принять"/>
+            
+        </DockPanel>
+
     </Grid>
 </Page>

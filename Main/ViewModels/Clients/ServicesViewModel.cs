@@ -18,23 +18,36 @@ namespace Main.ViewModels
     {
         private readonly PageService pageService;
         private readonly IServicesModelService modelService;
+        private readonly DbContextLoader loader;
         private readonly OrderService paramsService;
         private string searchText;
 
         public ObservableCollection<Service> Services { get; set; }
 
-        public ServicesViewModel(PageService pageService, IServicesModelService modelService, OrderService paramsService) : base(pageService)
+        public ServicesViewModel(PageService pageService,
+                                 IServicesModelService modelService,
+                                 DbContextLoader loader,
+                                 OrderService paramsService) : base(pageService)
         {
             this.pageService = pageService;
             this.modelService = modelService;
+            this.loader = loader;
             this.paramsService = paramsService;
             Init();
         }
 
         public Service Selected { get; set; }
 
+        public bool IsLoaded { get; set; }
+
         async void Init()
         {
+            while (!loader.IsLoaded)
+            {
+                await Task.Delay(200);
+            }
+            IsLoaded = true;
+
             await modelService.ReloadAsync();
             Services = new ObservableCollection<Service>(modelService.GetServicesAsync());
             //if (editing) -> SelectedService - param.Service

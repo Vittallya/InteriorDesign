@@ -15,20 +15,31 @@ namespace Main.ViewModels
     {
         private readonly PageService pageService;
         private readonly ICurrentUserService userService;
+        private readonly DbContextLoader loader;
         private readonly PageAnimationService animationService;
 
-        public MainViewModel(PageService pageService, ICurrentUserService userService, PageAnimationService animationService)
+        public MainViewModel(PageService pageService,
+                             ICurrentUserService userService,
+                             DbContextLoader loader,
+                             PageAnimationService animationService)
         {
             this.animationService = animationService;
             this.pageService = pageService;
             this.userService = userService;
-
+            this.loader = loader;
             pageService.PageChanged += PageService_PageChanged;
             userService.Autorized += UserService_Autorized;
             userService.Exited += UserService_Exited;
             userService.Skipped += UserService_Skipped;
             pageService.ChangePage<Main.Pages.LoginPage>();
+            Init();
         }
+
+        private void Init()
+        {
+            loader.StartLoading();
+        }
+
         public string UserName { get; set; }
         public bool IsClient { get; set; }
         private void UserService_Skipped()
@@ -154,7 +165,9 @@ namespace Main.ViewModels
         {
             RightUserIconVis = page.GetType() == typeof(Pages.ClientHomePage);
 
-            LeftUserIconVis = !RightUserIconVis && page.GetType() != typeof(Pages.LoginPage);
+            LeftUserIconVis = !RightUserIconVis 
+                && page.GetType() != typeof(Pages.LoginPage)
+                && page.GetType() != typeof(Pages.Dobovor);
 
             if (RightUserIconVis)
             {

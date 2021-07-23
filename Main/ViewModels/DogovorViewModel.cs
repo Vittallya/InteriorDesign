@@ -29,16 +29,20 @@ namespace Main.ViewModels
 
         public ICommand Confirm => new Command(x =>
         {
-            if(x is Window w)
+            IsConfirmed = true;
+            Confirmed?.Invoke();
+            if (x is Window w)
             {
-                IsConfirmed = true;
                 w.DialogResult = true;
             }
         });
 
-        public DogovorViewModel()
+        public ICommand Back => new Command(x =>
         {
+            Cansel?.Invoke();
+        });
 
-        }
+        public event Action Confirmed;
+        public event Action Cansel;
     }
 }

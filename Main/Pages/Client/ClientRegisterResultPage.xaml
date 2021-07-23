@@ -12,7 +12,7 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="*"/>
             <RowDefinition Height="75" />
 
@@ -28,7 +28,7 @@
 
             <StackPanel HorizontalAlignment="Center">
                 <TextBlock 
-                    FontSize="14"
+                    Style="{DynamicResource H2}"
                     Text="{Binding Message}"/>
 
                 <Button 

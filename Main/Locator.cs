@@ -29,6 +29,7 @@ namespace Main
             services.AddTransient<ClientCheckCodeViewModel>();
             services.AddTransient<ViewModels.WorkersViewModel>();
             services.AddTransient<ViewModels.Admin.AdminViewModel>();
+            services.AddTransient<ViewModels.ClientOrdersViewModel>();
 
 
             //Services/////////////////////////////////
@@ -50,8 +51,8 @@ namespace Main
             services.AddTransient<IOrderParamsCalculatorService, OrderCalculatorServiceUsual>();
             services.AddTransient<PageAnimationService>();
             services.AddTransient<EmployeeForClientService>();
-            services.AddTransient<ViewModels.ClientOrdersViewModel>();
             services.AddSingleton<MVVM_Core.EventBus>();
+            services.AddSingleton<BL.DbContextLoader>();
             services.AddTransient<IClientOrders, ClientOrders>();
 
 

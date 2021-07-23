@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client\ClientOrders.cs" />
+    <Compile Include="DbContextLoader.cs" />
     <Compile Include="Interfaces\IClientOrders.cs" />
     <Compile Include="EmailCodeGenerator.cs" />
     <Compile Include="EmailMessageSender.cs" />

@@ -24,5 +24,13 @@ namespace Main.Pages
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            PrintDialog p = new PrintDialog();
+            p.PrintDocument(((IDocumentPaginatorSource)this.viewer.Document).DocumentPaginator, "Договор оказания услуг");
+            p.ShowDialog();
+
+        }
     }
 }
