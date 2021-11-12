@@ -56,7 +56,7 @@
                 Margin="15 0"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                ItemsSource="{Binding Styles}" 
+                ItemsSource="{Binding StylesView}" 
                 SelectedItem="{Binding Selected}">
 
 

@@ -11,6 +11,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Main.Pages;
 using System.Collections;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace Main.ViewModels
 {
@@ -23,6 +25,8 @@ namespace Main.ViewModels
         private string searchText;
 
         public ObservableCollection<Service> Services { get; set; }
+
+        public ICollectionView ServicesView { get; private set; }
 
         public ServicesViewModel(PageService pageService,
                                  IServicesModelService modelService,
@@ -50,6 +54,7 @@ namespace Main.ViewModels
 
             await modelService.ReloadAsync();
             Services = new ObservableCollection<Service>(modelService.GetServicesAsync());
+            ServicesView = CollectionViewSource.GetDefaultView(Services);
             //if (editing) -> SelectedService - param.Service
         }
 
@@ -72,10 +77,13 @@ namespace Main.ViewModels
         void SearchByName(string name)
         {
             if (name != null && name.Length == 0)
-                name = null;
+            {
+                ServicesView.Filter = null;
+                return;
+            }
 
-            Services = new ObservableCollection<Service>(
-                modelService.GetServicesAsync(name));
+            name = name.ToLower();
+            ServicesView.Filter = s => (s as Service).Name.ToLower().StartsWith(name);
         }
 
         public ICommand Search => new Command(name =>

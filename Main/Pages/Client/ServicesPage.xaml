@@ -66,7 +66,7 @@
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectionMode="Multiple"
             x:Name="lb"
-                ItemsSource="{Binding Services}" 
+                ItemsSource="{Binding ServicesView}" 
                 SelectedItem="{Binding Selected}">
 
 

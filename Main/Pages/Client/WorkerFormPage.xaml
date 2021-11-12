@@ -17,10 +17,14 @@
         </Grid.ColumnDefinitions>
 
 
-        <Border VerticalAlignment="Center" Padding="5 15" Grid.Column="0" Background="#FFDADADA" BorderThickness="3">
+        <Border VerticalAlignment="Center" 
+                Padding="5 15" 
+                Grid.Column="0" 
+                Background="#FFDADADA" 
+                BorderThickness="3">
+            
             <Image 
                 Height="400"
-                MaxWidth="{Binding ElementName=col1, Path=Width}"
                 Stretch="Uniform"
                 Source="{Binding Employee.ImagePath}" />
 

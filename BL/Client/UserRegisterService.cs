@@ -27,6 +27,8 @@ namespace BL
         }
 
         string _name;
+        private Client _client;
+
         public string Email { get; private set; }
         public string Name => _name;
 
@@ -39,7 +41,7 @@ namespace BL
             NameAndEmailSetted = true;
         }
 
-        public async Task<bool> SetClientPassAndRegister(string pass, string login)
+        public async Task<bool> TryRegister(string pass, string login)
         {
             await allDbContext.Clients.LoadAsync();
 
@@ -49,13 +51,12 @@ namespace BL
                 return false;
             }
 
-            Client client = new Client { Login = login, Email = Email, Name = _name, Password = pass };
-            allDbContext.Clients.Add(client);
+            _client = new Client { Login = login, Email = Email, Name = _name, Password = pass };
+            allDbContext.Clients.Add(_client);
 
             try
             {
                 await allDbContext.SaveChangesAsync();
-                userService.SetupUser(client, false);
                 Registered?.Invoke();
             }
             catch(Exception ex)
@@ -66,7 +67,10 @@ namespace BL
             return true;
         }
 
-        
+        public Client GetRegistered()
+        {
+            return _client;
+        }
 
         public void Dispose()
         {

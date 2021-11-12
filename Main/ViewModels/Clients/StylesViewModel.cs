@@ -10,6 +10,8 @@ using Main.MVVM_Core;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Main.Pages;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace Main.ViewModels
 {
@@ -20,7 +22,7 @@ namespace Main.ViewModels
         private readonly OrderService orderService;
         private string searchText;
 
-        public ObservableCollection<Style> Styles { get; set; }
+        public ICollectionView StylesView { get; private set; }
 
         public Style Selected { get; set; }
 
@@ -34,7 +36,7 @@ namespace Main.ViewModels
 
         async void Init()
         {
-            Styles = await service.GetStyles();
+            StylesView = CollectionViewSource.GetDefaultView(await service.GetStyles());
         }
 
         public string SearchText
@@ -48,12 +50,17 @@ namespace Main.ViewModels
             }
         }
 
-        async void Search(string name)
+        void Search(string name)
         {
             if (name != null && name.Length == 0)
-                name = null;
-
-            Styles = await service.GetStyles(name);
+            {
+                StylesView.Filter = null;                
+            }
+            else
+            {
+                name = name.ToLower();
+                StylesView.Filter = st => (st as Style).Name.ToLower().StartsWith(name);
+            }
         }
 
         public ICommand NextPage => new Command(x =>

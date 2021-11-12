@@ -27,22 +27,8 @@ namespace Main.ViewModels
 
         public bool IsConfirmed { get; private set; }
 
-        public ICommand Confirm => new Command(x =>
-        {
-            IsConfirmed = true;
-            Confirmed?.Invoke();
-            if (x is Window w)
-            {
-                w.DialogResult = true;
-            }
-        });
+        public ICommand ConfirmCommand { get; set; }
 
-        public ICommand Back => new Command(x =>
-        {
-            Cansel?.Invoke();
-        });
-
-        public event Action Confirmed;
-        public event Action Cansel;
+        public ICommand CancelCommand { get; set; }
     }
 }

@@ -110,7 +110,7 @@ namespace Main.ViewModels
 
             };
 
-            dc.Confirmed += async () =>
+            dc.ConfirmCommand = new CommandAsync(async x =>
             {
                 await orderService.ApplyOrderAndCompleteAsync(@event.User.Id);
                 await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName));
@@ -118,13 +118,18 @@ namespace Main.ViewModels
                 orderService.Clear();
                 pageService.ChangePage<Pages.ClientResultPage>(AnimateTo.Left);
 
-            };
-            dc.Cansel += async () =>
-            {
-                MessageBox.Show("Оформление заказа прервано. Для оформления заказа необходимо принять условия договора. Чтобы возобновить заказ, перейдите во вкладку \"Услуги\"", "", MessageBoxButton.OK, MessageBoxImage.Information);
-                await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName, 2));
+            });
 
-            };
+            dc.CancelCommand = new CommandAsync(async x =>
+            {
+                MessageBox.Show("Для оформления заказа необходимо принять условия договора.", "", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                pageService.ClearHistoryByPool(Rules.Pages.SERVICES_POOL);
+                orderService.Clear();
+                await eventBus.Publish(new MVVM_Core.Events.OrderCompleted(ServiceName, 2));
+                pageService.ChangePage<Pages.ClientHomePage>(AnimateTo.Left);
+
+            });
 
 
             pageService.ChangePage<Pages.Dobovor>(PoolIndex, AnimateTo.Left, dc);

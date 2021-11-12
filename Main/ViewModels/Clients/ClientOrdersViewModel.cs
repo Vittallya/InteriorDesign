@@ -65,9 +65,9 @@
         async void Init()
         {
             AnimationVisible = true;
-            await clientOrders.ReloadAsync();
+            await clientOrders.ReloadAsync(userService.CurrentUser.Id);
 
-            var orders = clientOrders.GetOrders(userService.CurrentUser.Id);
+            var orders = clientOrders.GetOrders();
 
             orders = orders.OrderBy(x => x.StartWorkingDate).ToList();
 

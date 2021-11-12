@@ -22,17 +22,26 @@ namespace BL
 
         private IEnumerable<Order> _orders;
 
-        public async Task ReloadAsync()
+        public async Task ReloadAsync(int clId)
         {
-            await dbContext.Orders.Include(x => x.Services).LoadAsync();
-            await dbContext.OrderDetails.Include(x => x.Style).LoadAsync();
+            using(var context = new AllDbContext())
+            {
+                await context.Orders.Where(x => x.ClientId.Equals(clId)).Include(x => x.Services).Include(x => x.OrderDetail).LoadAsync();
 
-            _orders = await dbContext.Orders.AsNoTracking().ToListAsync();
+                _orders = context.Orders.Local.ToList();
+
+                foreach (var ord in _orders.Where(x => x.Services.Any(y => y.NeedDetails)))
+                {
+                    await context.Entry(ord.OrderDetail).Reference(x => x.Style).LoadAsync();
+                }
+
+            }
+
         }
 
-        public IEnumerable<Order> GetOrders(int clientId)
+        public IEnumerable<Order> GetOrders()
         {
-            return _orders.Where(x => x.ClientId == clientId);
+            return _orders;
         }
 
         public async Task RemoveOrder(Order order)

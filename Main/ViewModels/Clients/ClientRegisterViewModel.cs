@@ -84,8 +84,9 @@ namespace Main.ViewModels
                 return;
             }
 
-            if (await registerService.SetClientPassAndRegister(PasswordBox.Password, Login))
-            {                
+            if (await registerService.TryRegister(PasswordBox.Password, Login))
+            {
+                userService.SetupUser(registerService.GetRegistered(), false);
                 pageService.ClearHistoryByPool(Rules.Pages.CLIENT_REGISTRATION_POOL);
                 await eventBus.Publish(new MVVM_Core.Events.ClientRegistered(userService.CurrentUser));
                 this.Dispose();
